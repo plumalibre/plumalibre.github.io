@@ -191,7 +191,10 @@ const nc='\n        <article class="card"><div class="thumb"><img src="'+is+'" a
 const mk='<div class="news-grid">',i=html.indexOf(mk);if(i===-1)throw new Error('Rejilla no encontrada');const up=html.slice(0,i+mk.length)+nc+html.slice(i+mk.length);
 await ghPut('index.html',up,'🏠 '+titulo);return true;}catch(e){console.error(e);return false;}}
 
-async function publicar(){const d=getFD(),fn=$('filename').value.trim();if(!d.titulo||!d.cuerpo){showSt('stArea','⚠️ Completá título y cuerpo','warn');return;}if(!fn){showSt('stArea','⚠️ Falta archivo','warn');return;}const c=getCfg();if(!c.user||!c.token){showSt('stArea','⚠️ Configurá GitHub','warn');return;}
+async function publicar(){const d=getFD(),fn=$('filename').value.trim();if(!d.titulo||!d.cuerpo){showSt('stArea','⚠️ Completá título y cuerpo','warn');return;}if(!fn||fn==='.html'||!fn.match(/^[a-z0-9-]+\.html$/i)){
+  showSt('stArea','⚠️ El nombre del archivo no es válido. Debe ser algo como: mi-nota.html','warn');
+  return;
+}const c=getCfg();if(!c.user||!c.token){showSt('stArea','⚠️ Configurá GitHub','warn');return;}
 const btn=$('btnPub');btn.disabled=true;btn.textContent='⏳ Publicando...';
 try{if(imgB64&&imgName){showSt('stArea','📷 Subiendo imagen...','info');await ghPut('assets/'+imgName,imgB64,'📷 '+imgName,true);}
 showSt('stArea','📝 Subiendo artículo...','info');await ghPut('articulos/'+fn,genHTML(),'📰 '+d.titulo);
@@ -208,7 +211,174 @@ btn.disabled=false;btn.textContent='🚀 Publicar';}
 
 function chkDep(url,n){if(n>8)return;setTimeout(async()=>{try{await fetch(url,{method:'HEAD',mode:'no-cors'});const el=$('depChk');if(el){el.innerHTML='<h3>✅ ¡En línea!</h3><p style="font-size:.78rem"><a href="'+url+'" target="_blank" style="color:var(--accent)">Ver nota →</a></p>';if('Notification' in window&&Notification.permission==='granted')new Notification('Pluma Libre',{body:'Nota publicada ✓'});}}catch{chkDep(url,n+1);}},n<3?10000:15000);}
 
-function renderH(){const h=JSON.parse(localStorage.getItem(HK)||'[]'),el=$('histList');if(!h.length){el.innerHTML='<p style="font-size:.82rem;color:var(--text2)">Aún no hay notas.</p>';return;}el.innerHTML=h.map(x=>'<div class="h-item"><div><div class="h-title">'+x.titulo+'</div><div class="h-meta">'+(SEC[x.seccion]||'')+' · '+tAgo(x.ts)+'</div></div><div style="display:flex;gap:6px"><a class="h-btn" href="https://plumalibre.netlify.app/articulos/'+x.filename+'" target="_blank">🔗</a><button class="h-btn" onclick="shareH(\''+x.filename+"','"+x.titulo.replace(/'/g,"\\'")+"')\">📤</button></div></div>").join('');}
+async function renderH(){
+  const el=$('histList');
+  el.innerHTML='<p style="font-size:.82rem;color:var(--text2)">⏳ Cargando notas desde GitHub...</p>';
+  
+  try {
+    const c=getCfg();
+    if(!c.user||!c.token){
+      el.innerHTML='<p style="font-size:.82rem;color:var(--red)">⚠️ No hay conexión con GitHub</p>';
+      return;
+    }
+    
+    // Read articulos folder from GitHub
+    const res=await fetch('https://api.github.com/repos/'+c.user+'/'+c.repo+'/contents/articulos',{
+      headers:{'Authorization':'Bearer '+c.token}
+    });
+    
+    if(!res.ok){
+      el.innerHTML='<p style="font-size:.82rem;color:var(--red)">Error al cargar notas</p>';
+      return;
+    }
+    
+    const files=await res.json();
+    // Filter only .html files (exclude plantilla.html and .html sin nombre)
+    const notes=files.filter(f=>f.name.endsWith('.html')&&f.name!=='plantilla.html'&&f.name!=='.html');
+    
+    if(!notes.length){
+      el.innerHTML='<p style="font-size:.82rem;color:var(--text2)">No hay notas publicadas aún.</p>';
+      return;
+    }
+    
+    // Sort by name desc (newest first, assuming timestamp-based names or alphabetic)
+    notes.sort((a,b)=>b.sha.localeCompare(a.sha));
+    
+    el.innerHTML=notes.map(f=>{
+      const displayName=f.name.replace('.html','').replace(/-/g,' ');
+      return '<div class="h-item" style="flex-direction:column;align-items:stretch;gap:8px">'+
+        '<div><div class="h-title">'+displayName+'</div><div class="h-meta">'+f.name+'</div></div>'+
+        '<div style="display:flex;gap:6px;flex-wrap:wrap">'+
+          '<a class="h-btn" href="https://plumalibre.netlify.app/articulos/'+f.name+'" target="_blank">🔗 Ver</a>'+
+          '<button class="h-btn" onclick="editNote(\''+f.name+'\')">✏️ Editar</button>'+
+          '<button class="h-btn" onclick="delNote(\''+f.name+'\')" style="color:var(--red)">🗑 Borrar</button>'+
+          '<button class="h-btn" onclick="shareH(\''+f.name+'\',\''+displayName.replace(/'/g,"\\'")+'\')">📤</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+    
+  } catch(e) {
+    el.innerHTML='<p style="font-size:.82rem;color:var(--red)">Error: '+e.message+'</p>';
+  }
+}
+
+// EDIT A PUBLISHED NOTE
+async function editNote(filename){
+  const c=getCfg();
+  try {
+    showSt('stArea','⏳ Cargando nota para editar...','info');
+    const res=await fetch('https://api.github.com/repos/'+c.user+'/'+c.repo+'/contents/articulos/'+filename,{
+      headers:{'Authorization':'Bearer '+c.token}
+    });
+    if(!res.ok)throw new Error('No se pudo cargar la nota');
+    
+    const data=await res.json();
+    const html=decodeURIComponent(escape(atob(data.content)));
+    
+    // Parse the HTML to extract fields
+    const getMeta=(pattern)=>{const m=html.match(pattern);return m?m[1]:'';};
+    
+    const titulo=getMeta(/<h1>([^<]+)<\/h1>/);
+    const subtitulo=getMeta(/<p class="subtitle">([^<]+)<\/p>/);
+    const secEl=html.match(/class="badge badge-brand">([^<]+)<\/span>/);
+    const piefoto=getMeta(/<figcaption>([^<]+)<\/figcaption>/);
+    
+    // Extract body content between <div class="article-body"> and </div>
+    const bodyMatch=html.match(/<div class="article-body">([\s\S]*?)<\/div>\s*<div class="share">/);
+    let cuerpo='';
+    if(bodyMatch){
+      cuerpo=bodyMatch[1]
+        .replace(/<h2>([^<]+)<\/h2>/g,'## $1')
+        .replace(/<blockquote>([\s\S]*?)<\/blockquote>/g,'> $1')
+        .replace(/<strong>(.+?)<\/strong>/g,'**$1**')
+        .replace(/<em>(.+?)<\/em>/g,'_$1_')
+        .replace(/<p>([\s\S]*?)<\/p>/g,'$1\n\n')
+        .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+        .trim();
+    }
+    
+    // Detect section from badge
+    let seccion='politico';
+    if(secEl){
+      const secName=secEl[1];
+      for(const [k,v] of Object.entries(SEC)){
+        if(v===secName){seccion=k;break;}
+      }
+    }
+    
+    // Fill form
+    $('seccion').value=seccion;
+    $('titulo').value=titulo;
+    $('subtitulo').value=subtitulo;
+    $('cuerpo').value=cuerpo;
+    $('piefoto').value=piefoto;
+    $('filename').value=filename;
+    
+    // Mark as editing
+    window._editingFile=filename;
+    
+    updStats();
+    showTab('escribir',document.querySelectorAll('.tab')[0]);
+    showSt('stArea','✏️ Editando: '+filename+' (al publicar se sobrescribe)','info');
+  } catch(e){
+    showSt('stArea','❌ '+e.message,'err');
+  }
+}
+
+// DELETE A PUBLISHED NOTE
+async function delNote(filename){
+  if(!confirm('¿Seguro que querés borrar la nota "'+filename+'"?\n\nEsta acción no se puede deshacer.'))return;
+  
+  const c=getCfg();
+  try {
+    showSt('stArea','⏳ Borrando nota...','info');
+    
+    // Get SHA of file to delete
+    const getRes=await fetch('https://api.github.com/repos/'+c.user+'/'+c.repo+'/contents/articulos/'+filename,{
+      headers:{'Authorization':'Bearer '+c.token}
+    });
+    if(!getRes.ok)throw new Error('No se encontró el archivo');
+    const fileData=await getRes.json();
+    
+    // Delete file
+    const delRes=await fetch('https://api.github.com/repos/'+c.user+'/'+c.repo+'/contents/articulos/'+filename,{
+      method:'DELETE',
+      headers:{'Authorization':'Bearer '+c.token,'Content-Type':'application/json'},
+      body:JSON.stringify({message:'🗑 Borrar: '+filename,sha:fileData.sha})
+    });
+    
+    if(!delRes.ok){
+      const err=await delRes.json();
+      throw new Error(err.message||'Error al borrar');
+    }
+    
+    // Also try to remove from index.html
+    try {
+      const idxRes=await fetch('https://api.github.com/repos/'+c.user+'/'+c.repo+'/contents/index.html',{
+        headers:{'Authorization':'Bearer '+c.token}
+      });
+      if(idxRes.ok){
+        const idxData=await idxRes.json();
+        let idxHtml=decodeURIComponent(escape(atob(idxData.content)));
+        // Remove article cards that link to this filename
+        const pattern=new RegExp('\\s*<article class="card">[\\s\\S]*?articulos/'+filename.replace(/\./g,'\\.')+'[\\s\\S]*?</article>','g');
+        const newHtml=idxHtml.replace(pattern,'');
+        if(newHtml!==idxHtml){
+          await fetch('https://api.github.com/repos/'+c.user+'/'+c.repo+'/contents/index.html',{
+            method:'PUT',
+            headers:{'Authorization':'Bearer '+c.token,'Content-Type':'application/json'},
+            body:JSON.stringify({message:'🏠 Quitar del inicio: '+filename,content:btoa(unescape(encodeURIComponent(newHtml))),sha:idxData.sha})
+          });
+        }
+      }
+    } catch{}
+    
+    showSt('stArea','✅ Nota borrada. El sitio se actualiza en ~30s','ok');
+    setTimeout(()=>renderH(),1500);
+  } catch(e){
+    showSt('stArea','❌ '+e.message,'err');
+  }
+}
 function shareH(fn,t){const u='https://plumalibre.netlify.app/articulos/'+fn;if(navigator.share)navigator.share({title:t,url:u});else{navigator.clipboard.writeText(u);alert('Link copiado');}}
 
 function showSt(id,msg,type){const map={ok:'st-ok',err:'st-err',info:'st-info',warn:'st-warn'};$(id).innerHTML='<div class="st '+(map[type]||'')+'">'+msg+'</div>';if(type!=='info')setTimeout(()=>{const el=$(id);if(el)el.innerHTML='';},8000);}

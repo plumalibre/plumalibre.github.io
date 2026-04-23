@@ -32,7 +32,7 @@ Cobertura local, nacional e internacional. Periodismo crítico sin ataduras pol�
 ```
 /
 ├── index.html                  # Homepage
-├── sobre-nosotros.html         # Sobre + contacto (formulario ROTO - usaba Netlify)
+├── sobre-nosotros.html         # Sobre + contacto (form Formspree, endpoint xdayypog)
 ├── style.css                   # Estilos globales v3
 ├── robots.txt
 ├── sitemap.xml
@@ -100,13 +100,14 @@ Cobertura local, nacional e internacional. Periodismo crítico sin ataduras pol�
 - Eliminación de `herramientas/redes.html` (redundante tras integración)
 - 2026-04-23: limpieza de contenido de prueba (holalala.html + 2 cards rotas en home + imagen huérfana)
 - 2026-04-23: Google Analytics 4 activo (`G-TZRTJLP5KT`)
+- 2026-04-23: formulario de contacto migrado de Netlify Forms a Formspree (endpoint `xdayypog`)
 
 ## Pendientes críticos (Tier 1)
 
 1. ~~**Google Analytics 4** — placeholder hardcoded en TODAS las páginas, pendiente de reemplazar.~~ ✅ **Resuelto 2026-04-23**: GA4 activo con ID `G-TZRTJLP5KT` (cuenta `prensaplumalibre@gmail.com`). Integrado en homepage, 5 secciones, sobre-nosotros, plantilla de artículos y en el template `genHTML()` del editor v9 (así cada nota nueva nace ya trackeada).
 2. **Contenido placeholder** — sobre-nosotros genérico, notas de ejemplo con fotos azules
 3. **Seguridad del token** — XOR+base64 no es encriptación real; cualquiera puede extraerlo del repo público
-4. **Formulario de contacto roto** — sobre-nosotros.html usa Netlify Forms (suspendido), hay que migrar a Formspree
+4. ~~**Formulario de contacto roto** — sobre-nosotros.html usa Netlify Forms (suspendido), hay que migrar a Formspree~~ ✅ **Resuelto 2026-04-23**: migrado a Formspree Ajax con endpoint `https://formspree.io/f/xdayypog` (formId `xdayypog`). Incluye honeypot `_gotcha` anti-spam y manejo declarativo con `data-fs-*`.
 
 ## Convenciones de código
 

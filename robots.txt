@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://plumalibre.netlify.app/sitemap.xml
+Sitemap: https://plumalibre.github.io/sitemap.xml

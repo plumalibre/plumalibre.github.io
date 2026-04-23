@@ -686,3 +686,33 @@ ul { list-style: none; }
   .header, .top-bar, .footer, .menu-btn, .share, .to-top { display: none; }
   body { background: white; }
 }
+
+/* ===== Cards clickeables (stretched pseudo-link) =====
+   El <a> del título se expande via ::after para cubrir toda la card.
+   HTML no cambia: screen readers siguen leyendo solo el título como link,
+   Tab salta a 1 solo link por card, y el HTML queda válido (sin <a> anidados). */
+.hero-card, .card, .card-lg { position: relative; }
+
+.hero-card h2 a::after,
+.card h3 a::after,
+.card-lg h3 a::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+}
+
+.hero-card, .card, .card-lg { cursor: pointer; }
+
+/* Focus ring visible sobre toda la card cuando el link del título tiene focus */
+.hero-card:has(h2 a:focus-visible),
+.card:has(h3 a:focus-visible),
+.card-lg:has(h3 a:focus-visible) {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-radius: inherit;
+}
+.hero-card h2 a:focus-visible,
+.card h3 a:focus-visible,
+.card-lg h3 a:focus-visible { outline: none; }
+
+/* Links internos secundarios futuros (hashtag-badge clickeable, "ver más", etc.)
+   deben quedar por encima del pseudo-link estirado. */
+.hero-card .hero-body a:not(h2 a),
+.card .info a:not(h3 a),
+.card-lg a:not(h3 a) { position: relative; z-index: 2; }

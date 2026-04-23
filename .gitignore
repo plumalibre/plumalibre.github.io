@@ -1,0 +1,20 @@
+# Netlify CLI (migrado a GitHub Pages)
+.netlify/
+
+# Claude Code local settings
+.claude/
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+desktop.ini
+$RECYCLE.BIN/

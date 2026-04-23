@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
-<title>Pluma Libre — Editor</title>
+<title>Pluma Libre — Editor v9</title>
 <meta name="theme-color" content="#0B2545">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -39,6 +39,34 @@
 .login-box button{width:100%;padding:12px;font-size:.9rem;font-weight:600;border:none;border-radius:100px;background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font)}
 .login-err{color:var(--red);font-size:.75rem;margin-top:8px;min-height:18px}
 
+.col2-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}.col2-wrap>div{padding:12px;background:var(--bg);border-radius:8px}
+@media(max-width:640px){.col2-wrap{grid-template-columns:1fr}}
+
+/* ===== GENERADOR DE POSTS PARA REDES (integrado) ===== */
+.plat{background:var(--card);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow);transition:background .3s;border:1px solid var(--border)}
+.plat-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border)}
+.plat-name{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600}
+.plat-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:700}
+.plat-counter{font-size:.65rem;font-weight:600;padding:3px 9px;border-radius:100px}
+.ct-ok{background:#E8F9ED;color:#1B7A36}.dark .ct-ok{background:#1B3A25;color:#6EE7A0}
+.ct-warn{background:#FFF8E6;color:#B45309}
+.ct-over{background:#FFF0F0;color:#D32F2F}
+.plat-body{padding:12px 14px}
+.plat-preview{background:var(--bg);border-radius:8px;padding:12px;font-size:.78rem;line-height:1.55;color:var(--text);white-space:pre-wrap;word-break:break-word;transition:background .3s;max-height:260px;overflow-y:auto}
+.plat-preview .hashtag{color:var(--accent)}
+.plat-preview .link{color:var(--accent);text-decoration:underline}
+.plat-actions{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--border);flex-wrap:wrap}
+.plat-btn{flex:1;min-width:100px;padding:8px;font-size:.7rem;font-weight:600;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer;font-family:var(--font);text-align:center;transition:.2s}
+.plat-btn:active,.plat-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.plat-btn.copied{background:var(--green);color:#fff;border-color:var(--green)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{padding:4px 10px;font-size:.67rem;font-weight:500;border-radius:100px;background:rgba(0,113,227,.08);color:var(--accent);cursor:pointer;border:none;font-family:var(--font);transition:.2s}
+.tag:hover{background:rgba(0,113,227,.16)}
+.tag.selected{background:var(--accent);color:#fff}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--brand);color:#fff;padding:10px 20px;border-radius:100px;font-size:.78rem;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:transform .3s;z-index:300;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.redes-banner{background:linear-gradient(135deg,#0B2545,#0071E3);color:#fff;border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;font-size:.78rem;line-height:1.5}
+.redes-banner b{font-size:.88rem;display:block;margin-bottom:2px}
 .hidden{display:none!important}
 </style>
 </head>
@@ -56,26 +84,44 @@
 </div>
 
 <div class="topbar"><div><h1>✏️ Pluma Libre</h1><div class="sub">Editor de Noticias</div></div><div class="topbar-r"><button class="tbtn" onclick="toggleDark()" id="darkBtn">🌙</button><button class="tbtn" onclick="toggleConfig()">⚙️</button></div></div>
-<div class="tabs"><button class="tab on" onclick="showTab('escribir',this)">📝 Escribir</button><button class="tab" onclick="showTab('preview',this)">👁 Preview</button><button class="tab" onclick="showTab('publicar',this)">🚀 Publicar</button><button class="tab" onclick="showTab('historial',this)">📋 Historial</button></div>
+<div class="tabs"><button class="tab on" onclick="showTab('escribir',this)">📝 Escribir</button><button class="tab" onclick="showTab('preview',this)">👁 Preview</button><button class="tab" onclick="showTab('publicar',this)">🚀 Publicar</button><button class="tab" onclick="showTab('redes',this)">📱 Redes</button><button class="tab" onclick="showTab('historial',this)">📋 Historial</button></div>
 <div class="content">
 <div id="tab-escribir">
 <div class="stats"><div class="stat">📝 <b id="wc">0</b> palabras</div><div class="stat">⏱ <b id="rt">0</b> min</div><div class="stat" id="draftSt">💾 Sin guardar</div></div>
 <div class="card"><h2>Nueva Nota</h2>
-<div class="field"><label>Sección</label><select id="seccion" onchange="autoSave()"><option value="religioso">🙏 Acontecer Religioso</option><option value="politico">🏛 Acontecer Político</option><option value="cultural">🎭 Acontecer Cultural</option><option value="social">👥 Acontecer Social</option><option value="economico">💰 Acontecer Económico</option></select></div>
+<div class="field"><label>Sección</label><select id="seccion" onchange="autoSave();if(typeof _tagsInitialized!=='undefined'&&_tagsInitialized){initTags(true);genPosts();}"><option value="religioso">🙏 Acontecer Religioso</option><option value="politico">🏛 Acontecer Político</option><option value="cultural">🎭 Acontecer Cultural</option><option value="social">👥 Acontecer Social</option><option value="economico">💰 Acontecer Económico</option></select></div>
 <div class="field"><label>Título *</label><input type="text" id="titulo" placeholder="Ej: Sonsonate impulsa plan de desarrollo" oninput="onType()"></div>
 <div class="field"><label>Subtítulo (opcional)</label><input type="text" id="subtitulo" placeholder="Una línea que amplíe el título" oninput="autoSave()"></div>
 <div class="field"><label>Imagen principal</label><div class="img-drop" id="imgDrop" onclick="document.getElementById('imgIn').click()"><div class="ic">📷</div><div class="tx">Tocá para elegir foto · Se redimensiona auto</div></div><input type="file" id="imgIn" accept="image/*" style="display:none" onchange="handleImg(this)"><img id="imgPv" class="img-pv hidden" alt=""><p class="img-info hidden" id="imgInfo"></p><button class="btn btn-s btn-sm hidden" id="imgRm" onclick="removeImg()" style="margin-top:6px">🗑 Quitar</button></div>
-<div class="field"><label>Cuerpo *</label><div class="toolbar"><button onclick="ins('## ')">H2</button><button onclick="ins('> ')">Cita</button><button onclick="ins('**','**')"><b>B</b></button><button onclick="ins('_','_')"><i>I</i></button><button onclick="showVideoModal()">🎬 Video</button></div><textarea id="cuerpo" placeholder="Escribí tu nota aquí...&#10;&#10;Separá párrafos con línea en blanco&#10;## para subtítulos&#10;> para citas" oninput="onType()"></textarea></div>
+<div class="field"><label>Cuerpo *</label><div class="toolbar"><button onclick="ins('## ')">H2</button><button onclick="ins('### ')">H3</button><button onclick="ins('> ')">Cita</button><button onclick="wrapSel('**')"><b>B</b></button><button onclick="wrapSel('_')"><i>I</i></button><button onclick="insertBodyImg()">🖼 Foto</button><button onclick="showVideoModal()">🎬 Video</button><button onclick="ins('---\n')">— Línea</button><button onclick="insertColumns()">▥ 2 Col</button></div><textarea id="cuerpo" placeholder="Escribí tu nota aquí...&#10;&#10;Separá párrafos con línea en blanco&#10;## para subtítulos&#10;> para citas" oninput="onType()"></textarea></div>
 <div class="field"><label>Autor</label><input type="text" id="autor" value="Pluma Libre" oninput="autoSave()"></div>
 <div class="field"><label>Pie de foto (opcional)</label><input type="text" id="piefoto" placeholder="Ej: Foto: Pluma Libre" oninput="autoSave()"></div>
 <div class="btn-row"><button class="btn btn-s btn-sm" onclick="saveDraft()" style="flex:1">💾 Guardar borrador</button><button class="btn btn-d btn-sm" onclick="clearForm()" style="flex:1">🗑 Limpiar</button></div>
 </div></div>
 <div id="tab-preview" class="hidden"><div class="card"><h2>Vista previa</h2><div class="pv-box"><span class="pv-badge" id="pvSec"></span><h3 class="pv-title" id="pvTit">Título</h3><p class="pv-sub" id="pvSub"></p><p class="pv-meta" id="pvMeta"></p><img id="pvImg" class="img-pv hidden" alt="" style="margin-top:10px"><div class="pv-body" id="pvBody"></div></div></div></div>
-<div id="tab-publicar" class="hidden"><div id="stArea"></div><div class="card"><h2>Publicar nota</h2><div id="cfgSt"></div><div class="field"><label>Archivo</label><input type="text" id="filename"><p class="hint">URL: plumalibre.netlify.app/articulos/nombre.html</p></div><label style="display:flex;align-items:center;gap:8px;font-size:.78rem;margin-bottom:14px;cursor:pointer"><input type="checkbox" id="updateIdx" checked style="width:18px;height:18px"> Agregar al inicio automáticamente</label><button class="btn btn-g" onclick="publicar()" id="btnPub">🚀 Publicar</button><div class="btn-row"><button class="btn btn-s btn-sm" onclick="dlHTML()" style="flex:1">📥 Descargar</button><button class="btn btn-s btn-sm" onclick="cpHTML()" style="flex:1">📋 Copiar</button></div></div><div id="postPub" class="hidden"></div></div>
+<div id="tab-publicar" class="hidden"><div id="stArea"></div><div class="card"><h2>Publicar nota</h2><div id="cfgSt"></div><div class="field"><label>Archivo</label><input type="text" id="filename"><p class="hint">URL: plumalibre.github.io/articulos/nombre.html</p></div><label style="display:flex;align-items:center;gap:8px;font-size:.78rem;margin-bottom:14px;cursor:pointer"><input type="checkbox" id="updateIdx" checked style="width:18px;height:18px"> Agregar al inicio automáticamente</label><button class="btn btn-g" onclick="publicar()" id="btnPub">🚀 Publicar</button><div class="btn-row"><button class="btn btn-s btn-sm" onclick="dlHTML()" style="flex:1">📥 Descargar</button><button class="btn btn-s btn-sm" onclick="cpHTML()" style="flex:1">📋 Copiar</button></div></div><div id="postPub" class="hidden"></div></div>
+
+<div id="tab-redes" class="hidden">
+  <div class="redes-banner"><b>📱 Posts para redes sociales</b>Se generan automáticamente desde tu nota. Copiá y pegá en Facebook, X, Instagram y Threads.</div>
+  <div class="card">
+    <h2>📰 Datos del post</h2>
+    <div class="field"><label>Link del artículo</label><input type="text" id="rLink" placeholder="https://plumalibre.github.io/articulos/..." oninput="genPosts()"><p class="hint">Se autocompleta al publicar la nota</p></div>
+    <div class="field"><label>Extracto / Resumen *</label><textarea id="rExtracto" placeholder="2-3 líneas que resuman la nota para redes" style="min-height:80px" oninput="genPosts()"></textarea><p class="hint">Por defecto usa el subtítulo o las primeras líneas de la nota</p></div>
+    <button class="btn btn-s btn-sm" onclick="syncFromForm()" style="margin-top:4px">🔄 Cargar datos de la nota actual</button>
+  </div>
+  <div class="card">
+    <h2>🏷 Hashtags</h2>
+    <p style="font-size:.7rem;color:var(--text2);margin-bottom:8px">Tocá para agregar/quitar. Máximo 30 (Instagram).</p>
+    <div class="tags" id="tagArea"></div>
+    <div class="field" style="margin-top:10px;margin-bottom:0"><input type="text" id="customTag" placeholder="Agregar hashtag personalizado" onkeydown="if(event.key==='Enter'){addCustomTag();event.preventDefault()}"></div>
+  </div>
+  <button class="btn btn-p" onclick="genPosts()" style="margin-bottom:14px">🔄 Regenerar posts</button>
+  <div id="platforms"></div>
+</div>
 <div id="tab-historial" class="hidden"><div class="card"><h2>📋 Notas publicadas</h2><div id="histList"><p style="font-size:.82rem;color:var(--text2)">Aún no hay notas.</p></div></div><div class="card"><h2>💾 Borradores</h2><div id="draftList"><p style="font-size:.82rem;color:var(--text2)">No hay borradores.</p></div></div></div>
 </div>
 <div id="vidOv" class="overlay hidden" onclick="if(event.target===this)closeVideoModal()"><div class="panel"><button class="panel-close" onclick="closeVideoModal()">✕</button><h2>🎬 Insertar Video</h2><p style="font-size:.78rem;color:var(--text2);margin-bottom:14px">Pegá el link del video y se embebe automáticamente.</p><div class="field"><label>URL del video</label><input type="text" id="vidUrl" placeholder="Pegá link de YouTube, Facebook o TikTok" oninput="detectVideo()"><p class="hint" id="vidHint">Soporta: YouTube, Facebook y TikTok</p></div><div id="vidPreview" class="hidden" style="background:var(--bg);border-radius:8px;padding:12px;margin-bottom:12px"><p style="font-size:.72rem;font-weight:600;margin-bottom:6px" id="vidPlatform"></p><div id="vidFrame"></div></div><button class="btn btn-p" onclick="insertVideo()" id="vidInsertBtn" disabled>Insertar en la nota</button></div></div>
-<div id="cfgOv" class="overlay hidden" onclick="if(event.target===this)toggleConfig()"><div class="panel"><button class="panel-close" onclick="toggleConfig()">✕</button><h2>⚙️ Configuración GitHub</h2><p style="font-size:.78rem;color:var(--text2);margin-bottom:14px">Conectá tu repo para publicar automáticamente.</p><div class="step"><div class="step-n">1</div><div class="step-t"><strong>Creá repo</strong> en <a href="https://github.com/new" target="_blank" style="color:var(--accent)">github.com/new</a> → <code>pluma-libre</code></div></div><div class="step"><div class="step-n">2</div><div class="step-t"><strong>Subí archivos</strong> del sitio al repo</div></div><div class="step"><div class="step-n">3</div><div class="step-t"><strong>Conectá Netlify</strong> al repo</div></div><div class="step"><div class="step-n">4</div><div class="step-t"><strong>Creá token</strong> en <a href="https://github.com/settings/tokens/new?scopes=repo&description=PlumaLibre" target="_blank" style="color:var(--accent)">GitHub Tokens</a></div></div><div class="field"><label>Usuario</label><input type="text" id="ghU" placeholder="juanperez"></div><div class="field"><label>Repositorio</label><input type="text" id="ghR" value="pluma-libre"></div><div class="field"><label>Token</label><input type="password" id="ghT" placeholder="ghp_xxx"><p class="hint">Solo se guarda en tu navegador</p></div><button class="btn btn-p" onclick="saveCfg()" style="margin-top:6px">Guardar</button><button class="btn btn-s" onclick="testCfg()" style="margin-top:6px">🔍 Probar</button></div></div>
+<div id="cfgOv" class="overlay hidden" onclick="if(event.target===this)toggleConfig()"><div class="panel"><button class="panel-close" onclick="toggleConfig()">✕</button><h2>⚙️ Configuración GitHub</h2><p style="font-size:.78rem;color:var(--text2);margin-bottom:14px">Conectá tu repo para publicar automáticamente.</p><div class="step"><div class="step-n">1</div><div class="step-t"><strong>Creá repo</strong> en <a href="https://github.com/new" target="_blank" style="color:var(--accent)">github.com/new</a> → <code>pluma-libre</code></div></div><div class="step"><div class="step-n">2</div><div class="step-t"><strong>Subí archivos</strong> del sitio al repo</div></div><div class="step"><div class="step-n">3</div><div class="step-t"><strong>Activá GitHub Pages</strong> en Settings → Pages → Deploy from main</div></div><div class="step"><div class="step-n">4</div><div class="step-t"><strong>Creá token</strong> en <a href="https://github.com/settings/tokens/new?scopes=repo&description=PlumaLibre" target="_blank" style="color:var(--accent)">GitHub Tokens</a></div></div><div class="field"><label>Usuario</label><input type="text" id="ghU" placeholder="juanperez"></div><div class="field"><label>Repositorio</label><input type="text" id="ghR" value="pluma-libre"></div><div class="field"><label>Token</label><input type="password" id="ghT" placeholder="ghp_xxx"><p class="hint">Solo se guarda en tu navegador</p></div><button class="btn btn-p" onclick="saveCfg()" style="margin-top:6px">Guardar</button><button class="btn btn-s" onclick="testCfg()" style="margin-top:6px">🔍 Probar</button></div></div>
 <script>
 
 // ===== PLUMA LIBRE EDITOR =====
@@ -159,7 +205,7 @@ const CK='pl_cfg',HK='pl_hist',DK='pl_drafts';
 let imgB64=null,imgName=null,imgOrig=0,imgNew=0,asTimer=null;
 const $=id=>document.getElementById(id);
 
-function showTab(n,b){document.querySelectorAll('[id^="tab-"]').forEach(t=>t.classList.add('hidden'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));$('tab-'+n).classList.remove('hidden');if(b)b.classList.add('on');if(n==='preview')updPv();if(n==='publicar'){updFn();chkCfg();}if(n==='historial'){renderH();renderD();}}
+function showTab(n,b){document.querySelectorAll('[id^="tab-"]').forEach(t=>t.classList.add('hidden'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));$('tab-'+n).classList.remove('hidden');if(b)b.classList.add('on');if(n==='preview')updPv();if(n==='publicar'){updFn();chkCfg();}if(n==='redes'){initTags();genPosts();}if(n==='historial'){renderH();renderD();}}
 
 function toggleDark(){document.body.classList.toggle('dark');const d=document.body.classList.contains('dark');localStorage.setItem('pl_dark',d?'1':'0');$('darkBtn').textContent=d?'☀️':'🌙';}
 if(localStorage.getItem('pl_dark')==='1'){document.body.classList.add('dark');$('darkBtn').textContent='☀️';}
@@ -186,7 +232,14 @@ function updPv(){const d=getFD(),hoy=new Date(),f=hoy.getDate()+' de '+MES[hoy.g
 function parseMD(t){if(!t)return'';return t.split('\n\n').map(p=>{p=p.trim();if(!p)return'';if(p.startsWith('## '))return'<h2>'+esc(p.slice(3))+'</h2>';if(p.startsWith('> '))return'<blockquote>'+esc(p.slice(2))+'</blockquote>';
 if(p.startsWith('[VIDEO_YOUTUBE:')){var vid=p.match(/\[VIDEO_YOUTUBE:([^\]]+)\]/);if(vid)return'<div class="vid-embed"><iframe src="https://www.youtube.com/embed/'+vid[1]+'" allowfullscreen></iframe></div>';}
 if(p.startsWith('[VIDEO_FACEBOOK:')){var vfb=p.match(/\[VIDEO_FACEBOOK:([^\]]+)\]/);if(vfb)return'<div class="vid-embed"><iframe src="https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(vfb[1])+'&show_text=false" allowfullscreen></iframe></div>';}
-if(p.startsWith('[VIDEO_TIKTOK:'))return'<p style="text-align:center;padding:20px;background:var(--bg);border-radius:8px">🎵 Video de TikTok (visible al publicar)</p>';p=esc(p).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/_(.+?)_/g,'<em>$1</em>');return'<p>'+p+'</p>';}).join('');}
+if(p.startsWith('[VIDEO_TIKTOK:'))return'<p style="text-align:center;padding:20px;background:var(--bg);border-radius:8px">🎵 Video de TikTok (visible al publicar)</p>';p=esc(p).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/_(.+?)_/g,'<em>$1</em>');
+    if(p.match(/\[IMAGEN:([^\]]+)\]/)){
+      const fn=p.match(/\[IMAGEN:([^\]]+)\]/)[1];
+      const extra=(window._extraImages||[]).find(x=>x.name===fn);
+      if(extra)return'<img src="data:image/jpeg;base64,'+extra.data+'" style="width:100%;border-radius:8px;margin:8px 0" alt="">';
+      return'<img src="assets/'+fn+'" style="width:100%;border-radius:8px;margin:8px 0" alt="">';
+    }
+    return'<p>'+p+'</p>';}).join('');}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function updFn(){const t=$('titulo').value;if(t)$('filename').value=t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50)+'.html';}
 
@@ -195,7 +248,7 @@ const bh=d.cuerpo.split('\n\n').map(p=>{p=p.trim();if(!p)return'';if(p.startsWit
 .replace(/\[VIDEO_YOUTUBE:([^\]]+)\]/g, function(m,id){return '<div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin:24px 0"><iframe src="https://www.youtube.com/embed/'+id+'" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen></iframe></div>';})
 .replace(/\[VIDEO_FACEBOOK:([^\]]+)\]/g, function(m,url){return '<div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin:24px 0"><iframe src="https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(url)+'&show_text=false" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen></iframe></div>';})
 .replace(/\[VIDEO_TIKTOK:([^\]]+)\]/g, function(m,url){return '<blockquote class="tiktok-embed" cite="'+url+'" style="max-width:605px;min-width:325px;margin:24px auto"><section></section></blockquote><script async src="https://www.tiktok.com/embed.js"><\/script>';});
-return'<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>'+d.titulo+' — Pluma Libre</title><meta name="description" content="'+(d.subtitulo||d.titulo)+'"><meta name="theme-color" content="#0B2545"><link rel="canonical" href="https://plumalibre.netlify.app/articulos/'+fn+'"><meta property="og:type" content="article"><meta property="og:title" content="'+d.titulo+'"><meta property="og:description" content="'+(d.subtitulo||d.titulo)+'"><meta property="og:image" content="https://plumalibre.netlify.app/'+(imgName?'assets/'+imgName:'assets/logo.jpg')+'"><meta property="og:site_name" content="Pluma Libre"><meta property="article:published_time" content="'+fi+'"><script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsArticle","headline":"'+d.titulo+'","datePublished":"'+fi+'","author":{"@type":"Organization","name":"Pluma Libre"},"publisher":{"@type":"Organization","name":"Pluma Libre","logo":{"@type":"ImageObject","url":"https://plumalibre.netlify.app/assets/logo.jpg"}}}<\/script><script async src="https://www.googletagmanager.com/gtag/js?id=G-TZRTJLP5KT"><\/script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-TZRTJLP5KT");<\/script><link rel="icon" type="image/jpeg" href="../assets/logo.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../style.css"></head><body class="article-page"><div class="top-bar"><div class="wrap"><span id="fecha"></span><a href="https://www.facebook.com/PlumalibreES" target="_blank" rel="noopener" aria-label="Facebook"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a></div></div><header class="header"><div class="wrap"><a href="../index.html" class="logo"><img src="../assets/logo.jpg" alt="Pluma Libre" width="36" height="36"><div class="logo-text"><h1>Pluma Libre</h1><span class="tagline">Medio digital independiente</span></div></a><button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span><span></span></button><nav class="nav" id="nav"><ul><li><a href="../index.html">Inicio</a></li><li><a href="../secciones/religioso.html">#Religioso</a></li><li><a href="../secciones/politico.html">#Político</a></li><li><a href="../secciones/cultural.html">#Cultural</a></li><li><a href="../secciones/social.html">#Social</a></li><li><a href="../secciones/economico.html">#Económico</a></li><li><a href="../sobre-nosotros.html">Nosotros</a></li></ul></nav></div></header><main><div class="wrap"><div class="article-header"><span class="badge badge-brand">'+sn+'</span><h1>'+d.titulo+'</h1>'+(d.subtitulo?'<p class="subtitle">'+d.subtitulo+'</p>':'')+'<div class="article-meta"><strong>Por '+(d.autor||'Pluma Libre')+'</strong> · '+f+' · Sonsonate</div></div><figure class="article-img"><img src="'+ip+'" alt="'+d.titulo+'" loading="eager">'+(d.piefoto?'<figcaption>'+d.piefoto+'</figcaption>':'')+'</figure><div class="article-body">'+bh+'</div><div class="share"><p class="share-label">Compartir</p><div class="share-btns"><a class="fb" id="shareFb" href="#" target="_blank">Facebook</a><a class="wa" id="shareWa" href="#" target="_blank">WhatsApp</a></div></div></div></main><footer class="footer"><div class="wrap"><div class="footer-grid"><div><h4>Pluma Libre</h4><p>Medio digital independiente de El Salvador.</p></div><div><h4>Secciones</h4><ul><li><a href="../secciones/religioso.html">#Religioso</a></li><li><a href="../secciones/politico.html">#Político</a></li><li><a href="../secciones/cultural.html">#Cultural</a></li><li><a href="../secciones/social.html">#Social</a></li><li><a href="../secciones/economico.html">#Económico</a></li></ul></div><div><h4>Contacto</h4><p>Sonsonate, El Salvador</p></div></div><p class="footer-bottom">© 2026 Pluma Libre.</p></div></footer><script>const m=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],dd=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],h=new Date();document.getElementById("fecha").textContent=dd[h.getDay()]+", "+h.getDate()+" de "+m[h.getMonth()]+" de "+h.getFullYear();const mb=document.getElementById("menuBtn"),nv=document.getElementById("nav");mb.addEventListener("click",()=>{nv.classList.toggle("open");mb.classList.toggle("open")});document.querySelectorAll(".nav a").forEach(l=>l.addEventListener("click",()=>{nv.classList.remove("open");mb.classList.remove("open")}));const u=encodeURIComponent(location.href),t=encodeURIComponent(document.title);document.getElementById("shareFb").href="https://www.facebook.com/sharer/sharer.php?u="+u;document.getElementById("shareWa").href="https://api.whatsapp.com/send?text="+t+"%20"+u<\/script></body></html>';}
+return'<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>'+d.titulo+' — Pluma Libre</title><meta name="description" content="'+(d.subtitulo||d.titulo)+'"><meta name="theme-color" content="#0B2545"><link rel="canonical" href="https://plumalibre.github.io/articulos/'+fn+'"><meta property="og:type" content="article"><meta property="og:title" content="'+d.titulo+'"><meta property="og:description" content="'+(d.subtitulo||d.titulo)+'"><meta property="og:image" content="https://plumalibre.github.io/'+(imgName?'assets/'+imgName:'assets/logo.jpg')+'"><meta property="og:site_name" content="Pluma Libre"><meta property="article:published_time" content="'+fi+'"><script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsArticle","headline":"'+d.titulo+'","datePublished":"'+fi+'","author":{"@type":"Organization","name":"Pluma Libre"},"publisher":{"@type":"Organization","name":"Pluma Libre","logo":{"@type":"ImageObject","url":"https://plumalibre.github.io/assets/logo.jpg"}}}<\/script><script async src="https://www.googletagmanager.com/gtag/js?id=G-TZRTJLP5KT"><\/script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-TZRTJLP5KT");<\/script><link rel="icon" type="image/jpeg" href="../assets/logo.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../style.css"></head><body class="article-page"><div class="top-bar"><div class="wrap"><span id="fecha"></span><a href="https://www.facebook.com/PlumalibreES" target="_blank" rel="noopener" aria-label="Facebook"><svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a></div></div><header class="header"><div class="wrap"><a href="../index.html" class="logo"><img src="../assets/logo.jpg" alt="Pluma Libre" width="36" height="36"><div class="logo-text"><h1>Pluma Libre</h1><span class="tagline">Medio digital independiente</span></div></a><button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span><span></span></button><nav class="nav" id="nav"><ul><li><a href="../index.html">Inicio</a></li><li><a href="../secciones/religioso.html">#Religioso</a></li><li><a href="../secciones/politico.html">#Político</a></li><li><a href="../secciones/cultural.html">#Cultural</a></li><li><a href="../secciones/social.html">#Social</a></li><li><a href="../secciones/economico.html">#Económico</a></li><li><a href="../sobre-nosotros.html">Nosotros</a></li></ul></nav></div></header><main><div class="wrap"><div class="article-header"><span class="badge badge-brand">'+sn+'</span><h1>'+d.titulo+'</h1>'+(d.subtitulo?'<p class="subtitle">'+d.subtitulo+'</p>':'')+'<div class="article-meta"><strong>Por '+(d.autor||'Pluma Libre')+'</strong> · '+f+' · Sonsonate</div></div><figure class="article-img"><img src="'+ip+'" alt="'+d.titulo+'" loading="eager">'+(d.piefoto?'<figcaption>'+d.piefoto+'</figcaption>':'')+'</figure><div class="article-body">'+bh+'</div><div class="share"><p class="share-label">Compartir</p><div class="share-btns"><a class="fb" id="shareFb" href="#" target="_blank">Facebook</a><a class="wa" id="shareWa" href="#" target="_blank">WhatsApp</a></div></div></div></main><footer class="footer"><div class="wrap"><div class="footer-grid"><div><h4>Pluma Libre</h4><p>Medio digital independiente de El Salvador.</p></div><div><h4>Secciones</h4><ul><li><a href="../secciones/religioso.html">#Religioso</a></li><li><a href="../secciones/politico.html">#Político</a></li><li><a href="../secciones/cultural.html">#Cultural</a></li><li><a href="../secciones/social.html">#Social</a></li><li><a href="../secciones/economico.html">#Económico</a></li></ul></div><div><h4>Contacto</h4><p>Sonsonate, El Salvador</p></div></div><p class="footer-bottom">© 2026 Pluma Libre.</p></div></footer><script>const m=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],dd=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],h=new Date();document.getElementById("fecha").textContent=dd[h.getDay()]+", "+h.getDate()+" de "+m[h.getMonth()]+" de "+h.getFullYear();const mb=document.getElementById("menuBtn"),nv=document.getElementById("nav");mb.addEventListener("click",()=>{nv.classList.toggle("open");mb.classList.toggle("open")});document.querySelectorAll(".nav a").forEach(l=>l.addEventListener("click",()=>{nv.classList.remove("open");mb.classList.remove("open")}));const u=encodeURIComponent(location.href),t=encodeURIComponent(document.title);document.getElementById("shareFb").href="https://www.facebook.com/sharer/sharer.php?u="+u;document.getElementById("shareWa").href="https://api.whatsapp.com/send?text="+t+"%20"+u<\/script></body></html>';}
 
 function getCfg(){try{return JSON.parse(localStorage.getItem(CK)||'{}')}catch{return{}}}
 function saveCfg(){localStorage.setItem(CK,JSON.stringify({user:$('ghU').value.trim(),repo:$('ghR').value.trim(),token:$('ghT').value.trim()}));showSt('stArea','✅ Guardado','ok');toggleConfig();}
@@ -215,18 +268,40 @@ async function publicar(){const d=getFD(),fn=$('filename').value.trim();if(!d.ti
   return;
 }const c=getCfg();if(!c.user||!c.token){showSt('stArea','⚠️ Configurá GitHub','warn');return;}
 const btn=$('btnPub');btn.disabled=true;btn.textContent='⏳ Publicando...';
-try{if(imgB64&&imgName){showSt('stArea','📷 Subiendo imagen...','info');await ghPut('assets/'+imgName,imgB64,'📷 '+imgName,true);}
+try{if(imgB64&&imgName){showSt('stArea','📷 Subiendo imagen principal...','info');await ghPut('assets/'+imgName,imgB64,'📷 '+imgName,true);}
+// Upload extra body images
+if(window._extraImages&&window._extraImages.length>0){
+  for(let i=0;i<window._extraImages.length;i++){
+    const ei=window._extraImages[i];
+    showSt('stArea','🖼 Subiendo imagen '+(i+1)+'/'+window._extraImages.length+'...','info');
+    await ghPut('assets/'+ei.name,ei.data,'🖼 '+ei.name,true);
+  }
+}
 showSt('stArea','📝 Subiendo artículo...','info');await ghPut('articulos/'+fn,genHTML(),'📰 '+d.titulo);
 if($('updateIdx').checked){showSt('stArea','🏠 Actualizando inicio...','info');await updateIdx(d.titulo,d.seccion,fn);}
 const hist=JSON.parse(localStorage.getItem(HK)||'[]');hist.unshift({titulo:d.titulo,seccion:d.seccion,filename:fn,ts:Date.now()});localStorage.setItem(HK,JSON.stringify(hist.slice(0,50)));
 localStorage.removeItem('pl_as');
-const aUrl='https://plumalibre.netlify.app/articulos/'+fn,su=encodeURIComponent(aUrl),st=encodeURIComponent(d.titulo+' — Pluma Libre');
+const aUrl='https://plumalibre.github.io/articulos/'+fn,su=encodeURIComponent(aUrl),st=encodeURIComponent(d.titulo+' — Pluma Libre');
 showSt('stArea','✅ ¡Nota publicada! Se actualiza en ~30s','ok');
 $('postPub').classList.remove('hidden');
-$('postPub').innerHTML='<div class="card"><div class="share-box"><h3>🎉 ¡Compartila!</h3><div class="share-btns"><a class="fb" href="https://www.facebook.com/sharer/sharer.php?u='+su+'" target="_blank">📘 Facebook</a><a class="wa" href="https://api.whatsapp.com/send?text='+st+'%20'+su+'" target="_blank">💬 WhatsApp</a><a class="copy" href="#" onclick="event.preventDefault();navigator.clipboard.writeText(\''+aUrl+'\');this.textContent=\'✅ Copiado\'">🔗 Copiar</a></div><p style="font-size:.7rem;color:var(--text3);margin-top:8px">Link activo en ~30 segundos</p></div></div><div class="card" id="depChk"><h3>⏳ Verificando...</h3><p style="font-size:.78rem;color:var(--text2)" id="depMsg">Esperando Netlify...</p></div>';
+$('postPub').innerHTML='<div class="card"><div class="share-box"><h3>🎉 ¡Nota publicada!</h3><p style="font-size:.78rem;color:var(--text2);margin:8px 0 14px">Los posts para redes ya están listos en la pestaña <b>📱 Redes</b></p><div class="share-btns"><a class="fb" href="https://www.facebook.com/sharer/sharer.php?u='+su+'" target="_blank">📘 Facebook</a><a class="wa" href="https://api.whatsapp.com/send?text='+st+'%20'+su+'" target="_blank">💬 WhatsApp</a><a class="copy" href="#" onclick="event.preventDefault();navigator.clipboard.writeText(\''+aUrl+'\');this.textContent=\'✅ Copiado\'">🔗 Copiar link</a></div><button class="btn btn-p" style="margin-top:14px" onclick="goToRedes()">📱 Ir a Redes Sociales</button><p style="font-size:.7rem;color:var(--text3);margin-top:8px">Link activo en ~30 segundos</p></div></div><div class="card" id="depChk"><h3>⏳ Verificando deploy...</h3><p style="font-size:.78rem;color:var(--text2)" id="depMsg">Esperando GitHub Pages...</p></div>';
+// Auto-cargar datos en pestaña Redes
+$('rLink').value=aUrl;
+const dSub=d.subtitulo||'';
+let ext=dSub;
+if(!ext && d.cuerpo){
+  const plano=d.cuerpo.split('\n\n').map(p=>p.trim()).filter(p=>p&&!p.startsWith('## ')&&!p.startsWith('### ')&&!p.startsWith('> ')&&!p.startsWith('[')&&!p.startsWith('---')).join(' ').replace(/\*\*(.+?)\*\*/g,'$1').replace(/_(.+?)_/g,'$1');
+  ext=plano.slice(0,280);if(plano.length>280)ext+='…';
+}
+$('rExtracto').value=ext;
+initTags(true);
 chkDep(aUrl,0);
+// Pequeño delay y saltar a Redes
+setTimeout(()=>{const redesTab=document.querySelectorAll('.tab')[3];if(redesTab)showTab('redes',redesTab);},1500);
 }catch(e){showSt('stArea','❌ '+e.message,'err');}
 btn.disabled=false;btn.textContent='🚀 Publicar';}
+
+function goToRedes(){const redesTab=document.querySelectorAll('.tab')[3];if(redesTab)showTab('redes',redesTab);}
 
 function chkDep(url,n){if(n>8)return;setTimeout(async()=>{try{await fetch(url,{method:'HEAD',mode:'no-cors'});const el=$('depChk');if(el){el.innerHTML='<h3>✅ ¡En línea!</h3><p style="font-size:.78rem"><a href="'+url+'" target="_blank" style="color:var(--accent)">Ver nota →</a></p>';if('Notification' in window&&Notification.permission==='granted')new Notification('Pluma Libre',{body:'Nota publicada ✓'});}}catch{chkDep(url,n+1);}},n<3?10000:15000);}
 
@@ -268,7 +343,7 @@ async function renderH(){
       return '<div class="h-item" style="flex-direction:column;align-items:stretch;gap:8px">'+
         '<div><div class="h-title">'+displayName+'</div><div class="h-meta">'+f.name+'</div></div>'+
         '<div style="display:flex;gap:6px;flex-wrap:wrap">'+
-          '<a class="h-btn" href="https://plumalibre.netlify.app/articulos/'+f.name+'" target="_blank">🔗 Ver</a>'+
+          '<a class="h-btn" href="https://plumalibre.github.io/articulos/'+f.name+'" target="_blank">🔗 Ver</a>'+
           '<button class="h-btn" onclick="editNote(\''+f.name+'\')">✏️ Editar</button>'+
           '<button class="h-btn" onclick="delNote(\''+f.name+'\')" style="color:var(--red)">🗑 Borrar</button>'+
           '<button class="h-btn" onclick="shareH(\''+f.name+'\',\''+displayName.replace(/'/g,"\\'")+'\')">📤</button>'+
@@ -398,7 +473,7 @@ async function delNote(filename){
     showSt('stArea','❌ '+e.message,'err');
   }
 }
-function shareH(fn,t){const u='https://plumalibre.netlify.app/articulos/'+fn;if(navigator.share)navigator.share({title:t,url:u});else{navigator.clipboard.writeText(u);alert('Link copiado');}}
+function shareH(fn,t){const u='https://plumalibre.github.io/articulos/'+fn;if(navigator.share)navigator.share({title:t,url:u});else{navigator.clipboard.writeText(u);alert('Link copiado');}}
 
 function showSt(id,msg,type){const map={ok:'st-ok',err:'st-err',info:'st-info',warn:'st-warn'};$(id).innerHTML='<div class="st '+(map[type]||'')+'">'+msg+'</div>';if(type!=='info')setTimeout(()=>{const el=$(id);if(el)el.innerHTML='';},8000);}
 function toggleConfig(){$('cfgOv').classList.toggle('hidden')}
@@ -439,6 +514,278 @@ function insertVideo(){
   closeVideoModal();
   onType();
 }
+
+// WRAP SELECTED TEXT with marker (bold/italic)
+function wrapSel(mark){
+  const ta=$('cuerpo');
+  const s=ta.selectionStart,e=ta.selectionEnd;
+  if(s===e){ins(mark,mark);return;}
+  const sel=ta.value.substring(s,e);
+  ta.value=ta.value.substring(0,s)+mark+sel+mark+ta.value.substring(e);
+  ta.focus();
+  ta.setSelectionRange(s+mark.length,e+mark.length);
+  onType();
+}
+
+// INSERT BODY IMAGE
+function insertBodyImg(){
+  const input=document.createElement('input');
+  input.type='file';input.accept='image/*';
+  input.onchange=function(){
+    const file=this.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      const img=new Image();
+      img.onload=function(){
+        const MAX=1200;
+        let w=img.width,h=img.height;
+        if(w>MAX){h=Math.round(h*(MAX/w));w=MAX;}
+        const c=document.createElement('canvas');
+        c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        const du=c.toDataURL('image/jpeg',0.8);
+        const b64=du.split(',')[1];
+        const fname='img-'+Date.now()+'.jpg';
+        // Store for later upload
+        if(!window._extraImages)window._extraImages=[];
+        window._extraImages.push({name:fname,data:b64});
+        // Insert tag in textarea
+        const ta=$('cuerpo');
+        const pos=ta.selectionStart||ta.value.length;
+        const before=ta.value.substring(0,pos);
+        const after=ta.value.substring(pos);
+        const nl=(before.length>0&&!before.endsWith('\n'))?'\n\n':'';
+        ta.value=before+nl+'[IMAGEN:'+fname+']\n\n'+after;
+        onType();
+        showSt('stArea','🖼 Imagen insertada en la nota','ok');
+      };
+      img.src=ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+// INSERT 2-COLUMN LAYOUT
+function insertColumns(){
+  const ta=$('cuerpo');
+  const pos=ta.selectionStart||ta.value.length;
+  const before=ta.value.substring(0,pos);
+  const after=ta.value.substring(pos);
+  const nl=(before.length>0&&!before.endsWith('\n'))?'\n\n':'';
+  ta.value=before+nl+'[COL2]\nTexto columna izquierda\n[/COL]\nTexto columna derecha\n[/COL2]\n\n'+after;
+  onType();
+}
+
+// ===== GENERADOR DE POSTS PARA REDES (integrado en el editor) =====
+const SEC_EMOJI={religioso:'🙏',politico:'🏛',cultural:'🎭',social:'👥',economico:'💰'};
+const HASHTAGS={
+  religioso:['AcontecerReligioso','Sonsonate','ElSalvador','Fe','Iglesia','SemanaSanta','Religion','ComunidadDeFe','Diocesis','Parroquia'],
+  politico:['AcontecerPolítico','Sonsonate','ElSalvador','Política','GobiernoLocal','Municipio','Transparencia','DesarrolloLocal','AsambleaLegislativa','Alcaldia'],
+  cultural:['AcontecerCultural','Sonsonate','ElSalvador','Cultura','Arte','Tradición','PatrimonioCultural','ArtesLocales','Identidad','Historia'],
+  social:['AcontecerSocial','Sonsonate','ElSalvador','Comunidad','Sociedad','ServiciosPúblicos','Bienestar','Solidaridad','Educacion','Salud'],
+  economico:['AcontecerEconómico','Sonsonate','ElSalvador','Economía','Emprendimiento','ComercioLocal','Desarrollo','MiPymes','Trabajo','Inversion']
+};
+const ALWAYS=['PlumaLibre','Noticias','PeriodismoIndependiente'];
+let selectedTags=new Set();
+let _tagsInitialized=false;
+
+function initTags(force){
+  if(_tagsInitialized && !force)return;
+  const sec=$('seccion').value;
+  const all=[...ALWAYS,...HASHTAGS[sec]||[]];
+  selectedTags.clear();
+  all.slice(0,8).forEach(t=>selectedTags.add(t));
+  renderTags(all);
+  _tagsInitialized=true;
+}
+
+function renderTags(tags){
+  if(!tags){
+    const sec=$('seccion').value;
+    tags=[...ALWAYS,...HASHTAGS[sec]||[]];
+    // Incluir tags personalizados que ya estén seleccionados
+    selectedTags.forEach(t=>{if(!tags.includes(t))tags.push(t);});
+  }
+  const el=$('tagArea');
+  if(!el)return;
+  el.innerHTML=tags.map(t=>'<button class="tag'+(selectedTags.has(t)?' selected':'')+'" onclick="toggleTag(\''+t.replace(/'/g,"\\'")+'\')">#'+t+'</button>').join('');
+}
+
+function toggleTag(t){
+  if(selectedTags.has(t))selectedTags.delete(t);
+  else if(selectedTags.size<30)selectedTags.add(t);
+  else{toast('⚠️ Máximo 30 hashtags (límite Instagram)');return;}
+  renderTags();genPosts();
+}
+
+function addCustomTag(){
+  const input=$('customTag');
+  let t=input.value.trim().replace(/^#/,'').replace(/\s+/g,'');
+  if(!t)return;
+  if(selectedTags.size>=30){toast('⚠️ Máximo 30 hashtags');return;}
+  selectedTags.add(t);
+  input.value='';
+  renderTags();genPosts();
+}
+
+// Sincroniza desde el form principal (Escribir) a la pestaña Redes
+function syncFromForm(){
+  const d=getFD();
+  if(!d.titulo){toast('⚠️ Primero escribí el título en Escribir');return;}
+  // Extracto: preferí subtítulo, si no, primer párrafo del cuerpo
+  let extracto=d.subtitulo||'';
+  if(!extracto && d.cuerpo){
+    const plano=d.cuerpo.split('\n\n').map(p=>p.trim())
+      .filter(p=>p && !p.startsWith('## ') && !p.startsWith('### ') && !p.startsWith('> ') && !p.startsWith('[') && !p.startsWith('---'))
+      .join(' ').replace(/\*\*(.+?)\*\*/g,'$1').replace(/_(.+?)_/g,'$1');
+    extracto=plano.slice(0,280);
+    if(plano.length>280)extracto+='…';
+  }
+  $('rExtracto').value=extracto;
+  // Link: desde el filename si está, o construirlo
+  const fn=$('filename').value.trim();
+  if(fn && fn.match(/^[a-z0-9-]+\.html$/i)){
+    $('rLink').value='https://plumalibre.github.io/articulos/'+fn;
+  }
+  // Re-inicializar tags si cambió la sección
+  initTags(true);
+  genPosts();
+  toast('🔄 Datos cargados desde la nota');
+}
+
+function genPosts(){
+  const titulo=$('titulo').value.trim();
+  const extracto=$('rExtracto').value.trim();
+  const link=$('rLink').value.trim();
+  const sec=$('seccion').value;
+  const emoji=SEC_EMOJI[sec]||'📰';
+  const hashStr=[...selectedTags].map(t=>'#'+t).join(' ');
+  const cont=$('platforms');
+  if(!cont)return;
+
+  if(!titulo){
+    cont.innerHTML='<div class="card"><p style="font-size:.82rem;color:var(--text2);text-align:center;padding:20px">📝 Escribí el título en la pestaña <b>Escribir</b> para generar los posts</p></div>';
+    return;
+  }
+
+  // X (Twitter) - 280 chars, link ~23
+  const linkChars=link?24:0;
+  const xAvail=280-linkChars-2;
+  let xText=emoji+' '+titulo;
+  if(xText.length<xAvail-30 && extracto){
+    const rem=xAvail-xText.length-3;
+    if(rem>20){
+      const se=extracto.length>rem?extracto.slice(0,rem-1)+'…':extracto;
+      xText+='\n\n'+se;
+    }
+  }
+  if(xText.length>xAvail)xText=xText.slice(0,xAvail-1)+'…';
+  const xFull=link?xText+'\n\n'+link:xText;
+
+  // Threads - 500 chars
+  const thAvail=500-(link?link.length+2:0);
+  let thText=emoji+' '+titulo;
+  if(extracto){
+    const se=extracto.length>(thAvail-thText.length-10)?extracto.slice(0,thAvail-thText.length-10)+'…':extracto;
+    thText+='\n\n'+se;
+  }
+  const thTags=[...selectedTags].slice(0,4).map(t=>'#'+t).join(' ');
+  if(thText.length+thTags.length+2<=thAvail)thText+='\n\n'+thTags;
+  if(thText.length>thAvail)thText=thText.slice(0,thAvail-1)+'…';
+  const thFull=link?thText+'\n\n'+link:thText;
+
+  // Instagram - 2200 chars, link no clickeable
+  let igText=emoji+' '+titulo.toUpperCase()+'\n\n';
+  if(extracto)igText+=extracto+'\n\n';
+  igText+='📍 Sonsonate, El Salvador\n📰 Pluma Libre — Medio digital independiente\n\n';
+  if(link)igText+='🔗 Link en bio o visitá: '+link+'\n\n';
+  igText+='—\n'+hashStr;
+  if(igText.length>2200)igText=igText.slice(0,2197)+'...';
+
+  // Facebook - sin límite práctico
+  let fbText=emoji+' '+titulo+'\n\n';
+  if(extracto)fbText+=extracto+'\n\n';
+  fbText+='📍 Sonsonate, El Salvador\n📰 Pluma Libre — Medio digital independiente de El Salvador\n\n';
+  if(link)fbText+='👉 Leé la nota completa: '+link+'\n\n';
+  const fbTags=[...selectedTags].slice(0,5).map(t=>'#'+t).join(' ');
+  fbText+=fbTags;
+
+  const platforms=[
+    {id:'fb',name:'Facebook',icon:'📘',color:'#1877F2',text:fbText,max:63206,tips:'Sin límite práctico · Imagen 1200×630px · Link genera preview automático'},
+    {id:'x',name:'X (Twitter)',icon:'𝕏',color:'#000',text:xFull,max:280,tips:'Máximo 280 caracteres · Link se acorta automáticamente'},
+    {id:'ig',name:'Instagram',icon:'📸',color:'#E4405F',text:igText,max:2200,tips:'Imagen obligatoria 1080×1080px · El link NO es clickeable en el caption'},
+    {id:'threads',name:'Threads',icon:'@',color:'#000',text:thFull,max:500,tips:'Máximo 500 caracteres · 3-4 hashtags recomendados'}
+  ];
+
+  let html='';
+  for(const p of platforms){
+    const len=p.text.length;
+    const pct=Math.round((len/p.max)*100);
+    const ctClass=pct>100?'ct-over':pct>85?'ct-warn':'ct-ok';
+    const ctText=p.max<10000?len+'/'+p.max:len+' chars';
+    let actions='<button class="plat-btn" onclick="copyPost(\''+p.id+'\',this)">📋 Copiar</button>'+
+                '<button class="plat-btn" onclick="editPost(\''+p.id+'\')">✏️ Editar</button>';
+    if(p.id==='fb')actions+='<button class="plat-btn" onclick="copyAndOpen(\'facebook\')">📲 Abrir FB</button>';
+    if(p.id==='x')actions+='<button class="plat-btn" onclick="openX()">📲 Abrir X</button>';
+    if(p.id==='ig')actions+='<button class="plat-btn" onclick="copyAndOpen(\'instagram\')">📲 Abrir IG</button>';
+    if(p.id==='threads')actions+='<button class="plat-btn" onclick="copyAndOpen(\'threads\')">📲 Abrir</button>';
+    html+='<div class="plat"><div class="plat-head"><div class="plat-name"><div class="plat-icon" style="background:'+p.color+'">'+p.icon+'</div>'+p.name+'</div><span class="plat-counter '+ctClass+'">'+ctText+'</span></div><div class="plat-body"><div class="plat-preview" id="pv-'+p.id+'">'+escHtmlPost(p.text)+'</div><p style="font-size:.6rem;color:var(--text3);margin-top:6px">'+p.tips+'</p></div><div class="plat-actions">'+actions+'</div></div>';
+  }
+  cont.innerHTML=html;
+  window._posts={x:xFull,threads:thFull,ig:igText,fb:fbText};
+}
+
+function escHtmlPost(t){
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/(#\w+)/g,'<span class="hashtag">$1</span>')
+    .replace(/(https?:\/\/[^\s]+)/g,'<span class="link">$1</span>');
+}
+
+function copyPost(id,btn){
+  const text=window._posts[id];
+  navigator.clipboard.writeText(text).then(()=>{
+    const nombre={x:'X',threads:'Threads',ig:'Instagram',fb:'Facebook'}[id];
+    toast('✅ Copiado — pegalo en '+nombre);
+    if(btn){const orig=btn.innerHTML;btn.innerHTML='✅ Copiado';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML=orig;btn.classList.remove('copied');},2000);}
+  }).catch(()=>toast('❌ Error al copiar'));
+}
+
+function editPost(id){
+  const text=window._posts[id];
+  const nuevo=prompt('Editá el post (al regenerar se pierde):',text);
+  if(nuevo!==null){
+    window._posts[id]=nuevo;
+    $('pv-'+id).innerHTML=escHtmlPost(nuevo);
+    toast('✏️ Post editado (temporal)');
+  }
+}
+
+function copyAndOpen(app){
+  const map={instagram:'ig',facebook:'fb',threads:'threads'};
+  const text=window._posts[map[app]];
+  navigator.clipboard.writeText(text).then(()=>{
+    toast('📋 Copiado — abriendo '+app+'...');
+    setTimeout(()=>{
+      const urls={instagram:'https://www.instagram.com/',facebook:'https://www.facebook.com/',threads:'https://www.threads.net/'};
+      window.open(urls[app],'_blank');
+    },800);
+  });
+}
+
+function openX(){
+  const text=window._posts.x;
+  window.open('https://x.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
+}
+
+function toast(msg){
+  let t=$('toastEl');
+  if(!t){t=document.createElement('div');t.id='toastEl';t.className='toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(window._toastT);
+  window._toastT=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
 loadCfg();loadAS();
 </script>
 </body></html>

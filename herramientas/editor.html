@@ -65,6 +65,10 @@
 .tag.selected{background:var(--accent);color:#fff}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--brand);color:#fff;padding:10px 20px;border-radius:100px;font-size:.78rem;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:transform .3s;z-index:300;white-space:nowrap;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0)}
+/* M2: variantes para distinguir borrador local vs publicado online */
+.toast.toast-draft{background:#B45309;color:#FFF8E6}
+.dark .toast.toast-draft{background:#5C3A0A;color:#F0C674}
+.toast.toast-online{background:var(--green);color:#fff}
 .redes-banner{background:linear-gradient(135deg,#0B2545,#0071E3);color:#fff;border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;font-size:.78rem;line-height:1.5}
 .redes-banner b{font-size:.88rem;display:block;margin-bottom:2px}
 
@@ -450,7 +454,7 @@ function dismissRecovery(){
 }
 
 function getFD(){return{seccion:$('seccion').value,titulo:$('titulo').value,subtitulo:$('subtitulo').value,cuerpo:$('cuerpo').value,autor:$('autor').value,piefoto:$('piefoto').value};}
-function saveDraft(){const d=getFD();if(!d.titulo){showSt('stArea','⚠️ Poné al menos un título','warn');return;}const dr=JSON.parse(localStorage.getItem(DK)||'[]');dr.unshift({...d,id:Date.now(),ts:Date.now()});localStorage.setItem(DK,JSON.stringify(dr.slice(0,20)));localStorage.removeItem('pl_recovery');showSt('stArea','💾 Borrador guardado','ok');}
+function saveDraft(){const d=getFD();if(!d.titulo){showSt('stArea','⚠️ Poné al menos un título','warn');return;}const dr=JSON.parse(localStorage.getItem(DK)||'[]');dr.unshift({...d,id:Date.now(),ts:Date.now()});localStorage.setItem(DK,JSON.stringify(dr.slice(0,20)));localStorage.removeItem('pl_recovery');toast('💾 Guardado como borrador (solo en este dispositivo)','draft');}
 function loadDraft(id){const dr=JSON.parse(localStorage.getItem(DK)||'[]'),d=dr.find(x=>x.id===id);if(!d)return;$('seccion').value=d.seccion||'politico';$('titulo').value=d.titulo||'';$('subtitulo').value=d.subtitulo||'';$('cuerpo').value=d.cuerpo||'';$('autor').value=d.autor||'Pluma Libre';$('piefoto').value=d.piefoto||'';updStats();showTab('escribir',document.querySelectorAll('.tab')[0]);}
 function delDraft(id){let dr=JSON.parse(localStorage.getItem(DK)||'[]');localStorage.setItem(DK,JSON.stringify(dr.filter(x=>x.id!==id)));renderD();}
 function renderD(){const dr=JSON.parse(localStorage.getItem(DK)||'[]'),el=$('draftList');if(!dr.length){el.innerHTML='<p style="font-size:.82rem;color:var(--text2)">No hay borradores.</p>';return;}el.innerHTML=dr.map(d=>'<div class="draft-item" onclick="loadDraft('+d.id+')"><div class="d-title">'+(d.titulo||'Sin título')+'</div><div class="d-meta">'+(SEC[d.seccion]||'')+' · '+tAgo(d.ts)+' <span onclick="event.stopPropagation();delDraft('+d.id+')" style="color:var(--red);cursor:pointer;margin-left:8px">🗑</span></div></div>').join('');}
@@ -628,7 +632,7 @@ async function publicar(fn,destacar){
     window._loadedForEdit=false;
     const aUrl='https://plumalibre.github.io/articulos/'+fn,su=encodeURIComponent(aUrl),st=encodeURIComponent(d.titulo+' — Pluma Libre');
     closePreviewModal();
-    showSt('stArea','✅ ¡Nota publicada! Se actualiza en ~30s','ok');
+    toast('☁️✅ Publicado en línea · se actualiza en ~30s','online');
     $('postPub').classList.remove('hidden');
     $('postPub').innerHTML='<div class="card"><div class="share-box"><h3>🎉 ¡Nota publicada!</h3><p style="font-size:.78rem;color:var(--text2);margin:8px 0 14px">Los posts para redes ya están listos en la pestaña <b>📱 Redes</b></p><button class="btn btn-g" style="margin-bottom:12px" onclick="startNuevaNota()">🆕 Nueva nota</button><div class="share-btns"><a class="fb" href="https://www.facebook.com/sharer/sharer.php?u='+su+'" target="_blank">📘 Facebook</a><a class="wa" href="https://api.whatsapp.com/send?text='+st+'%20'+su+'" target="_blank">💬 WhatsApp</a><a class="copy" href="#" onclick="event.preventDefault();navigator.clipboard.writeText(\''+aUrl+'\');this.textContent=\'✅ Copiado\'">🔗 Copiar link</a></div><button class="btn btn-p" style="margin-top:14px" onclick="goToRedes()">📱 Ir a Redes Sociales</button><p style="font-size:.7rem;color:var(--text3);margin-top:8px">Link activo en ~30 segundos</p></div></div><div class="card" id="depChk"><h3>⏳ Verificando deploy...</h3><p style="font-size:.78rem;color:var(--text2)" id="depMsg">Esperando GitHub Pages...</p></div>';
     // Auto-cargar datos en pestaña Redes
@@ -1172,12 +1176,18 @@ function openX(){
   window.open('https://x.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
-function toast(msg){
+function toast(msg,type){
   let t=$('toastEl');
   if(!t){t=document.createElement('div');t.id='toastEl';t.className='toast';document.body.appendChild(t);}
-  t.textContent=msg;t.classList.add('show');
+  t.textContent=msg;
+  // reset y aplicar variante (draft=ámbar, online=verde, default=azul marca)
+  t.className='toast';
+  if(type)t.classList.add('toast-'+type);
+  t.classList.add('show');
   clearTimeout(window._toastT);
-  window._toastT=setTimeout(()=>t.classList.remove('show'),3000);
+  // mensajes de estado "online" duran un poco mas
+  const dur=type==='online'?4500:3000;
+  window._toastT=setTimeout(()=>t.classList.remove('show'),dur);
 }
 
 loadCfg();

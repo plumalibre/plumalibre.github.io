@@ -169,6 +169,11 @@ ul { list-style: none; }
 .hero {
   padding: 24px 0 0;
 }
+/* Si hay al menos una nota publicada en cualquier news-grid, el hero de bienvenida se oculta.
+   Con cero notas, vuelve a aparecer como estado vacio. */
+body:has(.news-grid > article) .hero {
+  display: none;
+}
 .hero-card {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -465,18 +470,46 @@ ul { list-style: none; }
 
 .article-img {
   width: 100%;
-  aspect-ratio: 16/9;
   overflow: hidden;
   margin: 24px 0;
   border-radius: var(--radius-lg);
   background: var(--bg);
+  max-height: 80vh;
+  display: flex;
+  justify-content: center;
 }
-.article-img img { width: 100%; height: 100%; object-fit: cover; }
+.article-img img {
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
 .article-img figcaption {
   font-size: 0.72rem;
   color: var(--text-tertiary);
   margin-top: 8px;
   font-style: italic;
+}
+
+/* Imagenes inline en el cuerpo de la nota (marcador [IMAGEN:xxx.jpg]) */
+.article-img-body {
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  max-height: 70vh;
+}
+.article-img-body img {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .article-body {

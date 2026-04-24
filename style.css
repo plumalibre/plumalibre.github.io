@@ -735,6 +735,10 @@ body:has(.news-grid > article) .hero {
 .social-links a:hover { color: var(--accent); border-color: var(--accent); box-shadow: var(--shadow-xs); }
 .social-links svg { flex-shrink: 0; color: inherit; font-size: 1.25em; }
 
+/* Fila de iconos sociales dentro del footer (arriba del copyright) */
+.footer-social { text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+.footer-social .social-icons { font-size: 1.1rem; }
+
 /* ============================================
    SISTEMA DE BANNERS PUBLICITARIOS
    Banner A: superior del home (entre hero y grid de noticias).

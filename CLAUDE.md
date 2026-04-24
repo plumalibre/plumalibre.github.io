@@ -44,7 +44,8 @@ Cobertura local, nacional e internacional. Periodismo crítico sin ataduras pol�
 │   ├── politico.html
 │   ├── cultural.html
 │   ├── social.html
-│   └── economico.html
+│   ├── economico.html
+│   └── deportivo.html
 ├── articulos/
 │   ├── plantilla.html          # NO BORRAR - base para notas
 │   └── [notas].html
@@ -84,7 +85,7 @@ Cobertura local, nacional e internacional. Periodismo crítico sin ataduras pol�
 ## Línea editorial
 
 - **Tono:** Profesional, directo, accesible
-- **Secciones fijas:** #AcontecerReligioso #AcontecerPolítico #AcontecerCultural #AcontecerSocial #AcontecerEconómico
+- **Secciones fijas:** #AcontecerReligioso #AcontecerPolítico #AcontecerCultural #AcontecerSocial #AcontecerEconómico #AcontecerDeportivo
 - **Hashtags base:** #PlumaLibre #Sonsonate #ElSalvador
 - **Relaciones comerciales:** Pauta con Alcaldía de Sonsonate Centro (Alcalde Roberto Aquino). NO con Sonsonate Este.
 

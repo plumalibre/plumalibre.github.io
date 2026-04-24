@@ -36,6 +36,11 @@
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://plumalibre.github.io/secciones/deportivo.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- ✏️ AGREGAR: Cada vez que publiques una nota nueva, agregá un bloque como este:
   <url>
     <loc>https://plumalibre.github.io/articulos/nombre-de-tu-nota.html</loc>

@@ -36,7 +36,8 @@ pluma-libre/
 │   ├── politico.html           ← #AcontecerPolítico
 │   ├── cultural.html           ← #AcontecerCultural
 │   ├── social.html             ← #AcontecerSocial
-│   └── economico.html          ← #AcontecerEconómico
+│   ├── economico.html          ← #AcontecerEconómico
+│   └── deportivo.html          ← #AcontecerDeportivo
 ├── articulos/
 │   └── plantilla.html          ← Plantilla base (no borrar)
 └── herramientas/

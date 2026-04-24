@@ -1,7 +1,7 @@
 {
   "banner_a_home": {
     "activo": false,
-    "imagen": "",
+    "imagen": "assets/banner-a.jpg",
     "link": "",
     "alt": ""
   },

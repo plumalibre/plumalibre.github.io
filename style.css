@@ -797,6 +797,10 @@ body:has(.news-grid > article) .hero {
 /* Banner A - home: 3 tamaños responsive + alto acotado (250 desktop / 150 mobile) */
 .pl-ad--banner-a { max-width: 970px; }
 .pl-ad--banner-a .pl-ad-frame { height: 250px; max-height: 250px; }
+/* Si el JS de repositionBannerA lo movió dentro del grid (después de la
+   nota destacada), tomar toda la fila y cancelar el margen vertical propio
+   (el gap del grid ya da espacio arriba/abajo). */
+.news-grid > .pl-ad--banner-a { grid-column: 1 / -1; margin: 0 auto; }
 .pl-ad--banner-a .pl-ad-img-billboard   { display: block; }
 .pl-ad--banner-a .pl-ad-img-leaderboard { display: none; }
 .pl-ad--banner-a .pl-ad-img-mobile      { display: none; }

@@ -203,7 +203,17 @@
         };
         apply(".pl-ad--banner-a",c.banner_a_home);
         apply(".pl-ad--banner-b",c.banner_b_nota);
+        repositionBannerA();
       }catch(e){}
+    }
+    function repositionBannerA(){
+      const ad=document.querySelector(".pl-ad--banner-a");
+      if(!ad||ad.hidden)return;
+      const heroArt=document.querySelector(".news-grid .hero-article");
+      if(!heroArt)return;
+      const wrap=ad.closest(".wrap");
+      heroArt.insertAdjacentElement("afterend",ad);
+      if(wrap&&!wrap.children.length)wrap.remove();
     }
     if(document.querySelector(".pl-ad")){
       if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",loadBanners);

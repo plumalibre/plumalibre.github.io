@@ -347,6 +347,88 @@ ul { list-style: none; }
 .card-lg .meta { font-size: 0.7rem; color: var(--text-tertiary); margin-top: 8px; font-weight: 500; }
 
 /* ============================================
+   NOTA DESTACADA EN PORTADA
+   Ocupa todo el ancho del .news-grid y tiene
+   un badge "Destacada". Solo una a la vez — el
+   editor degrada la anterior al marcar una nueva.
+   ============================================ */
+.news-grid > .hero-article {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease), border-color 0.2s var(--ease);
+  animation: fadeIn 0.5s var(--ease) both;
+}
+.news-grid > .hero-article:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+.news-grid > .hero-article::before {
+  content: "📌 Destacada";
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--brand);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  z-index: 2;
+  box-shadow: var(--shadow-sm);
+}
+.news-grid > .hero-article .thumb {
+  width: 100%;
+  height: 240px;
+  border-radius: 0;
+  flex: none;
+  overflow: hidden;
+}
+.news-grid > .hero-article .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.news-grid > .hero-article:hover .thumb img { transform: scale(1.03); }
+.news-grid > .hero-article .info {
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.news-grid > .hero-article .badge-sm { font-size: 0.7rem; }
+.news-grid > .hero-article h3 {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+.news-grid > .hero-article h3 a { transition: color 0.2s; }
+.news-grid > .hero-article h3 a:hover { color: var(--accent); }
+.news-grid > .hero-article .meta {
+  font-size: 0.74rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  font-weight: 500;
+}
+@media (min-width: 700px) {
+  .news-grid > .hero-article .thumb { height: 360px; }
+  .news-grid > .hero-article h3 { font-size: 1.85rem; }
+  .news-grid > .hero-article .info { padding: 26px 28px 28px; }
+}
+
+/* ============================================
    ARTICLE PAGE
    ============================================ */
 .article-page { background: var(--white); }

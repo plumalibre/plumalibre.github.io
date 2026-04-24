@@ -400,8 +400,7 @@ async function confirmPublicar(){
       '<div class="fn-sug"><span>Sugerencia: <code>'+sug+'</code></span><button type="button" onclick="useSug(\''+sug+'\');$(\'pvFilename\').value=\''+sug+'\';$(\'pvCfgSt\').innerHTML=\'\';">Usar este nombre</button></div>';
     return;
   }
-  // Commit 1 de v10: el checkbox está visible pero inerte. Commit 2 (hero zone + CSS) lo activa.
-  const destacar=false;
+  const destacar=$('pvDestacar').checked;
   await publicar(fn,destacar);
 }
 

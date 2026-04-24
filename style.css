@@ -762,12 +762,14 @@ body:has(.news-grid > article) .hero {
   text-align: left;
   margin-bottom: 6px;
 }
-/* Variante A - sobria (borde 1px, recomendada) */
+/* Variante A - sobria (borde 1px, recomendada)
+   Background gris claro para que las imágenes con ratio distinto al slot
+   muestren bandas neutras en vez de blanco puro. */
 .pl-ad-sobria .pl-ad-frame {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--bg-card);
+  background: var(--bg);
 }
 /* Variante B - integrada (líneas divisorias arriba y abajo) */
 .pl-ad-integrada {
@@ -775,16 +777,26 @@ body:has(.news-grid > article) .hero {
   border-bottom: 1px solid var(--border);
   padding: 10px 0 12px;
 }
-.pl-ad-integrada .pl-ad-frame { overflow: hidden; }
-.pl-ad-frame a,
+.pl-ad-integrada .pl-ad-frame { overflow: hidden; background: var(--bg); }
+/* Imagen hace contain dentro del frame. Preserva aspect-ratio, se centra
+   y deja bandas grises si el ratio de la imagen no coincide con el slot. */
+.pl-ad-frame a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+}
 .pl-ad-frame img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
+  object-fit: contain;
+  object-position: center;
 }
-/* Banner A - home: 3 tamaños responsive */
+/* Banner A - home: 3 tamaños responsive + alto acotado (250 desktop / 150 mobile) */
 .pl-ad--banner-a { max-width: 970px; }
+.pl-ad--banner-a .pl-ad-frame { height: 250px; max-height: 250px; }
 .pl-ad--banner-a .pl-ad-img-billboard   { display: block; }
 .pl-ad--banner-a .pl-ad-img-leaderboard { display: none; }
 .pl-ad--banner-a .pl-ad-img-mobile      { display: none; }
@@ -793,15 +805,18 @@ body:has(.news-grid > article) .hero {
   .pl-ad--banner-a .pl-ad-img-leaderboard { display: block; }
 }
 @media (max-width: 767px) {
+  .pl-ad--banner-a .pl-ad-frame { height: 150px; max-height: 150px; }
   .pl-ad--banner-a .pl-ad-img-billboard   { display: none; }
   .pl-ad--banner-a .pl-ad-img-mobile      { display: block; }
 }
-/* Banner B - nota: 2 tamaños responsive */
+/* Banner B - nota: 2 tamaños responsive + alto acotado (120 desktop / 100 mobile) */
 .pl-ad--banner-b { max-width: 728px; margin: 28px auto; }
+.pl-ad--banner-b .pl-ad-frame { height: 120px; max-height: 120px; }
 .pl-ad--banner-b .pl-ad-img-leaderboard { display: block; }
 .pl-ad--banner-b .pl-ad-img-mobile      { display: none; }
 @media (max-width: 767px) {
   .pl-ad--banner-b { margin: 20px auto; }
+  .pl-ad--banner-b .pl-ad-frame { height: 100px; max-height: 100px; }
   .pl-ad--banner-b .pl-ad-img-leaderboard { display: none; }
   .pl-ad--banner-b .pl-ad-img-mobile      { display: block; }
 }

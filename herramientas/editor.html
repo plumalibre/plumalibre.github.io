@@ -67,6 +67,24 @@
 .toast.show{transform:translateX(-50%) translateY(0)}
 .redes-banner{background:linear-gradient(135deg,#0B2545,#0071E3);color:#fff;border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;font-size:.78rem;line-height:1.5}
 .redes-banner b{font-size:.88rem;display:block;margin-bottom:2px}
+
+/* ===== B7/B2/B3: warnings + sugerencia + modal propio ===== */
+.deco-warn{background:#FFF8E6;color:#B45309;padding:10px 12px;border-radius:8px;font-size:.72rem;margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.dark .deco-warn{background:#3A2A0E;color:#F0C674}
+.deco-warn button{padding:6px 12px;font-size:.68rem;font-weight:600;border:none;border-radius:100px;background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);flex-shrink:0}
+.fn-sug{background:#E8F0FE;color:#1A56DB;padding:10px 12px;border-radius:8px;font-size:.72rem;margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.dark .fn-sug{background:#1B2A4A;color:#7FB0FF}
+.fn-sug code{background:rgba(0,0,0,.08);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.78rem;word-break:break-all}
+.dark .fn-sug code{background:rgba(255,255,255,.1)}
+.fn-sug button{padding:6px 12px;font-size:.68rem;font-weight:600;border:none;border-radius:100px;background:var(--accent);color:#fff;cursor:pointer;font-family:var(--font);flex-shrink:0}
+.pl-conf-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px;animation:fade .15s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.pl-conf-box{background:var(--card);border-radius:12px;padding:20px;width:90%;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.pl-conf-box h3{font-family:var(--fd);font-size:1rem;font-weight:600;margin-bottom:8px;color:var(--text)}
+.pl-conf-box p{font-size:.82rem;color:var(--text2);margin-bottom:18px;line-height:1.5}
+.pl-conf-btns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.pl-conf-btns .btn{width:auto;flex:0 1 auto;min-width:120px}
+
 .hidden{display:none!important}
 </style>
 </head>
@@ -90,7 +108,7 @@
 <div class="stats"><div class="stat">📝 <b id="wc">0</b> palabras</div><div class="stat">⏱ <b id="rt">0</b> min</div><div class="stat" id="draftSt">💾 Sin guardar</div></div>
 <div class="card"><h2>Nueva Nota</h2>
 <div class="field"><label>Sección</label><select id="seccion" onchange="autoSave();if(typeof _tagsInitialized!=='undefined'&&_tagsInitialized){initTags(true);genPosts();}"><option value="religioso">🙏 Acontecer Religioso</option><option value="politico">🏛 Acontecer Político</option><option value="cultural">🎭 Acontecer Cultural</option><option value="social">👥 Acontecer Social</option><option value="economico">💰 Acontecer Económico</option></select></div>
-<div class="field"><label>Título *</label><input type="text" id="titulo" placeholder="Ej: Sonsonate impulsa plan de desarrollo" oninput="onType()"></div>
+<div class="field"><label>Título *</label><input type="text" id="titulo" placeholder="Ej: Sonsonate impulsa plan de desarrollo" oninput="onType()"><div id="decoWarn" class="deco-warn hidden"><span>⚠️ Texto decorativo detectado (ej. 𝗦𝗢𝗡𝗦𝗢𝗡𝗔𝗧𝗘). Puede verse mal en buscadores.</span><button type="button" onclick="applyNormalize()">🔤 Convertir a texto normal</button></div></div>
 <div class="field"><label>Subtítulo (opcional)</label><input type="text" id="subtitulo" placeholder="Una línea que amplíe el título" oninput="autoSave()"></div>
 <div class="field"><label>Imagen principal</label><div class="img-drop" id="imgDrop" onclick="document.getElementById('imgIn').click()"><div class="ic">📷</div><div class="tx">Tocá para elegir foto · Se redimensiona auto</div></div><input type="file" id="imgIn" accept="image/*" style="display:none" onchange="handleImg(this)"><img id="imgPv" class="img-pv hidden" alt=""><p class="img-info hidden" id="imgInfo"></p><button class="btn btn-s btn-sm hidden" id="imgRm" onclick="removeImg()" style="margin-top:6px">🗑 Quitar</button></div>
 <div class="field"><label>Cuerpo *</label><div class="toolbar"><button onclick="ins('## ')">H2</button><button onclick="ins('### ')">H3</button><button onclick="ins('> ')">Cita</button><button onclick="wrapSel('**')"><b>B</b></button><button onclick="wrapSel('_')"><i>I</i></button><button onclick="insertBodyImg()">🖼 Foto</button><button onclick="showVideoModal()">🎬 Video</button><button onclick="ins('---\n')">— Línea</button><button onclick="insertColumns()">▥ 2 Col</button></div><textarea id="cuerpo" placeholder="Escribí tu nota aquí...&#10;&#10;Separá párrafos con línea en blanco&#10;## para subtítulos&#10;> para citas" oninput="onType()"></textarea></div>
@@ -99,7 +117,7 @@
 <div class="btn-row"><button class="btn btn-s btn-sm" onclick="saveDraft()" style="flex:1">💾 Guardar borrador</button><button class="btn btn-d btn-sm" onclick="clearForm()" style="flex:1">🗑 Limpiar</button></div>
 </div></div>
 <div id="tab-preview" class="hidden"><div class="card"><h2>Vista previa</h2><div class="pv-box"><span class="pv-badge" id="pvSec"></span><h3 class="pv-title" id="pvTit">Título</h3><p class="pv-sub" id="pvSub"></p><p class="pv-meta" id="pvMeta"></p><img id="pvImg" class="img-pv hidden" alt="" style="margin-top:10px"><div class="pv-body" id="pvBody"></div></div></div></div>
-<div id="tab-publicar" class="hidden"><div id="stArea"></div><div class="card"><h2>Publicar nota</h2><div id="cfgSt"></div><div class="field"><label>Archivo</label><input type="text" id="filename"><p class="hint">URL: plumalibre.github.io/articulos/nombre.html</p></div><label style="display:flex;align-items:center;gap:8px;font-size:.78rem;margin-bottom:14px;cursor:pointer"><input type="checkbox" id="updateIdx" checked style="width:18px;height:18px"> Agregar al inicio automáticamente</label><button class="btn btn-g" onclick="publicar()" id="btnPub">🚀 Publicar</button><div class="btn-row"><button class="btn btn-s btn-sm" onclick="dlHTML()" style="flex:1">📥 Descargar</button><button class="btn btn-s btn-sm" onclick="cpHTML()" style="flex:1">📋 Copiar</button></div></div><div id="postPub" class="hidden"></div></div>
+<div id="tab-publicar" class="hidden"><div id="stArea"></div><div class="card"><h2>Publicar nota</h2><div id="cfgSt"></div><div class="field"><label>Archivo</label><input type="text" id="filename" oninput="onFilenameEdit()"><p class="hint">URL: plumalibre.github.io/articulos/nombre.html</p></div><label style="display:flex;align-items:center;gap:8px;font-size:.78rem;margin-bottom:14px;cursor:pointer"><input type="checkbox" id="updateIdx" checked style="width:18px;height:18px"> Agregar al inicio automáticamente</label><button class="btn btn-g" onclick="publicar()" id="btnPub">🚀 Publicar</button><div class="btn-row"><button class="btn btn-s btn-sm" onclick="dlHTML()" style="flex:1">📥 Descargar</button><button class="btn btn-s btn-sm" onclick="cpHTML()" style="flex:1">📋 Copiar</button></div></div><div id="postPub" class="hidden"></div></div>
 
 <div id="tab-redes" class="hidden">
   <div class="redes-banner"><b>📱 Posts para redes sociales</b>Se generan automáticamente desde tu nota. Copiá y pegá en Facebook, X, Instagram y Threads.</div>
@@ -216,7 +234,17 @@ function fmtS(b){return b<1024?b+'B':b<1048576?(b/1024).toFixed(1)+'KB':(b/10485
 
 function updStats(){const t=$('cuerpo').value.trim();const w=t?t.split(/\s+/).length:0;$('wc').textContent=w;$('rt').textContent=Math.max(1,Math.ceil(w/200));}
 function ins(before,after=''){const ta=$('cuerpo');const s=ta.selectionStart,e=ta.selectionEnd,sel=ta.value.substring(s,e);ta.value=ta.value.substring(0,s)+before+sel+after+ta.value.substring(e);ta.focus();ta.setSelectionRange(s+before.length,s+before.length+sel.length);onType();}
-function onType(){updStats();clearTimeout(asTimer);asTimer=setTimeout(asDraft,2000);$('draftSt').innerHTML='💾 <span style="color:var(--orange)">Sin guardar</span>';}
+function onType(){
+  updStats();
+  clearTimeout(asTimer);asTimer=setTimeout(asDraft,2000);
+  $('draftSt').innerHTML='💾 <span style="color:var(--orange)">Sin guardar</span>';
+  // B7: warning de decorativos en el título (siempre lo refrescamos, onType se dispara desde título y cuerpo)
+  const dw=$('decoWarn');
+  if(dw){if(hasDecorativeChars($('titulo').value))dw.classList.remove('hidden');else dw.classList.add('hidden');}
+  // B2: regenerar filename desde el título si el usuario no lo editó a mano
+  const fEl=$('filename');
+  if(fEl && fEl.dataset.manual!=='1')fEl.value=slugifyTitle($('titulo').value)+'.html';
+}
 function asDraft(){const d=getFD();if(!d.titulo&&!d.cuerpo)return;localStorage.setItem('pl_as',JSON.stringify({...d,ts:Date.now()}));$('draftSt').innerHTML='💾 <span style="color:var(--green)">Guardado ✓</span>';}
 function autoSave(){clearTimeout(asTimer);asTimer=setTimeout(asDraft,1000);}
 function loadAS(){const r=localStorage.getItem('pl_as');if(!r)return;try{const d=JSON.parse(r);if(d.titulo||d.cuerpo){$('seccion').value=d.seccion||'politico';$('titulo').value=d.titulo||'';$('subtitulo').value=d.subtitulo||'';$('cuerpo').value=d.cuerpo||'';$('autor').value=d.autor||'Pluma Libre';$('piefoto').value=d.piefoto||'';updStats();$('draftSt').innerHTML='💾 <span style="color:var(--green)">Recuperado</span>';}}catch{}}
@@ -226,7 +254,7 @@ function saveDraft(){const d=getFD();if(!d.titulo){showSt('stArea','⚠️ Poné
 function loadDraft(id){const dr=JSON.parse(localStorage.getItem(DK)||'[]'),d=dr.find(x=>x.id===id);if(!d)return;$('seccion').value=d.seccion||'politico';$('titulo').value=d.titulo||'';$('subtitulo').value=d.subtitulo||'';$('cuerpo').value=d.cuerpo||'';$('autor').value=d.autor||'Pluma Libre';$('piefoto').value=d.piefoto||'';updStats();showTab('escribir',document.querySelectorAll('.tab')[0]);}
 function delDraft(id){let dr=JSON.parse(localStorage.getItem(DK)||'[]');localStorage.setItem(DK,JSON.stringify(dr.filter(x=>x.id!==id)));renderD();}
 function renderD(){const dr=JSON.parse(localStorage.getItem(DK)||'[]'),el=$('draftList');if(!dr.length){el.innerHTML='<p style="font-size:.82rem;color:var(--text2)">No hay borradores.</p>';return;}el.innerHTML=dr.map(d=>'<div class="draft-item" onclick="loadDraft('+d.id+')"><div class="d-title">'+(d.titulo||'Sin título')+'</div><div class="d-meta">'+(SEC[d.seccion]||'')+' · '+tAgo(d.ts)+' <span onclick="event.stopPropagation();delDraft('+d.id+')" style="color:var(--red);cursor:pointer;margin-left:8px">🗑</span></div></div>').join('');}
-function clearForm(){if(!confirm('¿Limpiar todo?'))return;['titulo','subtitulo','cuerpo','piefoto'].forEach(id=>$(id).value='');$('autor').value='Pluma Libre';removeImg();localStorage.removeItem('pl_as');updStats();$('draftSt').innerHTML='💾 Sin guardar';}
+function clearForm(){if(!confirm('¿Limpiar todo?'))return;['titulo','subtitulo','cuerpo','piefoto'].forEach(id=>$(id).value='');$('autor').value='Pluma Libre';removeImg();localStorage.removeItem('pl_as');updStats();$('draftSt').innerHTML='💾 Sin guardar';const f=$('filename');if(f){f.value='';delete f.dataset.manual;}window._editingFile=null;const dw=$('decoWarn');if(dw)dw.classList.add('hidden');}
 
 function updPv(){const d=getFD(),hoy=new Date(),f=hoy.getDate()+' de '+MES[hoy.getMonth()]+', '+hoy.getFullYear();$('pvSec').textContent=SEC[d.seccion]||'';$('pvTit').textContent=d.titulo||'Título';$('pvSub').textContent=d.subtitulo||'';$('pvMeta').textContent='Por '+(d.autor||'Pluma Libre')+' · '+f;const pi=$('pvImg');if(imgB64){pi.src='data:image/jpeg;base64,'+imgB64;pi.classList.remove('hidden');}else pi.classList.add('hidden');$('pvBody').innerHTML=parseMD(d.cuerpo);}
 function parseMD(t){if(!t)return'';return t.split('\n\n').map(p=>{p=p.trim();if(!p)return'';if(p.startsWith('## '))return'<h2>'+esc(p.slice(3))+'</h2>';if(p.startsWith('> '))return'<blockquote>'+esc(p.slice(2))+'</blockquote>';
@@ -241,7 +269,80 @@ if(p.startsWith('[VIDEO_TIKTOK:'))return'<p style="text-align:center;padding:20p
     }
     return'<p>'+p+'</p>';}).join('');}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function updFn(){const t=$('titulo').value;if(t)$('filename').value=t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50)+'.html';}
+
+// === B7/B2/B3: detecci\u00f3n y normalizaci\u00f3n de caracteres decorativos + slugify ===
+// Rangos Unicode: Mathematical Alphanumeric (\ud835\uddd4\ud835\uddd5\ud835\uddd6 estilo Facebook/IG), Enclosed Alphanumerics
+// (\u2460 \u2461), Halfwidth/Fullwidth (\uff21\uff22\uff23) y smart quotes (" " ' ').
+const RE_DECORATIVOS=/[\u{1D400}-\u{1D7FF}\u{2460}-\u{24FF}\u{FF00}-\u{FFEF}\u2018\u2019\u201c\u201d]/u;
+function hasDecorativeChars(s){return RE_DECORATIVOS.test(s||'');}
+function normalizeDecorative(s){
+  if(!s)return s;
+  // NFKC colapsa Mathematical Alphanumeric, Fullwidth y Enclosed Alphanumerics a ASCII
+  let out=s.normalize('NFKC');
+  // Smart quotes \u2192 ASCII (NFKC no las toca)
+  out=out.replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"');
+  return out;
+}
+function slugifyTitle(t){
+  let s=normalizeDecorative(t||'');
+  // Em dash, en dash y ellipsis antes del lowercase
+  s=s.replace(/[\u2013\u2014]/g,'-').replace(/\u2026/g,'...');
+  s=s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+     .replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,50);
+  // Colapso y trim final (por si el slice cort\u00f3 dejando gui\u00f3n)
+  s=s.replace(/^-|-$/g,'');
+  if(!s){
+    const h=new Date(),y=h.getFullYear(),mo=String(h.getMonth()+1).padStart(2,'0'),dd=String(h.getDate()).padStart(2,'0');
+    s='nota-'+y+'-'+mo+'-'+dd;
+  }
+  return s;
+}
+
+// Modal de confirmaci\u00f3n propio (reemplazo de confirm() nativo, estilo Pluma Libre)
+function showConfirmModal({titulo,texto,okText='Aceptar',cancelText='Cancelar'}){
+  return new Promise(resolve=>{
+    const ov=document.createElement('div');
+    ov.className='pl-conf-ov';
+    ov.innerHTML='<div class="pl-conf-box" role="dialog" aria-modal="true">'+
+      '<h3></h3><p></p>'+
+      '<div class="pl-conf-btns">'+
+        '<button type="button" class="btn btn-s btn-sm" data-act="0"></button>'+
+        '<button type="button" class="btn btn-g btn-sm" data-act="1"></button>'+
+      '</div></div>';
+    // textContent para evitar inyecci\u00f3n si el caller pasa input de usuario
+    ov.querySelector('h3').textContent=titulo;
+    ov.querySelector('p').textContent=texto;
+    ov.querySelector('[data-act="0"]').textContent=cancelText;
+    ov.querySelector('[data-act="1"]').textContent=okText;
+    const cleanup=v=>{document.removeEventListener('keydown',onKey);ov.remove();resolve(v);};
+    const onKey=e=>{if(e.key==='Escape')cleanup(false);};
+    ov.addEventListener('click',e=>{
+      if(e.target===ov){cleanup(false);return;}
+      const b=e.target.closest('[data-act]');
+      if(b)cleanup(b.dataset.act==='1');
+    });
+    document.addEventListener('keydown',onKey);
+    document.body.appendChild(ov);
+  });
+}
+
+// Aplicar normalizaci\u00f3n al t\u00edtulo desde el bot\u00f3n del warning
+function applyNormalize(){
+  const t=$('titulo');
+  t.value=normalizeDecorative(t.value);
+  onType();
+}
+// Marcar filename como editado a mano (no volver a autogenerarlo)
+function onFilenameEdit(){const f=$('filename');if(f)f.dataset.manual='1';}
+// Usar la sugerencia cuando el filename del usuario es inv\u00e1lido
+function useSug(s){
+  const f=$('filename');
+  f.value=s;
+  delete f.dataset.manual;
+  $('stArea').innerHTML='';
+}
+
+function updFn(){const f=$('filename');if(!f||f.dataset.manual==='1')return;f.value=slugifyTitle($('titulo').value)+'.html';}
 
 function genHTML(){const d=getFD(),fn=$('filename').value,hoy=new Date(),f=hoy.getDate()+' de '+MES[hoy.getMonth()]+', '+hoy.getFullYear(),fi=hoy.toISOString().slice(0,10),ip=imgName?'../assets/'+imgName:'https://placehold.co/900x500/0B2545/fff?text=Imagen',sn=SEC[d.seccion];
 const bh=d.cuerpo.split('\n\n').map(p=>{p=p.trim();if(!p)return'';if(p.startsWith('## '))return'<h2>'+p.slice(3)+'</h2>';if(p.startsWith('> '))return'<blockquote>'+p.slice(2)+'</blockquote>';p=p.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/_(.+?)_/g,'<em>$1</em>');return'<p>'+p+'</p>';}).join('\n')
@@ -263,10 +364,32 @@ const nc='\n        <article class="card"><div class="thumb"><img src="'+is+'" a
 const mk='<div class="news-grid">',i=html.indexOf(mk);if(i===-1)throw new Error('Rejilla no encontrada');const up=html.slice(0,i+mk.length)+nc+html.slice(i+mk.length);
 await ghPut('index.html',up,'🏠 '+titulo);return true;}catch(e){console.error(e);return false;}}
 
-async function publicar(){const d=getFD(),fn=$('filename').value.trim();if(!d.titulo||!d.cuerpo){showSt('stArea','⚠️ Completá título y cuerpo','warn');return;}if(!fn||fn==='.html'||!fn.match(/^[a-z0-9-]+\.html$/i)){
-  showSt('stArea','⚠️ El nombre del archivo no es válido. Debe ser algo como: mi-nota.html','warn');
-  return;
-}const c=getCfg();if(!c.user||!c.token){showSt('stArea','⚠️ Configurá GitHub','warn');return;}
+async function publicar(){
+  let d=getFD();
+  if(!d.titulo||!d.cuerpo){showSt('stArea','⚠️ Completá título y cuerpo','warn');return;}
+  // B7: si quedaron decorativos en el título, preguntar con modal propio antes de publicar
+  if(hasDecorativeChars(d.titulo)){
+    const ok=await showConfirmModal({
+      titulo:'Texto decorativo en el título',
+      texto:'Tu título tiene caracteres decorativos (ej. 𝗔𝗕𝗖). Pueden verse mal en Google y redes sociales. ¿Convertir a texto normal antes de publicar?',
+      okText:'Convertir y publicar',
+      cancelText:'Publicar así'
+    });
+    if(ok){
+      $('titulo').value=normalizeDecorative($('titulo').value);
+      onType();
+      d=getFD();
+    }
+  }
+  // B2/B3: validar filename y ofrecer sugerencia si no sirve
+  const fn=$('filename').value.trim();
+  if(!fn||fn==='.html'||!fn.match(/^[a-z0-9-]+\.html$/i)){
+    const sug=slugifyTitle(d.titulo)+'.html';
+    $('stArea').innerHTML='<div class="st st-warn">⚠️ Nombre no válido. Solo letras minúsculas, números y guiones. Ej: <code>mi-nota.html</code></div>'+
+      '<div class="fn-sug"><span>Sugerencia: <code>'+sug+'</code></span><button type="button" onclick="useSug(\''+sug+'\')">Usar este nombre</button></div>';
+    return;
+  }
+  const c=getCfg();if(!c.user||!c.token){showSt('stArea','⚠️ Configurá GitHub','warn');return;}
 const btn=$('btnPub');btn.disabled=true;btn.textContent='⏳ Publicando...';
 try{if(imgB64&&imgName){showSt('stArea','📷 Subiendo imagen principal...','info');await ghPut('assets/'+imgName,imgB64,'📷 '+imgName,true);}
 // Upload extra body images
@@ -407,7 +530,9 @@ async function editNote(filename){
     $('cuerpo').value=cuerpo;
     $('piefoto').value=piefoto;
     $('filename').value=filename;
-    
+    // Edición: el filename ya existe, no regenerarlo desde el título
+    $('filename').dataset.manual='1';
+
     // Mark as editing
     window._editingFile=filename;
     

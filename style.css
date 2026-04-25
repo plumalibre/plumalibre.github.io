@@ -292,6 +292,7 @@ body:has(.news-grid > article) .hero {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
 }
 .card .info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
 .card .badge-sm {
@@ -403,6 +404,7 @@ body:has(.news-grid > article) .hero {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   transition: transform 0.5s var(--ease);
 }
 .news-grid > .hero-article:hover .thumb img { transform: scale(1.03); }

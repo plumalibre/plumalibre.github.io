@@ -6,9 +6,9 @@
     "alt": "Pluma Libre"
   },
   "banner_b_nota": {
-    "activo": false,
+    "activo": true,
     "imagen": "assets/banner-b.jpg",
-    "link": "",
+    "link": "https://www.facebook.com/plumalibre.press/",
     "alt": ""
   }
 }

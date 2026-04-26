@@ -1,6 +1,6 @@
 {
   "banner_a_home": {
-    "activo": true,
+    "activo": false,
     "imagen": "assets/banner-a.jpg",
     "link": "https://www.facebook.com/plumalibre.press/",
     "alt": "Pluma Libre"

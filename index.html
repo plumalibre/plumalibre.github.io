@@ -236,7 +236,7 @@
     function injectBannerC(cfgC){
       if(!cfgC||cfgC.activo!==true||!cfgC.imagen||!cfgC.link)return;
       if(!isImg(cfgC.imagen)||!isUrl(cfgC.link))return;
-      const freq=Math.max(3,Math.min(10,parseInt(cfgC.frecuencia)||5));
+      const freq=Math.max(1,Math.min(10,parseInt(cfgC.frecuencia)||5));
       const tpl=document.getElementById("banner-c-tpl");
       if(!tpl)return;
       document.querySelectorAll(".news-grid").forEach(grid=>{

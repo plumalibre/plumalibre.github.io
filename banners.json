@@ -1,6 +1,6 @@
 {
   "banner_a_home": {
-    "activo": false,
+    "activo": true,
     "imagen": "assets/banner-a.jpg",
     "link": "https://www.facebook.com/plumalibre.press/",
     "alt": "Pluma Libre"
@@ -12,10 +12,10 @@
     "alt": ""
   },
   "banner_c_grid": {
-    "activo": false,
-    "imagen": "",
-    "link": "",
-    "alt": "",
-    "frecuencia": 5
+    "activo": true,
+    "imagen": "assets/banner-c.jpg",
+    "link": "https://www.facebook.com/plumalibre.press/",
+    "alt": "Pluma Libre",
+    "frecuencia": 2
   }
 }

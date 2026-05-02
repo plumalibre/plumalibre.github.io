@@ -78,7 +78,18 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 56px;
+  height: 48px;
+  transition: height 0.22s ease;
+}
+.header.scrolled .wrap { height: 38px; }
+.header.scrolled .logo-simbolo,
+.header.scrolled .logo-text { display: none; }
+.header.scrolled .logo::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 28px;
+  background: url("assets/logo-globo.png") center/contain no-repeat;
 }
 .logo {
   position: absolute;

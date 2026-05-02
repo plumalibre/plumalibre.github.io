@@ -100,7 +100,7 @@ ul { list-style: none; }
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 600;
-  margin-top: 1px;
+  margin-top: -3px;
 }
 
 /* Menu button */

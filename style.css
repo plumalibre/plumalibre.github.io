@@ -91,7 +91,7 @@ ul { list-style: none; }
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--brand);
-  line-height: 1;
+  line-height: 0.85;
   letter-spacing: -0.02em;
 }
 .logo-text .tagline {
@@ -100,7 +100,8 @@ ul { list-style: none; }
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 600;
-  margin-top: -3px;
+  margin-top: 0;
+  line-height: 1;
 }
 
 /* Menu button */

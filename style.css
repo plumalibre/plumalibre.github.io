@@ -828,6 +828,40 @@ body:has(.news-grid > article) .hero {
   .pl-ad--banner-b .pl-ad-img-leaderboard { display: none; }
   .pl-ad--banner-b .pl-ad-img-mobile      { display: block; }
 }
+/* Banner A — sticky shrink al scrollear. La clase .pl-ad-shrunk se agrega
+   por JS cuando scrollY > 200px y se quita cuando vuelve a < 100px (zona
+   muerta para evitar flicker en el borde). */
+.pl-ad--banner-a .pl-ad-frame {
+  transition: height 350ms cubic-bezier(.25,.1,.25,1), max-height 350ms cubic-bezier(.25,.1,.25,1);
+}
+.pl-ad--banner-a.pl-ad-shrunk .pl-ad-frame { height: 100px; max-height: 100px; }
+.pl-ad--banner-a.pl-ad-shrunk img { object-fit: cover; }
+@media (max-width: 767px) {
+  .pl-ad--banner-a.pl-ad-shrunk .pl-ad-frame { height: 70px; max-height: 70px; }
+}
+/* Banner C — intercalado entre cards del grid (estilo card normal). */
+.pl-ad--banner-c {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin: 0;
+  max-width: none;
+}
+.pl-ad--banner-c .pl-ad-label {
+  padding: 8px 12px 4px;
+  margin: 0;
+  font-size: 10px;
+}
+.pl-ad--banner-c .pl-ad-frame {
+  flex: 1;
+  aspect-ratio: 4 / 3;
+  background: var(--bg);
+}
+.pl-ad--banner-c .pl-ad-frame img { object-fit: cover; }
+
 /* Colapso defensivo: si quitaron el atributo `hidden` pero todavía no hay
    imagen con src válida, no mostrar el banner (evita frame roto). */
 .pl-ad:not(:has(img[src]:not([src=""]))) { display: none; }

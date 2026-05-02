@@ -92,6 +92,18 @@
       </aside>
     </div>
 
+    <!-- Banner C (intercalado entre cards) · plantilla. JS lo clona y lo inserta cada N cards si banner_c_grid.activo===true -->
+    <template id="banner-c-tpl">
+      <article class="pl-ad pl-ad--banner-c" role="complementary" aria-label="Contenido publicitario">
+        <span class="pl-ad-label">Publicidad</span>
+        <div class="pl-ad-frame">
+          <a href="" target="_blank" rel="noopener nofollow sponsored" aria-label="Ir al sitio del patrocinador — se abre en una pestaña nueva">
+            <img src="" alt="">
+          </a>
+        </div>
+      </article>
+    </template>
+
     <div class="wrap">
       <div class="section-head">
         <h2>Últimas Noticias</h2>
@@ -187,13 +199,13 @@
 
   <script>
   (function(){
+    const isUrl=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^(mailto:|tel:)/i.test(u)||/^https:\/\/wa\.me\//i.test(u));
+    const isImg=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^[A-Za-z0-9._\/-]+$/.test(u));
     async function loadBanners(){
       try{
         const r=await fetch("/banners.json?t="+Date.now(),{cache:"no-store"});
         if(!r.ok)return;
         const c=await r.json();
-        const isUrl=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^(mailto:|tel:)/i.test(u)||/^https:\/\/wa\.me\//i.test(u));
-        const isImg=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^[A-Za-z0-9._\/-]+$/.test(u));
         const apply=(sel,b)=>{
           if(!b||b.activo!==true||!b.imagen)return;
           if(!isImg(b.imagen)||!isUrl(b.link))return;
@@ -204,6 +216,8 @@
         apply(".pl-ad--banner-a",c.banner_a_home);
         apply(".pl-ad--banner-b",c.banner_b_nota);
         repositionBannerA();
+        injectBannerC(c.banner_c_grid);
+        setupBannerAShrink();
       }catch(e){}
     }
     function repositionBannerA(){
@@ -215,7 +229,48 @@
       heroArt.insertAdjacentElement("afterend",ad);
       if(wrap&&!wrap.children.length)wrap.remove();
     }
-    if(document.querySelector(".pl-ad")){
+    // Banner C: clona el template y lo inserta cada `frecuencia` cards en
+    // cada news-grid que tenga al menos `frecuencia` cards. La iteración
+    // usa el array original de cards, así la frecuencia es estable (los
+    // banners ya insertados no se cuentan a sí mismos).
+    function injectBannerC(cfgC){
+      if(!cfgC||cfgC.activo!==true||!cfgC.imagen||!cfgC.link)return;
+      if(!isImg(cfgC.imagen)||!isUrl(cfgC.link))return;
+      const freq=Math.max(3,Math.min(10,parseInt(cfgC.frecuencia)||5));
+      const tpl=document.getElementById("banner-c-tpl");
+      if(!tpl)return;
+      document.querySelectorAll(".news-grid").forEach(grid=>{
+        const cards=Array.from(grid.querySelectorAll(":scope > article.card, :scope > article.hero-article"));
+        if(cards.length<freq)return;
+        for(let i=freq-1;i<cards.length;i+=freq){
+          const ad=tpl.content.firstElementChild.cloneNode(true);
+          ad.querySelector("a").href=cfgC.link;
+          const img=ad.querySelector("img");
+          img.src=cfgC.imagen;
+          if(cfgC.alt)img.alt=cfgC.alt;
+          cards[i].insertAdjacentElement("afterend",ad);
+        }
+      });
+    }
+    // Banner A sticky: achica al pasar 200px de scroll, vuelve a tamaño
+    // original cuando el scroll baja de 100px (zona muerta evita flicker
+    // en el borde). rAF garantiza ~60fps sin overhead.
+    function setupBannerAShrink(){
+      const ad=document.querySelector(".pl-ad--banner-a");
+      if(!ad||ad.hidden)return;
+      let ticking=false;
+      window.addEventListener("scroll",()=>{
+        if(ticking)return;
+        ticking=true;
+        requestAnimationFrame(()=>{
+          const y=window.scrollY;
+          if(y>200)ad.classList.add("pl-ad-shrunk");
+          else if(y<100)ad.classList.remove("pl-ad-shrunk");
+          ticking=false;
+        });
+      },{passive:true});
+    }
+    if(document.querySelector(".pl-ad")||document.getElementById("banner-c-tpl")){
       if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",loadBanners);
       else loadBanners();
     }

@@ -99,22 +99,23 @@ Tres botones en la barra superior:
 
 ## Banners publicitarios (banners.json)
 
-El sitio tiene dos slots de banner que se controlan desde `banners.json` en la raíz del repo:
+El sitio tiene tres slots de banner que se controlan desde `banners.json` en la raíz del repo:
 
-- **Banner A** — aparece en el home (entre hero y grid de noticias)
-- **Banner B** — aparece dentro de las notas (entre el 3er y 4to párrafo)
+- **Banner A** — aparece en el home (entre hero y grid de noticias). Se **achica al scrollear** (250→100px desktop, 150→70px mobile, vuelve a tamaño original al subir el scroll).
+- **Banner B** — aparece dentro de las notas (entre el 3er y 4to párrafo).
+- **Banner C** — intercalado entre cards del grid de Últimas Noticias en el home, cada N cards (configurable, default 5). Se renderiza como una card más del grid (mismo aspect, sombra, border-radius). Dimensiones recomendadas: 600×600 (1:1) o 800×600 (4:3) px, JPG/PNG, máx 150KB. Tiene campo extra `frecuencia` (3-10) en `banners.json`. **Pendiente futuro:** cuando las páginas de sección (`secciones/*.html`) tengan más cards, extender Banner C a esas páginas también (hoy solo aparece en home).
 
-Ambos slots están en el HTML pero quedan ocultos (`hidden` + CSS guard) hasta que `banners.json` los marque como activos. Un script inline al final del `<body>` lee `banners.json` al cargar, valida link/imagen y remueve el `hidden` si todo es válido.
+Banner A y B están en el HTML estático (ocultos con `hidden` hasta que el JS los active). Banner C vive en un `<template id="banner-c-tpl">` y se clona/inserta por JS solo si está activo. El script inline al final del `<body>` lee `banners.json` al cargar, valida link/imagen y aplica.
 
 ### Activar un anunciante — opción rápida (editor)
 
-Desde el editor → botón **📢 Publicidad** en la barra superior → modal con formularios para Banner A y Banner B:
+Desde el editor → botón **📢 Publicidad** en la barra superior → modal con formularios para Banner A, Banner B y Banner C:
 - Checkbox "Activo"
 - Subir imagen (se redimensiona y comprime automáticamente al tamaño del slot)
 - Link y alt
 - Botón "Guardar Banner X" → genera 1-2 commits automáticos (imagen + `banners.json`).
 
-Este es el flujo recomendado día a día. Los nombres de imagen son fijos (`assets/banner-a.jpg`, `assets/banner-b.jpg`) y cada upload sobrescribe.
+Este es el flujo recomendado día a día. Los nombres de imagen son fijos (`assets/banner-a.jpg`, `assets/banner-b.jpg`, `assets/banner-c.jpg`) y cada upload sobrescribe.
 
 ### Activar un anunciante — opción manual (GitHub web)
 

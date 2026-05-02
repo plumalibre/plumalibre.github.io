@@ -10,5 +10,12 @@
     "imagen": "assets/banner-b.jpg",
     "link": "https://www.facebook.com/plumalibre.press/",
     "alt": ""
+  },
+  "banner_c_grid": {
+    "activo": false,
+    "imagen": "",
+    "link": "",
+    "alt": "",
+    "frecuencia": 5
   }
 }

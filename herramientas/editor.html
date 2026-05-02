@@ -260,6 +260,38 @@
       <button class="btn btn-p" onclick="saveBanner('b')">💾 Guardar Banner B</button>
     </div>
 
+    <div class="card">
+      <h2>📢 Banner C — Entre cards del grid</h2>
+      <p class="hint" style="margin-top:4px">Aparece intercalado dentro del grid de Últimas Noticias, cada N cards.</p>
+      <label class="cb" style="margin:10px 0"><input type="checkbox" id="adC-activo"> Activo</label>
+
+      <div class="field"><label>Imagen</label>
+        <div class="img-drop" id="adC-drop" onclick="document.getElementById('adC-in').click()"><div class="ic">📷</div><div class="tx">Tocá para elegir imagen</div></div>
+        <input type="file" id="adC-in" accept="image/*" style="display:none" onchange="handleBannerImg(this,'c')">
+        <img id="adC-pv" class="img-pv hidden" alt="">
+        <p class="img-info hidden" id="adC-info"></p>
+        <button class="btn btn-s btn-sm hidden" id="adC-rm" onclick="removeBannerImg('c')" style="margin-top:6px">🗑 Quitar imagen pendiente</button>
+        <p class="hint" style="margin-top:6px">Recomendado: 600×600 o 800×600 px · JPG/PNG · hasta 150KB (se comprime automáticamente).</p>
+      </div>
+
+      <div class="field"><label>Link del anunciante *</label>
+        <input type="text" id="adC-link" placeholder="https://...">
+        <p class="hint">Admite https:// · mailto: · tel: · https://wa.me/</p>
+      </div>
+
+      <div class="field"><label>Texto alt (accesibilidad)</label>
+        <input type="text" id="adC-alt" placeholder="Descripción breve del anuncio">
+      </div>
+
+      <div class="field"><label>Frecuencia (cada cuántas cards)</label>
+        <input type="number" id="adC-frecuencia" min="3" max="10" value="5">
+        <p class="hint">Mínimo 3, máximo 10. Default 5 (aparece como card #6, #11, #16...).</p>
+      </div>
+
+      <div id="adC-st"></div>
+      <button class="btn btn-p" onclick="saveBanner('c')">💾 Guardar Banner C</button>
+    </div>
+
     <div class="card" style="background:var(--bg2)">
       <h2 style="font-size:.95rem">ℹ️ Cómo funciona</h2>
       <ul style="font-size:.78rem;color:var(--text2);line-height:1.6;padding-left:18px;margin-top:6px">
@@ -1385,8 +1417,8 @@ function toast(msg,type){
   window._toastT=setTimeout(()=>t.classList.remove('show'),dur);
 }
 
-// ===== MODAL PUBLICIDAD (Banner A + Banner B) =====
-const bannerState={a:{newB64:null,savedImg:''},b:{newB64:null,savedImg:''}};
+// ===== MODAL PUBLICIDAD (Banner A + Banner B + Banner C) =====
+const bannerState={a:{newB64:null,savedImg:''},b:{newB64:null,savedImg:''},c:{newB64:null,savedImg:''}};
 
 function bannerImgPath(slot){return 'assets/banner-'+slot+'.jpg';}
 function adId(slot,suffix){return 'ad'+slot.toUpperCase()+'-'+suffix;}
@@ -1405,18 +1437,19 @@ async function openAdsModal(){
 function closeAdsModal(){
   $('adsOv').classList.add('hidden');
   document.body.style.overflow='';
-  ['a','b'].forEach(s=>{bannerState[s].newB64=null;$(adId(s,'in')).value='';$(adId(s,'st')).innerHTML='';});
+  ['a','b','c'].forEach(s=>{bannerState[s].newB64=null;$(adId(s,'in')).value='';$(adId(s,'st')).innerHTML='';});
 }
 
 async function loadBannersForm(){
   const c=getCfg();
-  if(!c.user||!c.token){$('adsWarn').classList.remove('hidden');['a','b'].forEach(s=>paintBanner(s,{}));return;}
+  if(!c.user||!c.token){$('adsWarn').classList.remove('hidden');['a','b','c'].forEach(s=>paintBanner(s,{}));return;}
   $('adsWarn').classList.add('hidden');
   $('adsLoad').classList.remove('hidden');
-  let cfg={banner_a_home:{},banner_b_nota:{}};
+  let cfg={banner_a_home:{},banner_b_nota:{},banner_c_grid:{}};
   try{const {content}=await ghGet('banners.json');cfg=JSON.parse(content);}catch{}
   paintBanner('a',cfg.banner_a_home||{});
   paintBanner('b',cfg.banner_b_nota||{});
+  paintBanner('c',cfg.banner_c_grid||{});
   $('adsLoad').classList.add('hidden');
 }
 
@@ -1424,6 +1457,11 @@ function paintBanner(slot,b){
   $(adId(slot,'activo')).checked=b.activo===true;
   $(adId(slot,'link')).value=b.link||'';
   $(adId(slot,'alt')).value=b.alt||'';
+  const freqEl=$(adId(slot,'frecuencia'));
+  if(freqEl){
+    const f=parseInt(b.frecuencia);
+    freqEl.value=(isNaN(f)||f<3||f>10)?5:f;
+  }
   bannerState[slot].newB64=null;
   bannerState[slot].savedImg=b.imagen||'';
   const pv=$(adId(slot,'pv')),drop=$(adId(slot,'drop')),info=$(adId(slot,'info')),rm=$(adId(slot,'rm'));
@@ -1460,7 +1498,7 @@ function compressBanner(imgEl,maxW,maxBytes){
 
 function handleBannerImg(input,slot){
   const file=input.files[0];if(!file)return;
-  const maxW=slot==='a'?970:728;
+  const maxW=slot==='a'?970:slot==='c'?800:728;
   const maxBytes=slot==='a'?200*1024:150*1024;
   const reader=new FileReader();
   reader.onload=e=>{
@@ -1514,6 +1552,10 @@ function validateBanner(slot){
     if(!/^(https:\/\/|mailto:|tel:|https:\/\/wa\.me\/)/i.test(link))return{ok:false,msg:'⚠️ Link debe empezar con https:// mailto: tel: o https://wa.me/'};
     if(!hasImg)return{ok:false,msg:'⚠️ Imagen obligatoria si el banner está activo.'};
   }
+  if(slot==='c'){
+    const f=parseInt($(adId(slot,'frecuencia')).value);
+    if(isNaN(f)||f<3||f>10)return{ok:false,msg:'⚠️ Frecuencia debe ser un número entre 3 y 10.'};
+  }
   return{ok:true};
 }
 
@@ -1531,15 +1573,20 @@ async function saveBanner(slot){
       bannerState[slot].newB64=null;
     }
     showSt(adId(slot,'st'),'📝 Actualizando banners.json...','info');
-    let cfg={banner_a_home:{activo:false,imagen:'',link:'',alt:''},banner_b_nota:{activo:false,imagen:'',link:'',alt:''}};
+    let cfg={banner_a_home:{activo:false,imagen:'',link:'',alt:''},banner_b_nota:{activo:false,imagen:'',link:'',alt:''},banner_c_grid:{activo:false,imagen:'',link:'',alt:'',frecuencia:5}};
     try{const {content}=await ghGet('banners.json');cfg=JSON.parse(content);}catch{}
-    const key=slot==='a'?'banner_a_home':'banner_b_nota';
-    cfg[key]={
+    const key=slot==='a'?'banner_a_home':slot==='b'?'banner_b_nota':'banner_c_grid';
+    const obj={
       activo:$(adId(slot,'activo')).checked,
       imagen:bannerState[slot].savedImg||'',
       link:$(adId(slot,'link')).value.trim(),
       alt:$(adId(slot,'alt')).value.trim()
     };
+    if(slot==='c'){
+      const f=parseInt($(adId(slot,'frecuencia')).value);
+      obj.frecuencia=(isNaN(f)||f<3||f>10)?5:f;
+    }
+    cfg[key]=obj;
     await ghPut('banners.json',JSON.stringify(cfg,null,2)+'\n','banner: actualizar '+key);
     $(adId(slot,'st')).innerHTML='';
     toast('✅ Banner '+slot.toUpperCase()+' actualizado. Visible en ~30s','online');

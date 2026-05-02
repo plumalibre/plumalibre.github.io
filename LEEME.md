@@ -1,6 +1,6 @@
 # 📰 Pluma Libre — Sitio Web
 
-Medio digital independiente de Sonsonate, El Salvador.
+Medio informativo de interés nacional e internacional con sede en Sonsonate, El Salvador.
 Sitio en producción: **https://plumalibre.github.io**
 
 ---

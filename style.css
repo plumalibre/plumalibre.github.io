@@ -74,15 +74,24 @@ ul { list-style: none; }
   border-bottom: 1px solid var(--border);
 }
 .header .wrap {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 56px;
 }
-.logo { display: flex; align-items: center; gap: 6px; }
+.logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .logo img {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   border-radius: 8px;
 }
@@ -105,7 +114,7 @@ ul { list-style: none; }
   line-height: 1.15;
 }
 .logo img.logo-wordmark {
-  height: 22px;
+  height: 18px;
   width: auto;
   border-radius: 0;
 }
@@ -970,8 +979,10 @@ body:has(.news-grid > article) .hero {
   .nav a:hover { background: rgba(0,0,0,0.04); }
   .nav a.on { background: rgba(0,113,227,0.08); color: var(--accent); }
   .logo-text h1 { font-size: 1.4rem; }
-  .logo img { width: 40px; height: 40px; }
+  .logo img { width: 32px; height: 32px; }
   .logo img.logo-wordmark { height: 18px; width: auto; }
+  .header .wrap { justify-content: space-between; }
+  .logo { position: static; transform: none; left: auto; top: auto; }
   .hero .wrap {
     display: grid;
     grid-template-columns: 1.5fr 1fr;

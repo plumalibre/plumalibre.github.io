@@ -69,6 +69,20 @@
   </header>
 
   <main>
+    <!-- Banner A (home) · arriba del hero. Activar: quitar `hidden` + poner href + src de las 3 imágenes (970x250, 728x90, 320x100). -->
+    <div class="wrap">
+      <aside class="pl-ad pl-ad-sobria pl-ad--banner-a" role="complementary" aria-label="Contenido publicitario" hidden>
+        <span class="pl-ad-label">Publicidad</span>
+        <div class="pl-ad-frame">
+          <a href="" target="_blank" rel="noopener nofollow sponsored" aria-label="Ir al sitio del patrocinador — se abre en una pestaña nueva">
+            <img class="pl-ad-img-billboard"   src="" width="970" height="250" alt="">
+            <img class="pl-ad-img-leaderboard" src="" width="728" height="90"  alt="">
+            <img class="pl-ad-img-mobile"      src="" width="320" height="100" alt="">
+          </a>
+        </div>
+      </aside>
+    </div>
+
     <!-- HOME HERO: 1 principal + 4 secundarias.
          Las clases son .home-hero-principal y .home-hero-secondary; el editor las maneja con un selector de 3 estados. -->
     <section class="home-hero">
@@ -116,20 +130,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Banner A (home) · activar: quitar `hidden` + poner href del anunciante + src de las 3 imágenes (970x250, 728x90, 320x100) -->
-    <div class="wrap">
-      <aside class="pl-ad pl-ad-sobria pl-ad--banner-a" role="complementary" aria-label="Contenido publicitario" hidden>
-        <span class="pl-ad-label">Publicidad</span>
-        <div class="pl-ad-frame">
-          <a href="" target="_blank" rel="noopener nofollow sponsored" aria-label="Ir al sitio del patrocinador — se abre en una pestaña nueva">
-            <img class="pl-ad-img-billboard"   src="" width="970" height="250" alt="">
-            <img class="pl-ad-img-leaderboard" src="" width="728" height="90"  alt="">
-            <img class="pl-ad-img-mobile"      src="" width="320" height="100" alt="">
-          </a>
-        </div>
-      </aside>
-    </div>
 
     <!-- Banner C (intercalado entre cards) · plantilla. JS lo clona y lo inserta cada N cards si banner_c_grid.activo===true -->
     <template id="banner-c-tpl">

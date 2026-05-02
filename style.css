@@ -101,7 +101,7 @@ ul { list-style: none; }
   letter-spacing: 0.12em;
   font-weight: 600;
   display: block;
-  margin-top: 0;
+  margin-top: -5px;
   line-height: 1;
 }
 

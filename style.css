@@ -262,6 +262,161 @@ body:has(.news-grid > article) .hero {
 }
 
 /* ============================================
+   HOME HERO — layout estilo Infobae
+   1 principal grande + 4 secundarias en sidebar.
+   Mobile: stack vertical con secundarias compactas.
+   Desktop: grilla asimetrica 1.6fr / 1fr.
+   ============================================ */
+.home-hero { padding: 20px 0 8px; }
+.home-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.home-hero-principal {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s var(--ease);
+  cursor: pointer;
+  animation: fadeIn 0.5s var(--ease) both;
+}
+.home-hero-principal:hover { box-shadow: var(--shadow-md); }
+.home-hero-principal .img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--bg);
+}
+.home-hero-principal .img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.home-hero-principal:hover .img img { transform: scale(1.03); }
+.home-hero-principal .body { padding: 18px 18px 22px; }
+.home-hero-principal .kicker,
+.home-hero-secondary .kicker {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand);
+  margin-bottom: 6px;
+}
+.home-hero-principal h2 {
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+}
+.home-hero-principal h2 a:hover { color: var(--accent); }
+.home-hero-principal .excerpt {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+.home-hero-principal .meta {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.home-hero-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.home-hero-secondary {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.25s var(--ease);
+  border: 1px solid transparent;
+  cursor: pointer;
+  animation: fadeIn 0.4s var(--ease) both;
+}
+.home-hero-secondary:hover {
+  box-shadow: var(--shadow-sm);
+  border-color: var(--border);
+  transform: translateY(-1px);
+}
+.home-hero-secondary .thumb {
+  flex-shrink: 0;
+  width: 92px;
+  height: 92px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg);
+}
+.home-hero-secondary .thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.home-hero-secondary .info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.home-hero-secondary .kicker { font-size: 0.6rem; margin-bottom: 4px; }
+.home-hero-secondary h3 {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+.home-hero-secondary h3 a:hover { color: var(--accent); }
+.home-hero-secondary:nth-child(1) { animation-delay: 60ms; }
+.home-hero-secondary:nth-child(2) { animation-delay: 100ms; }
+.home-hero-secondary:nth-child(3) { animation-delay: 140ms; }
+.home-hero-secondary:nth-child(4) { animation-delay: 180ms; }
+
+/* Stretched link en cards del hero */
+.home-hero-principal h2 a::after,
+.home-hero-secondary h3 a::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+}
+.home-hero-principal:has(h2 a:focus-visible),
+.home-hero-secondary:has(h3 a:focus-visible) {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-radius: inherit;
+}
+.home-hero-principal h2 a:focus-visible,
+.home-hero-secondary h3 a:focus-visible { outline: none; }
+
+@media (min-width: 900px) {
+  .home-hero-grid {
+    grid-template-columns: 1.6fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .home-hero-principal .img { aspect-ratio: 16/10; }
+  .home-hero-principal .body { padding: 22px 26px 28px; }
+  .home-hero-principal h2 { font-size: 2.1rem; }
+  .home-hero-principal .excerpt { font-size: 1.02rem; }
+  .home-hero-sidebar { gap: 12px; }
+  .home-hero-secondary { padding: 12px; }
+  .home-hero-secondary .thumb { width: 100px; height: 100px; }
+  .home-hero-secondary h3 { font-size: 1rem; }
+}
+
+/* ============================================
    SECTION TITLES
    ============================================ */
 .section-head {

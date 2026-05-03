@@ -12,9 +12,13 @@
   },
   "banner_b_nota": {
     "activo": true,
+    "tipo": "imagen",
     "imagen": "assets/banner-b.jpg",
     "link": "https://www.facebook.com/plumalibre.press/",
-    "alt": ""
+    "alt": "",
+    "ubicaciones": [
+      "nota_interno"
+    ]
   },
   "banner_c_grid": {
     "activo": true,

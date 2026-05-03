@@ -235,37 +235,45 @@
     const isImg=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^[A-Za-z0-9._\/-]+$/.test(u));
     const ytId=u=>{if(!u)return null;const m=String(u).match(/(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:null;};
     const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    // Default natural por slot, para banners viejos que no traen ubicaciones explícitas
+    const DEF_LOC={banner_a_home:'home_top',banner_b_nota:'nota_interno',banner_c_grid:'home_grid'};
+    function bannerValido(b){if(!b||b.activo!==true||!isUrl(b.link))return false;const t=b.tipo||'imagen';if(t==='youtube')return !!ytId(b.imagen);return !!b.imagen&&isImg(b.imagen);}
+    function locsDe(b,key){return Array.isArray(b.ubicaciones)?b.ubicaciones:[DEF_LOC[key]||'home_grid'];}
+    // Devuelve el primer banner válido cuya lista de ubicaciones incluye la requerida.
+    function pickBannerFor(loc,c){
+      const slots=[['banner_a_home',c.banner_a_home],['banner_b_nota',c.banner_b_nota],['banner_c_grid',c.banner_c_grid]];
+      for(const [k,b] of slots){if(bannerValido(b)&&locsDe(b,k).includes(loc))return b;}
+      // También buscar entre individuales del grid
+      const ind=Array.isArray(c.banners_grid_individuales)?c.banners_grid_individuales:[];
+      for(const b of ind){if(bannerValido(b)&&(b.ubicaciones||['home_grid']).includes(loc))return b;}
+      return null;
+    }
+    function renderBannerEn(ad,b){
+      const link=ad.querySelector('.pl-ad-frame a')||ad.querySelector('a');
+      if(!link)return;
+      const tipo=b.tipo||'imagen';
+      link.href=b.link;
+      if(tipo==='youtube'){
+        const id=ytId(b.imagen);
+        link.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&loop=1&playlist='+id+'&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;border:0"></iframe>';
+      }else if(tipo==='video'){
+        link.innerHTML='<video src="'+esc(b.imagen)+'" autoplay loop muted playsinline style="display:block;width:100%;height:100%;object-fit:cover"></video>';
+      }else{
+        const imgs=link.querySelectorAll('img');
+        if(imgs.length)imgs.forEach(i=>{i.src=b.imagen;if(b.alt)i.alt=b.alt;});
+        else link.innerHTML='<img src="'+esc(b.imagen)+'" alt="'+esc(b.alt||'')+'" style="display:block;width:100%;height:100%;object-fit:contain">';
+      }
+      ad.removeAttribute('hidden');
+    }
     async function loadBanners(){
       try{
         const r=await fetch("/banners.json?t="+Date.now(),{cache:"no-store"});
         if(!r.ok)return;
         const c=await r.json();
-        // apply: maneja tipo imagen|gif|video|youtube. Imagen/gif van con <img>, video con <video>, youtube con <iframe>.
-        const apply=(sel,b)=>{
-          if(!b||b.activo!==true)return;
-          if(!isUrl(b.link))return;
-          const tipo=b.tipo||'imagen';
-          if(tipo!=='youtube'&&(!b.imagen||!isImg(b.imagen)))return;
-          if(tipo==='youtube'&&!ytId(b.imagen))return;
-          document.querySelectorAll(sel).forEach(ad=>{
-            const link=ad.querySelector('.pl-ad-frame a');
-            if(!link)return;
-            link.href=b.link;
-            if(tipo==='youtube'){
-              const id=ytId(b.imagen);
-              link.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&loop=1&playlist='+id+'&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;border:0"></iframe>';
-            }else if(tipo==='video'){
-              link.innerHTML='<video src="'+esc(b.imagen)+'" autoplay loop muted playsinline style="display:block;width:100%;height:100%;object-fit:cover"></video>';
-            }else{
-              link.querySelectorAll('img').forEach(i=>{i.src=b.imagen;if(b.alt)i.alt=b.alt;});
-            }
-            ad.removeAttribute('hidden');
-          });
-        };
-        apply(".pl-ad--banner-a",c.banner_a_home);
-        apply(".pl-ad--banner-b",c.banner_b_nota);
+        const top=pickBannerFor('home_top',c);
+        if(top)document.querySelectorAll(".pl-ad--banner-a").forEach(ad=>renderBannerEn(ad,top));
         repositionBannerA();
-        injectBannerC(c.banner_c_grid);
+        injectBannerC(c);
         setupBannerAShrink();
       }catch(e){}
     }
@@ -278,36 +286,30 @@
       heroArt.insertAdjacentElement("afterend",ad);
       if(wrap&&!wrap.children.length)wrap.remove();
     }
-    // Banner C: clona el template y lo inserta cada `frecuencia` cards en
-    // cada news-grid que tenga al menos `frecuencia` cards. La iteración
-    // usa el array original de cards, así la frecuencia es estable (los
-    // banners ya insertados no se cuentan a sí mismos).
-    function injectBannerC(cfgC){
-      if(!cfgC||cfgC.activo!==true||!cfgC.link)return;
-      if(!isUrl(cfgC.link))return;
-      const tipo=cfgC.tipo||'imagen';
-      if(tipo!=='youtube'&&(!cfgC.imagen||!isImg(cfgC.imagen)))return;
-      if(tipo==='youtube'&&!ytId(cfgC.imagen))return;
+    // Banner C + individuales: clona el template e inserta un banner cada `frecuencia` cards.
+    // Asigna los individuales activos en orden a los espacios; los espacios sobrantes los
+    // rellena con el Banner C (comodín). Si C no es válido y no quedan individuales, no
+    // inserta nada en ese espacio.
+    function injectBannerC(c){
+      const cfgC=c.banner_c_grid||{};
+      const cValido=bannerValido(cfgC)&&locsDe(cfgC,'banner_c_grid').includes('home_grid');
+      const indActivos=(Array.isArray(c.banners_grid_individuales)?c.banners_grid_individuales:[])
+        .filter(b=>bannerValido(b)&&(b.ubicaciones||['home_grid']).includes('home_grid'));
+      // Si no hay nada que mostrar en el grid, salir
+      if(!cValido&&indActivos.length===0)return;
       const freq=Math.max(1,Math.min(10,parseInt(cfgC.frecuencia)||5));
       const tpl=document.getElementById("banner-c-tpl");
       if(!tpl)return;
+      let usadoInd=0;
       document.querySelectorAll(".news-grid").forEach(grid=>{
         const cards=Array.from(grid.querySelectorAll(":scope > article.card, :scope > article.hero-article"));
         if(cards.length<freq)return;
         for(let i=freq-1;i<cards.length;i+=freq){
+          // Elegir individual si aún quedan, sino el C comodín
+          const banner=usadoInd<indActivos.length?indActivos[usadoInd++]:(cValido?cfgC:null);
+          if(!banner)break;
           const ad=tpl.content.firstElementChild.cloneNode(true);
-          const link=ad.querySelector("a");
-          link.href=cfgC.link;
-          if(tipo==='youtube'){
-            const id=ytId(cfgC.imagen);
-            link.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&loop=1&playlist='+id+'&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;border:0"></iframe>';
-          }else if(tipo==='video'){
-            link.innerHTML='<video src="'+esc(cfgC.imagen)+'" autoplay loop muted playsinline style="display:block;width:100%;height:100%;object-fit:cover"></video>';
-          }else{
-            const img=ad.querySelector("img");
-            img.src=cfgC.imagen;
-            if(cfgC.alt)img.alt=cfgC.alt;
-          }
+          renderBannerEn(ad,banner);
           cards[i].insertAdjacentElement("afterend",ad);
         }
       });

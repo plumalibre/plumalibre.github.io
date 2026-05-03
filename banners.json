@@ -1,6 +1,6 @@
 {
   "banner_a_home": {
-    "activo": false,
+    "activo": true,
     "tipo": "imagen",
     "imagen": "assets/banner-a.jpg",
     "link": "https://www.facebook.com/plumalibre.press/",

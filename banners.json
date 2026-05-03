@@ -22,9 +22,13 @@
   },
   "banner_c_grid": {
     "activo": true,
+    "tipo": "imagen",
     "imagen": "assets/banner-c.jpg",
     "link": "https://www.facebook.com/plumalibre.press/",
     "alt": "Pluma Libre",
-    "frecuencia": 2
+    "ubicaciones": [
+      "home_grid"
+    ],
+    "frecuencia": 5
   }
 }

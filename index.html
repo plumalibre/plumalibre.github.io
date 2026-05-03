@@ -232,17 +232,34 @@
   (function(){
     const isUrl=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^(mailto:|tel:)/i.test(u)||/^https:\/\/wa\.me\//i.test(u));
     const isImg=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^[A-Za-z0-9._\/-]+$/.test(u));
+    const ytId=u=>{if(!u)return null;const m=String(u).match(/(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:null;};
+    const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     async function loadBanners(){
       try{
         const r=await fetch("/banners.json?t="+Date.now(),{cache:"no-store"});
         if(!r.ok)return;
         const c=await r.json();
+        // apply: maneja tipo imagen|gif|video|youtube. Imagen/gif van con <img>, video con <video>, youtube con <iframe>.
         const apply=(sel,b)=>{
-          if(!b||b.activo!==true||!b.imagen)return;
-          if(!isImg(b.imagen)||!isUrl(b.link))return;
-          document.querySelectorAll(sel+" a").forEach(a=>{a.href=b.link;});
-          document.querySelectorAll(sel+" img").forEach(i=>{i.src=b.imagen;if(b.alt)i.alt=b.alt;});
-          document.querySelectorAll(sel).forEach(ad=>ad.removeAttribute("hidden"));
+          if(!b||b.activo!==true)return;
+          if(!isUrl(b.link))return;
+          const tipo=b.tipo||'imagen';
+          if(tipo!=='youtube'&&(!b.imagen||!isImg(b.imagen)))return;
+          if(tipo==='youtube'&&!ytId(b.imagen))return;
+          document.querySelectorAll(sel).forEach(ad=>{
+            const link=ad.querySelector('.pl-ad-frame a');
+            if(!link)return;
+            link.href=b.link;
+            if(tipo==='youtube'){
+              const id=ytId(b.imagen);
+              link.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&loop=1&playlist='+id+'&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;border:0"></iframe>';
+            }else if(tipo==='video'){
+              link.innerHTML='<video src="'+esc(b.imagen)+'" autoplay loop muted playsinline style="display:block;width:100%;height:100%;object-fit:cover"></video>';
+            }else{
+              link.querySelectorAll('img').forEach(i=>{i.src=b.imagen;if(b.alt)i.alt=b.alt;});
+            }
+            ad.removeAttribute('hidden');
+          });
         };
         apply(".pl-ad--banner-a",c.banner_a_home);
         apply(".pl-ad--banner-b",c.banner_b_nota);
@@ -265,8 +282,11 @@
     // usa el array original de cards, así la frecuencia es estable (los
     // banners ya insertados no se cuentan a sí mismos).
     function injectBannerC(cfgC){
-      if(!cfgC||cfgC.activo!==true||!cfgC.imagen||!cfgC.link)return;
-      if(!isImg(cfgC.imagen)||!isUrl(cfgC.link))return;
+      if(!cfgC||cfgC.activo!==true||!cfgC.link)return;
+      if(!isUrl(cfgC.link))return;
+      const tipo=cfgC.tipo||'imagen';
+      if(tipo!=='youtube'&&(!cfgC.imagen||!isImg(cfgC.imagen)))return;
+      if(tipo==='youtube'&&!ytId(cfgC.imagen))return;
       const freq=Math.max(1,Math.min(10,parseInt(cfgC.frecuencia)||5));
       const tpl=document.getElementById("banner-c-tpl");
       if(!tpl)return;
@@ -275,10 +295,18 @@
         if(cards.length<freq)return;
         for(let i=freq-1;i<cards.length;i+=freq){
           const ad=tpl.content.firstElementChild.cloneNode(true);
-          ad.querySelector("a").href=cfgC.link;
-          const img=ad.querySelector("img");
-          img.src=cfgC.imagen;
-          if(cfgC.alt)img.alt=cfgC.alt;
+          const link=ad.querySelector("a");
+          link.href=cfgC.link;
+          if(tipo==='youtube'){
+            const id=ytId(cfgC.imagen);
+            link.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&loop=1&playlist='+id+'&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;border:0"></iframe>';
+          }else if(tipo==='video'){
+            link.innerHTML='<video src="'+esc(cfgC.imagen)+'" autoplay loop muted playsinline style="display:block;width:100%;height:100%;object-fit:cover"></video>';
+          }else{
+            const img=ad.querySelector("img");
+            img.src=cfgC.imagen;
+            if(cfgC.alt)img.alt=cfgC.alt;
+          }
           cards[i].insertAdjacentElement("afterend",ad);
         }
       });

@@ -237,6 +237,7 @@
     const isImg=u=>typeof u==="string"&&(/^https:\/\//i.test(u)||/^[A-Za-z0-9._\/-]+$/.test(u));
     const ytId=u=>{if(!u)return null;const m=String(u).match(/(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:null;};
     const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    const abs=p=>/^https?:\/\//i.test(p)||(p&&p.charAt(0)==='/')?p:'/'+p;
     // Default natural por slot, para banners viejos que no traen ubicaciones explícitas
     const DEF_LOC={banner_a_home:'home_top',banner_b_nota:'nota_interno',banner_c_grid:'home_grid'};
     function bannerValido(b){if(!b||b.activo!==true||!isUrl(b.link))return false;const t=b.tipo||'imagen';if(t==='youtube')return !!ytId(b.imagen);return !!b.imagen&&isImg(b.imagen);}
@@ -259,11 +260,11 @@
         const id=ytId(b.imagen);
         link.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&mute=1&loop=1&playlist='+id+'&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;border:0"></iframe>';
       }else if(tipo==='video'){
-        link.innerHTML='<video src="'+esc(b.imagen)+'" autoplay loop muted playsinline style="display:block;width:100%;height:100%;object-fit:cover"></video>';
+        link.innerHTML='<video src="'+esc(abs(b.imagen))+'" autoplay loop muted playsinline style="display:block;width:100%;height:100%;object-fit:cover"></video>';
       }else{
         const imgs=link.querySelectorAll('img');
-        if(imgs.length)imgs.forEach(i=>{i.src=b.imagen;if(b.alt)i.alt=b.alt;});
-        else link.innerHTML='<img src="'+esc(b.imagen)+'" alt="'+esc(b.alt||'')+'" style="display:block;width:100%;height:100%;object-fit:contain">';
+        if(imgs.length)imgs.forEach(i=>{i.src=abs(b.imagen);if(b.alt)i.alt=b.alt;});
+        else link.innerHTML='<img src="'+esc(abs(b.imagen))+'" alt="'+esc(b.alt||'')+'" style="display:block;width:100%;height:100%;object-fit:contain">';
       }
       ad.removeAttribute('hidden');
     }

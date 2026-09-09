@@ -399,3 +399,205 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+
+// ============================================================
+// Reacciones (pulgar arriba / abajo) y comentarios de las notas.
+// El sitio es estatico, asi que los datos viven en el Worker
+// (/social/*, base D1). Se inyecta desde aca porque el bloque tendria
+// que repetirse en las 167 notas.
+//
+// Los comentarios NO salen solos: entran en espera y aparecen cuando se
+// aprueban desde /social/panel?key=... — asi lo pidio la casa.
+// ============================================================
+(function(){
+  var API = 'https://plumalibre-analytics.prensaplumalibre.workers.dev';
+
+  function esNota(){
+    return /\/articulos\//.test(location.pathname) || document.body.classList.contains('article-page');
+  }
+
+  // El slug es el nombre del archivo de la nota; es la clave en la base.
+  function slug(){
+    var f = location.pathname.split('/').pop() || '';
+    return f.replace(/\.html?$/, '').toLowerCase();
+  }
+
+  // Identificador anonimo del visitante: solo sirve para no contarle dos veces
+  // el pulgar y para el limite de comentarios. No es una cuenta.
+  function yo(){
+    var v = '';
+    try { v = localStorage.getItem('pl_yo') || ''; } catch(e){}
+    if(!/^[a-zA-Z0-9-]{8,64}$/.test(v)){
+      v = (crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : String(Date.now()) + '-' + Math.random().toString(36).slice(2, 10);
+      try { localStorage.setItem('pl_yo', v); } catch(e){}
+    }
+    return v;
+  }
+
+  function el(tag, clase, texto){
+    var e = document.createElement(tag);
+    if(clase) e.className = clase;
+    if(texto != null) e.textContent = texto;
+    return e;
+  }
+
+  function fecha(ms){
+    try {
+      return new Date(ms).toLocaleDateString('es-SV', { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch(e){ return ''; }
+  }
+
+  function armar(){
+    var s = document.createElement('section');
+    s.className = 'pl-social';
+
+    // --- reacciones ---
+    var rx = el('div', 'pl-rx');
+    var titRx = el('p', 'pl-social-t', '¿Qué te pareció esta nota?');
+    var fila = el('div', 'pl-rx-fila');
+    var arriba = el('button', 'pl-rx-b pl-rx-si');
+    arriba.type = 'button';
+    arriba.setAttribute('aria-label', 'Me gusta');
+    arriba.innerHTML = '<span class="pl-rx-i">👍</span><span class="pl-rx-n">0</span>';
+    var abajo = el('button', 'pl-rx-b pl-rx-no');
+    abajo.type = 'button';
+    abajo.setAttribute('aria-label', 'No me gusta');
+    abajo.innerHTML = '<span class="pl-rx-i">👎</span><span class="pl-rx-n">0</span>';
+    fila.appendChild(arriba); fila.appendChild(abajo);
+    rx.appendChild(titRx); rx.appendChild(fila);
+
+    // --- comentarios ---
+    var com = el('div', 'pl-com');
+    com.appendChild(el('h2', 'pl-com-t', 'Comentarios'));
+    var lista = el('ul', 'pl-com-lista');
+    var vacio = el('p', 'pl-com-vacio', 'Todavía nadie comenta esta nota. Estrenala vos.');
+
+    var form = document.createElement('form');
+    form.className = 'pl-com-form';
+    form.noValidate = true;
+    var nombre = document.createElement('input');
+    nombre.type = 'text'; nombre.name = 'nombre'; nombre.maxLength = 40;
+    nombre.placeholder = 'Tu nombre'; nombre.autocomplete = 'name';
+    var texto = document.createElement('textarea');
+    texto.name = 'texto'; texto.maxLength = 800; texto.rows = 3;
+    texto.placeholder = 'Escribí tu comentario';
+    // Campo trampa para robots: invisible y fuera del recorrido del teclado.
+    var trampa = document.createElement('input');
+    trampa.type = 'text'; trampa.name = 'web'; trampa.tabIndex = -1;
+    trampa.autocomplete = 'off'; trampa.className = 'pl-com-trampa';
+    trampa.setAttribute('aria-hidden', 'true');
+    var enviar = document.createElement('button');
+    enviar.type = 'submit'; enviar.className = 'pl-com-enviar'; enviar.textContent = 'Enviar comentario';
+    var aviso = el('p', 'pl-com-aviso', 'Los comentarios se revisan antes de publicarse.');
+    form.appendChild(nombre); form.appendChild(texto); form.appendChild(trampa);
+    form.appendChild(enviar); form.appendChild(aviso);
+
+    com.appendChild(form);
+    com.appendChild(vacio);
+    com.appendChild(lista);
+
+    s.appendChild(rx); s.appendChild(com);
+    return { raiz: s, arriba: arriba, abajo: abajo, lista: lista, vacio: vacio,
+             form: form, nombre: nombre, texto: texto, trampa: trampa, enviar: enviar, aviso: aviso };
+  }
+
+  function pintarConteos(ui, d){
+    ui.arriba.querySelector('.pl-rx-n').textContent = d.arriba || 0;
+    ui.abajo.querySelector('.pl-rx-n').textContent = d.abajo || 0;
+    ui.arriba.classList.toggle('on', d.mio === 1);
+    ui.abajo.classList.toggle('on', d.mio === -1);
+  }
+
+  function pintarComentarios(ui, cs){
+    ui.lista.innerHTML = '';
+    if(!cs || !cs.length){ ui.vacio.hidden = false; return; }
+    ui.vacio.hidden = true;
+    cs.forEach(function(c){
+      var li = el('li', 'pl-com-item');
+      li.appendChild(el('b', null, c.nombre));
+      li.appendChild(el('span', 'pl-com-fecha', fecha(c.creado)));
+      li.appendChild(el('p', null, c.texto));
+      ui.lista.appendChild(li);
+    });
+  }
+
+  function init(){
+    if(!esNota()) return;
+    var sl = slug();
+    if(!sl) return;
+    var quien = yo();
+
+    var ancla = document.querySelector('.pl-rel') || document.querySelector('.contact-cta');
+    var share = document.querySelector('.share');
+    if(!ancla && !share) return;
+
+    var ui = armar();
+    if(ancla) ancla.parentNode.insertBefore(ui.raiz, ancla);
+    else share.parentNode.insertBefore(ui.raiz, share.nextSibling);
+
+    fetch(API + '/social/estado?slug=' + encodeURIComponent(sl) + '&yo=' + encodeURIComponent(quien))
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(!d || d.error) return;
+        pintarConteos(ui, d);
+        pintarComentarios(ui, d.comentarios);
+      })
+      .catch(function(){});
+
+    function reaccionar(valor){
+      return function(){
+        ui.arriba.disabled = ui.abajo.disabled = true;
+        fetch(API + '/social/reaccion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug: sl, valor: valor, yo: quien })
+        }).then(function(r){ return r.json(); })
+          .then(function(d){ if(d && !d.error) pintarConteos(ui, d); })
+          .catch(function(){})
+          .then(function(){ ui.arriba.disabled = ui.abajo.disabled = false; });
+      };
+    }
+    ui.arriba.addEventListener('click', reaccionar(1));
+    ui.abajo.addEventListener('click', reaccionar(-1));
+
+    ui.form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var nom = ui.nombre.value.trim(), txt = ui.texto.value.trim();
+      if(nom.length < 2 || txt.length < 2){
+        ui.aviso.textContent = 'Poné tu nombre y tu comentario.';
+        ui.aviso.className = 'pl-com-aviso pl-com-error';
+        return;
+      }
+      ui.enviar.disabled = true;
+      ui.aviso.className = 'pl-com-aviso';
+      ui.aviso.textContent = 'Enviando...';
+      fetch(API + '/social/comentario', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: sl, nombre: nom, texto: txt, yo: quien, web: ui.trampa.value })
+      }).then(function(r){ return r.json(); })
+        .then(function(d){
+          if(d && d.ok){
+            ui.nombre.value = ''; ui.texto.value = '';
+            ui.aviso.className = 'pl-com-aviso pl-com-listo';
+            ui.aviso.textContent = 'Gracias. Tu comentario queda en espera: lo publicamos apenas lo revisemos.';
+          } else {
+            ui.aviso.className = 'pl-com-aviso pl-com-error';
+            ui.aviso.textContent = (d && d.error === 'muy_seguido') ? 'Esperá un momento antes de mandar otro.'
+              : (d && d.error === 'demasiados') ? 'Ya mandaste varios hoy. Seguimos mañana.'
+              : 'No se pudo enviar. Probá de nuevo.';
+          }
+        })
+        .catch(function(){
+          ui.aviso.className = 'pl-com-aviso pl-com-error';
+          ui.aviso.textContent = 'No se pudo enviar. Probá de nuevo.';
+        })
+        .then(function(){ ui.enviar.disabled = false; });
+    });
+  }
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();

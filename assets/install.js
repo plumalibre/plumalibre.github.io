@@ -302,3 +302,100 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+
+// ============================================================
+// Compartir: Messenger + bandeja del sistema — se inyecta acá porque
+// el bloque .share-btns esta repetido en las 167 notas del sitio.
+// - "Messenger": en celular abre la app (esquema fb-messenger://). En
+//   escritorio el dialogo de Meta EXIGE un App ID; si PL_FB_APP_ID queda
+//   vacio, el boton no se muestra en escritorio (no hay forma sin App ID).
+// - "Mas": navigator.share abre la bandeja del sistema — mensajes SMS,
+//   Telegram, Messenger, correo, lo que el usuario tenga instalado.
+//   Si el navegador no la soporta (escritorio), copia el enlace.
+// ============================================================
+(function(){
+  var PL_FB_APP_ID = ''; // poner el App ID de Meta para habilitar Messenger en escritorio
+
+  function esMovil(){
+    return /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+  }
+
+  function svg(d){
+    var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    s.setAttribute('width','14'); s.setAttribute('height','14');
+    s.setAttribute('viewBox','0 0 24 24'); s.setAttribute('fill','currentColor');
+    s.setAttribute('aria-hidden','true');
+    var p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d', d);
+    s.appendChild(p);
+    return s;
+  }
+
+  var D_MSG = 'M12 0C5.24 0 0 4.95 0 11.64c0 3.5 1.43 6.52 3.77 8.61.2.18.31.42.32.68l.07 2.14c.02.68.72 1.12 1.35.85l2.39-1.05c.2-.09.42-.1.63-.05 1.09.3 2.26.46 3.47.46 6.76 0 12-4.95 12-11.64C24 4.95 18.76 0 12 0zm7.2 8.94l-3.52 5.59c-.56.89-1.77 1.11-2.61.48l-2.8-2.1a.72.72 0 00-.87 0l-3.78 2.87c-.51.38-1.17-.22-.83-.76l3.52-5.59c.56-.89 1.77-1.11 2.61-.48l2.8 2.1c.26.19.61.19.87 0l3.78-2.87c.5-.39 1.17.22.83.76z';
+  var D_MAS = 'M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z';
+  var D_LINK = 'M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z';
+
+  function boton(clase, etiqueta, icono){
+    var a = document.createElement('a');
+    a.className = clase;
+    a.href = '#';
+    a.appendChild(svg(icono));
+    a.appendChild(document.createTextNode(' ' + etiqueta));
+    return a;
+  }
+
+  function init(){
+    var cont = document.querySelector('.share-btns');
+    if(!cont || cont.querySelector('.msg, .mas')) return;
+
+    var url = location.href;
+    var titulo = (document.querySelector('.article-header h1') || {}).textContent || document.title;
+    titulo = String(titulo).trim();
+
+    if(esMovil() || PL_FB_APP_ID){
+      var m = boton('msg', 'Messenger', D_MSG);
+      if(PL_FB_APP_ID){
+        m.href = 'https://www.facebook.com/dialog/send?app_id=' + encodeURIComponent(PL_FB_APP_ID) +
+                 '&link=' + encodeURIComponent(url) + '&redirect_uri=' + encodeURIComponent(url);
+        m.target = '_blank';
+        m.rel = 'noopener';
+      } else {
+        m.href = 'fb-messenger://share/?link=' + encodeURIComponent(url);
+      }
+      cont.appendChild(m);
+    }
+
+    var nativo = typeof navigator.share === 'function';
+    var b = boton('mas', nativo ? 'Más' : 'Copiar enlace', nativo ? D_MAS : D_LINK);
+    b.addEventListener('click', function(e){
+      e.preventDefault();
+      if(nativo){
+        navigator.share({title: titulo, text: titulo, url: url}).catch(function(){});
+        return;
+      }
+      var listo = function(){
+        var t = b.lastChild;
+        t.textContent = ' Enlace copiado';
+        setTimeout(function(){ t.textContent = ' Copiar enlace'; }, 2200);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(listo).catch(function(){});
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = url;
+        ta.setAttribute('readonly','');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try{ document.execCommand('copy'); listo(); }catch(err){}
+        ta.remove();
+      }
+    });
+    cont.appendChild(b);
+  }
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();

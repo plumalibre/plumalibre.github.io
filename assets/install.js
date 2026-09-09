@@ -533,19 +533,23 @@
     var share = document.querySelector('.share');
     if(!ancla && !share) return;
 
-    var ui = armar();
-    if(ancla) ancla.parentNode.insertBefore(ui.raiz, ancla);
-    else share.parentNode.insertBefore(ui.raiz, share.nextSibling);
-
+    // El bloque se pinta SOLO si el Worker contesta. Mientras la base no exista
+    // —o si un dia se cae— la nota queda como estaba, sin un cajon muerto.
+    var ui = null;
     fetch(API + '/social/estado?slug=' + encodeURIComponent(sl) + '&yo=' + encodeURIComponent(quien))
       .then(function(r){ return r.json(); })
       .then(function(d){
-        if(!d || d.error) return;
+        if(!d || d.error || !d.ok) return;
+        ui = armar();
+        if(ancla) ancla.parentNode.insertBefore(ui.raiz, ancla);
+        else share.parentNode.insertBefore(ui.raiz, share.nextSibling);
         pintarConteos(ui, d);
         pintarComentarios(ui, d.comentarios);
+        enchufar();
       })
       .catch(function(){});
 
+    function enchufar(){
     function reaccionar(valor){
       return function(){
         ui.arriba.disabled = ui.abajo.disabled = true;
@@ -596,6 +600,7 @@
         })
         .then(function(){ ui.enviar.disabled = false; });
     });
+    }
   }
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

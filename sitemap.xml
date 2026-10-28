@@ -1388,4 +1388,10 @@
 <url><loc>https://plumalibre.press/articulos/arranca-campana-presidencial-2027-sin-candidatos-inscritos-tse.html</loc><lastmod>2026-10-27</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 <url><loc>https://plumalibre.press/articulos/reuters-el-salvador-unos-1000-soldados-haiti-emboscada-cuatro-militares.html</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 <url><loc>https://plumalibre.press/articulos/choque-trenes-ave-iryo-toledo-espana-al-menos-64-muertos.html</loc><lastmod>2026-10-28</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://plumalibre.press/articulos/ever-castillo-candidato-a-diputado-por-arena-en-so.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

@@ -136,6 +136,20 @@
       // El hero del HTML es lo que arma el editor a mano: en modo manual manda
       // tal cual, en automatico lo reemplazan las notas mas recientes del grid
       // y en mixto va primero lo fijado y se completa con lo reciente.
+      // 29-oct-2026: las cards se ordenan por FECHA (la mas nueva primero). Antes
+      // mandaba el orden en que se subieron y el carrusel mezclaba dias. Dentro del
+      // mismo dia queda primero la que se subio de ultimo (orden estable).
+      (function(){
+        var g=document.querySelector('.news-grid');if(!g)return;
+        var MES={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,setiembre:8,octubre:9,noviembre:10,diciembre:11};
+        function fecha(c){var m=c.querySelector('.meta');var t=m?m.textContent.toLowerCase():'';
+          var x=t.match(/(\d{1,2})\s+de\s+([a-z\u00e1\u00e9\u00ed\u00f3\u00fa]+),?\s+(\d{4})/);
+          if(!x||MES[x[2]]===undefined)return -1;return Date.UTC(+x[3],MES[x[2]],+x[1]);}
+        var cards=[].slice.call(g.querySelectorAll(':scope > article.card'));
+        var orden=cards.map(function(c,i){return{c:c,f:fecha(c),i:i};}).sort(function(a,b){return (b.f-a.f)||(a.i-b.i);});
+        var marcas=cards.map(function(c){var m=document.createComment('c');c.parentNode.replaceChild(m,c);return m;});
+        marcas.forEach(function(m,i){m.parentNode.replaceChild(orden[i].c,m);});
+      })();
       var modo=(cfgHero.modo||'automatico'),cuantas=cfgHero.cantidad>0?cfgHero.cantidad:5;
       var manuales=[],pm=leer(principal);if(pm)manuales.push(pm);
       secs.forEach(function(s){var d=leer(s);if(d)manuales.push(d);});
@@ -269,6 +283,41 @@
     })();
     </script>
 
+    <!-- 29-oct-2026: «Lo mas leido de la semana» (GA4 via el Worker, /social/populares). Si falla, no se pinta. -->
+    <section class="pl-top" hidden>
+      <div class="wrap">
+        <div class="section-head"><h2>Lo más leído de la semana</h2></div>
+        <ol class="pl-top-lista"></ol>
+      </div>
+    </section>
+    <script>
+    (function(){
+      var sec=document.querySelector('.pl-top');if(!sec)return;
+      var API='https://plumalibre-analytics.prensaplumalibre.workers.dev/social/populares';
+      function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+      function foto(href){
+        var a=document.querySelector('.news-grid a[href="'+href.replace(/^\//,'')+'"]');
+        var img=a&&a.closest('article')&&a.closest('article').querySelector('img');
+        if(img)return Promise.resolve(img.getAttribute('src'));
+        return fetch(href).then(function(r){return r.ok?r.text():'';}).then(function(h){
+          var m=h.match(/<meta property="og:image" content="([^"]+)"/);return m?m[1]:'';}).catch(function(){return '';});
+      }
+      function pintar(notas){
+        if(!notas||notas.length<3)return;
+        var ol=sec.querySelector('.pl-top-lista');
+        Promise.all(notas.map(function(n){return foto(n.href);})).then(function(fotos){
+          ol.innerHTML=notas.map(function(n,i){
+            return '<li class="pl-top-item"><a href="'+esc(n.href.replace(/^\//,''))+'"><span class="pl-top-n">'+(i+1)+'</span>'+
+              (fotos[i]?'<span class="pl-top-img"><img src="'+esc(fotos[i])+'" alt="" loading="lazy"></span>':'')+
+              '<span class="pl-top-t">'+esc(n.titulo)+'</span></a></li>';}).join('');
+          sec.hidden=false;
+        });
+      }
+      function ir(){fetch(API).then(function(r){return r.json();}).then(function(d){if(d&&d.ok)pintar(d.notas);}).catch(function(){});}
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ir,{once:true});else ir();
+    })();
+    </script>
+
     <!-- Banner C (intercalado entre cards) · plantilla. JS lo clona y lo inserta cada N cards si banner_c_grid.activo===true -->
     <template id="banner-c-tpl">
       <article class="pl-ad pl-ad--banner-c" role="complementary" aria-label="Contenido publicitario">
@@ -286,7 +335,7 @@
         <h2>Últimas Noticias</h2>
       </div>
       <div class="news-grid">
-        <article class="card"><div class="thumb"><img src="assets/expresidente-elias-antonio-saca-orden-libertad.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Político</span><h3><a href="articulos/expresidente-saca-orden-de-libertad-tras-cumplir-10-anos-carcel-corrupcion.html">Expresidente Saca tiene orden de libertad tras cumplir 10 años de cárcel por corrupción</a></h3><p class="meta">28 de octubre, 2026</p></div></article>
+        <article class="card"><div class="thumb"><img src="assets/expresidente-elias-antonio-saca-orden-libertad.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Política</span><h3><a href="articulos/expresidente-saca-orden-de-libertad-tras-cumplir-10-anos-carcel-corrupcion.html">Expresidente Saca tiene orden de libertad tras cumplir 10 años de cárcel por corrupción</a></h3><p class="meta">28 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/familia-mata-ramirez-san-judas-tadeo-serenata-mariachi.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/familia-mata-ramirez-rezo-misa-serenata-san-judas-tadeo-colonia-santa-marta.html">Con rezo, misa y serenata, la familia Mata Ramírez celebró a San Judas Tadeo</a></h3><p class="meta">29 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/el-salvador-78-a-2000-soldados-haiti.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Internacional</span><h3><a href="articulos/el-salvador-paso-de-78-a-mas-de-2000-soldados-en-haiti-en-diez-dias.html">En diez días, El Salvador pasó de 78 a más de 2,000 soldados en Haití</a></h3><p class="meta">29 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/san-judas-tadeo-basilica-sagrado-corazon-altar-flores-velas.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/miles-de-fieles-celebran-san-judas-tadeo-basilica-sagrado-corazon-san-salvador.html">Con flores y candelas, miles de fieles celebran a San Judas Tadeo, el santo de las causas difíciles</a></h3><p class="meta">28 de octubre, 2026</p></div></article>
@@ -295,25 +344,25 @@
         <article class="card"><div class="thumb"><img src="assets/1000104778.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Política</span><h3><a href="articulos/ever-castillo-candidato-a-diputado-por-arena-en-so.html">Ever Castillo, ​candidato a diputado por ARENA en Sonsonate presenta a su compañero de fórmula para la casilla #1</a></h3><p class="meta">28 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/choque-trenes-ave-iryo-urda-toledo-guardia-civil.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Internacional</span><h3><a href="articulos/choque-trenes-ave-iryo-toledo-espana-al-menos-64-muertos.html">Choque de dos trenes de alta velocidad en Toledo, España: al menos 64 muertos</a></h3><p class="meta">28 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/el-salvador-1000-soldados-haiti-reuters.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Internacional</span><h3><a href="articulos/reuters-el-salvador-unos-1000-soldados-haiti-emboscada-cuatro-militares.html">Reuters: El Salvador ya tiene unos 1,000 soldados en Haití tras la emboscada a cuatro militares</a></h3><p class="meta">28 de octubre, 2026</p></div></article>
-        <article class="card"><div class="thumb"><img src="assets/sede-tse-san-salvador-campana-presidencial-2027.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Político</span><h3><a href="articulos/arranca-campana-presidencial-2027-sin-candidatos-inscritos-tse.html">Arranca la campaña presidencial 2027 sin ningún candidato inscrito en el TSE</a></h3><p class="meta">27 de octubre, 2026</p></div></article>
+        <article class="card"><div class="thumb"><img src="assets/sede-tse-san-salvador-campana-presidencial-2027.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Política</span><h3><a href="articulos/arranca-campana-presidencial-2027-sin-candidatos-inscritos-tse.html">Arranca la campaña presidencial 2027 sin ningún candidato inscrito en el TSE</a></h3><p class="meta">27 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/1000104112.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Religión</span><h3><a href="articulos/obispos-aclaran-que-reunion-y-oracion-con-trump-en.html">Obispos aclaran que reunión y oración con Trump en la Casa Blanca no constituyeron un respaldo político</a></h3><p class="meta">27 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/costa-del-sol-turistas-colombianos-ahogados-el-zapote.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/costa-del-sol-mar-arrastra-tres-personas-dos-turistas-colombianos-mueren-una-desaparecida.html">El mar arrastró a tres personas en la Costa del Sol: dos turistas colombianos murieron y una sigue desaparecida</a></h3><p class="meta">27 de octubre, 2026</p></div></article>
-        <article class="card"><div class="thumb"><img src="assets/audiencia-cidh-panama-regimen-excepcion-el-salvador.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Político</span><h3><a href="articulos/estado-salvadoreno-no-llego-audiencia-cidh-reos-regimen-de-excepcion.html">El Estado salvadoreño no llegó a la audiencia de la CIDH sobre los reos del régimen de excepción</a></h3><p class="meta">26 de octubre, 2026</p></div></article>
+        <article class="card"><div class="thumb"><img src="assets/audiencia-cidh-panama-regimen-excepcion-el-salvador.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Política</span><h3><a href="articulos/estado-salvadoreno-no-llego-audiencia-cidh-reos-regimen-de-excepcion.html">El Estado salvadoreño no llegó a la audiencia de la CIDH sobre los reos del régimen de excepción</a></h3><p class="meta">26 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/bombero-cilindro-gas-restaurante-sonsonate.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/explosion-gas-restaurante-barrio-el-angel-sonsonate-tres-trabajadores-lesionados.html">Explosión de gas en la cocina de un restaurante de Sonsonate deja tres trabajadores lesionados</a></h3><p class="meta">26 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/1000103871.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/cristosal-denuncia-contradicciones-de-la-pddh-ante.html"> CRISTOSAL DENUNCIA CONTRADICCIONES DE LA PDDH ANTE LA CRISIS DE DERECHOS HUMANOS EN EL SALVADOR</a></h3><p class="meta">26 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/haiti-aeropuerto-toussaint-louverture-puerto-principe.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Internacional</span><h3><a href="articulos/haiti-bukele-no-son-nuestros-hombres-fuerza-internacional-no-confirma-restos.html">La fuerza internacional en Haití no respalda a Bukele: no descarta que los restos sean de los 4 militares salvadoreños</a></h3><p class="meta">26 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/sandra-yanira-martinez-meteorologa.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/sandra-yanira-martinez-primera-mujer-meteorologa-el-salvador-fallece.html">Sandra Yanira Martínez, la primera mujer meteoróloga de El Salvador, fallece a los 67 años</a></h3><p class="meta">26 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/pick-up-chocado-paredon-santa-catarina-masahuat.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/suben-a-tres-fallecidos-choque-santa-catarina-masahuat-jugadores-partido.html">Suben a tres los fallecidos del choque en la calle a Santa Catarina Masahuat; en el pick-up iban jugadores que volvían de un partido</a></h3><p class="meta">26 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/ambulancia-comandos-salvamento-volcada-santa-catarina-masahuat.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/choque-calle-santa-catarina-masahuat-dos-fallecidos-ambulancia-vuelca.html">Choque en la calle a Santa Catarina Masahuat deja al menos un fallecido; la ambulancia que atendía la emergencia también volcó</a></h3><p class="meta">25 de octubre, 2026</p></div></article>
-        <article class="card"><div class="thumb"><img src="assets/tala-el-mamey-izalco-reserva-bitcoin-23oct.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Político</span><h3><a href="articulos/tala-reserva-izalco-el-mamey-minar-bitcoin-volcano-energy-socia-gobierno.html">Talan árboles centenarios en la reserva de Izalco para minar bitcoin: la empresa señalada es socia del Gobierno</a></h3><p class="meta">23 de octubre, 2026</p></div></article>
+        <article class="card"><div class="thumb"><img src="assets/tala-el-mamey-izalco-reserva-bitcoin-23oct.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Política</span><h3><a href="articulos/tala-reserva-izalco-el-mamey-minar-bitcoin-volcano-energy-socia-gobierno.html">Talan árboles centenarios en la reserva de Izalco para minar bitcoin: la empresa señalada es socia del Gobierno</a></h3><p class="meta">23 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/pescador-ataque-lagarto-bahia-jiquilisco-cruz-roja.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/pescador-sobrevive-ataque-lagarto-bahia-jiquilisco-mordida-rostro.html">Un lagarto lo mordió en la cara y lo hundió: pescador sobrevive al ataque en la bahía de Jiquilisco</a></h3><p class="meta">23 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/el-salvador-fuerzas-especiales-haiti-secuestrados-23oct.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Internacional</span><h3><a href="articulos/el-salvador-envia-200-soldados-haiti-ley-sin-limite-de-tropas.html">El Salvador manda 200 soldados más a Haití con una ley que no pone límite de tropas</a></h3><p class="meta">23 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/juanfer-sendra-tiktok-titulo-universitario.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/juanfer-sendra-tiktoker-espanol-gobierno-titulo-universitario-no-sirve.html">Llegó al país hace dos años, ya tiene cargo en el Gobierno y dice que el título universitario «no sirve»</a></h3><p class="meta">22 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/gobierno-admite-militares-secuestrados-haiti-operacion.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Internacional</span><h3><a href="articulos/gobierno-admite-militares-salvadorenos-secuestrados-haiti-operacion-rescate.html">Tres días después, el Gobierno admite que los cuatro militares en Haití están secuestrados y lanza una operación de rescate</a></h3><p class="meta">21 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/chino-rosales-capturado-perro-balcon-san-salvador.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/chino-rosales-exjugador-aguila-capturado-colgar-perro-balcon-san-salvador.html">El «Chino» Rosales, exjugador del Águila, es el hombre capturado por colgar a un perro desde un balcón</a></h3><p class="meta">21 de octubre, 2026</p></div></article>
-        <article class="card"><div class="thumb"><img src="assets/manuel-gil-kompagil-conversatorio-medis-sonsonate.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Político</span><h3><a href="articulos/manuel-gil-kompagil-conversatorio-resiliencia-colectivos-sonsonate-medis.html">Manuel Gil, «Kompagil», participa en conversatorio sobre resiliencia con colectivos de Sonsonate</a></h3><p class="meta">21 de octubre, 2026</p></div></article>
+        <article class="card"><div class="thumb"><img src="assets/manuel-gil-kompagil-conversatorio-medis-sonsonate.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Política</span><h3><a href="articulos/manuel-gil-kompagil-conversatorio-resiliencia-colectivos-sonsonate-medis.html">Manuel Gil, «Kompagil», participa en conversatorio sobre resiliencia con colectivos de Sonsonate</a></h3><p class="meta">21 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/camiones-los-chorros-apopa-decisiones-judiciales.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/camiones-los-chorros-apopa-conductor-preso-otro-libre-con-fianza.html">Dos camiones, dos tragedias: el conductor de Los Chorros sigue preso y los acusados por la volqueta de Apopa, libres con fianza</a></h3><p class="meta">21 de octubre, 2026</p></div></article>
-        <article class="card"><div class="thumb"><img src="assets/fiscal-rodolfo-delgado-comision-hacienda-regimen-condenas.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Político</span><h3><a href="articulos/regimen-de-excepcion-casi-9-de-cada-10-capturados-siguen-sin-condena-fiscalia.html">Casi 9 de cada 10 capturados en el régimen de excepción siguen sin condena, según cifras de la Fiscalía</a></h3><p class="meta">20 de octubre, 2026</p></div></article>
+        <article class="card"><div class="thumb"><img src="assets/fiscal-rodolfo-delgado-comision-hacienda-regimen-condenas.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Política</span><h3><a href="articulos/regimen-de-excepcion-casi-9-de-cada-10-capturados-siguen-sin-condena-fiscalia.html">Casi 9 de cada 10 capturados en el régimen de excepción siguen sin condena, según cifras de la Fiscalía</a></h3><p class="meta">20 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/amnistia-fiscal-2026-ilustracion.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Económico</span><h3><a href="articulos/amnistia-fiscal-2026-hacienda-propone-perdonar-intereses-recargos-11-diciembre.html">Hacienda propone una nueva amnistía fiscal: perdonaría intereses y recargos de deudas hasta el 11 de diciembre</a></h3><p class="meta">20 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/owen-morales-estudiante-ina-tiburones-music-band-acajutla.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/owen-morales-estudiante-ina-muere-accidente-disagro-acajutla.html">Owen, de 17 años, volvía de preparar su proyecto escolar cuando murió en un accidente en Acajutla</a></h3><p class="meta">20 de octubre, 2026</p></div></article>
         <article class="card"><div class="thumb"><img src="assets/capturan-agente-pnc-amenazas-santa-catarina-masahuat.jpg" alt="" loading="lazy"></div><div class="info"><span class="badge-sm">Social</span><h3><a href="articulos/capturan-agente-pnc-amenazas-companera-de-vida-santa-catarina-masahuat.html">Capturan a un agente de la PNC por amenazar a su compañera de vida en Santa Catarina Masahuat</a></h3><p class="meta">19 de octubre, 2026</p></div></article>

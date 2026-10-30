@@ -534,10 +534,9 @@
 
     // Se ve entre el final de la foto y los botones grandes de abajo; la linea
     // dorada marca cuanto del texto ya se leyo.
-    var foto = document.querySelector('.article-img') || document.querySelector('.article-header');
     function mirar(){
       var vh = innerHeight;
-      var desde = foto ? foto.getBoundingClientRect().bottom < 0 : scrollY > 400;
+      var desde = true; // 29-oct: Javier la quiere visible desde arriba de la nota
       var tope = document.querySelector('.share-arriba') || document.querySelector('.pl-social') || document.querySelector('.footer');
       var hasta = tope && tope.getBoundingClientRect().top < vh - 40;
       var ver = desde && !hasta;

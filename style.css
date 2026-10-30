@@ -3190,3 +3190,27 @@ body:has(.home-hero) .news-grid > .pl-ad--banner-c .pl-ad-frame iframe {
 
 /* 29-oct-2026: compartir sube debajo del texto de la nota (lo mueve install.js) */
 .share.share-arriba{max-width:680px;margin:0 auto;padding:4px 0 24px;border-top:0}
+
+/* 29-oct-2026: barra fija de la nota, estilo pildora azul (lo arma install.js) */
+.pl-panel{position:fixed;z-index:85;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:2px;padding:6px 8px;background:var(--brand);border-radius:999px;box-shadow:0 10px 28px rgba(8,26,65,.35);overflow:hidden;opacity:0;visibility:hidden;transform:translate(-50%,24px);transition:opacity .25s,transform .25s,visibility .25s;--avance:0}
+.pl-panel.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.pl-panel-avance{position:absolute;left:0;right:0;top:0;height:3px;background:#E8B931;transform:scaleX(var(--avance));transform-origin:left;transition:transform .15s linear;pointer-events:none}
+.pl-panel-b{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:42px;height:42px;padding:0 11px;border:0;border-radius:999px;background:transparent;color:#fff;font-weight:700;font-size:14px;line-height:1;font-family:inherit;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.pl-panel-b:hover,.pl-panel-b:focus-visible{background:rgba(255,255,255,.12)}
+.pl-panel-b[hidden]{display:none}
+.pl-panel-b.mas.ok{color:#7ee2a0}
+.pl-panel-b.like{color:#E8B931}
+.pl-panel-b.like.on{background:rgba(232,185,49,.2)}
+.pl-panel-b.oir.on{background:#E8B931;color:var(--brand)}
+.pl-panel-n:empty{display:none}
+.pl-panel-sep{width:1px;height:22px;background:rgba(255,255,255,.2);margin:0 4px}
+body.pl-panel-on .to-top{bottom:80px}
+@media (min-width:1100px){
+.pl-panel{left:calc(50% - 340px - 92px);bottom:auto;top:50%;flex-direction:column;padding:8px 6px;border-radius:28px;transform:translate(-10px,-50%)}
+.pl-panel.show{transform:translate(0,-50%)}
+.pl-panel-avance{right:auto;bottom:0;width:3px;height:auto;transform:scaleY(var(--avance));transform-origin:top}
+.pl-panel-b{flex-direction:column;gap:3px;height:auto;min-height:42px;padding:8px 6px;font-size:12px}
+.pl-panel-sep{width:22px;height:1px;margin:4px 0}
+body.pl-panel-on .to-top{bottom:24px}
+}
+@media print{.pl-panel{display:none}}

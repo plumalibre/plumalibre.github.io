@@ -405,8 +405,156 @@
     cont.appendChild(b);
   }
 
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  // ----------------------------------------------------------
+  // Barra fija de la nota (29-oct-2026, estilo "pildora azul" que eligio Javier):
+  // WhatsApp, Compartir | pulgar n, comentarios n, Escuchar, y una linea dorada
+  // que avanza con la lectura. Celular: abajo al centro. Escritorio ancho:
+  // columna a la izquierda del texto. Aparece al pasar la foto y se esconde al
+  // llegar a los botones grandes de abajo.
+  // ----------------------------------------------------------
+  var D_WA = 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z';
+  var D_UP = 'M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z';
+  var D_COM = 'M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z';
+  var D_OIR = 'M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z';
+  var D_PARAR = 'M6 6h12v12H6z';
+
+  function panel(){
+    var cuerpo = document.querySelector('.article-body');
+    var wa = document.getElementById('shareWa');
+    if(!cuerpo || !wa || document.querySelector('.pl-panel')) return;
+    var url = location.href;
+    var titulo = String((document.querySelector('.article-header h1') || {}).textContent || document.title).trim();
+
+    var p = document.createElement('nav');
+    p.className = 'pl-panel';
+    p.setAttribute('aria-label', 'Acciones de la nota');
+    var barra = document.createElement('span');
+    barra.className = 'pl-panel-avance';
+    p.appendChild(barra);
+
+    function icono(a, d){
+      var i = svg(d); i.setAttribute('width', '19'); i.setAttribute('height', '19');
+      if(a.firstChild) a.replaceChild(i, a.firstChild); else a.appendChild(i);
+    }
+    function item(clase, etiqueta, d, href){
+      var a = document.createElement(href ? 'a' : 'button');
+      a.className = 'pl-panel-b ' + clase;
+      if(href){ a.href = href; } else { a.type = 'button'; }
+      a.setAttribute('aria-label', etiqueta);
+      a.title = etiqueta;
+      icono(a, d);
+      p.appendChild(a);
+      return a;
+    }
+    function num(a){
+      var n = document.createElement('span'); n.className = 'pl-panel-n'; a.appendChild(n); return n;
+    }
+
+    var bw = item('wa', 'Compartir por WhatsApp', D_WA, wa.href); bw.target = '_blank'; bw.rel = 'noopener';
+    var nativo = typeof navigator.share === 'function';
+    var bm = item('mas', nativo ? 'Compartir' : 'Copiar enlace', nativo ? D_MAS : D_LINK);
+    bm.addEventListener('click', function(){
+      if(nativo){ navigator.share({title: titulo, text: titulo, url: url}).catch(function(){}); return; }
+      if(navigator.clipboard) navigator.clipboard.writeText(url).then(function(){
+        bm.classList.add('ok'); setTimeout(function(){ bm.classList.remove('ok'); }, 1800);
+      }).catch(function(){});
+    });
+    var sep = document.createElement('span'); sep.className = 'pl-panel-sep'; p.appendChild(sep);
+
+    var bl = item('like', 'Me gusta', D_UP); var nl = num(bl); bl.hidden = true;
+    var bc = item('com', 'Comentar', D_COM); var nc = num(bc); bc.hidden = true;
+
+    // Escuchar: el telefono lee la nota en voz alta (gratis, sin servidor).
+    var voz = window.speechSynthesis;
+    if(voz && window.SpeechSynthesisUtterance){
+      var bo = item('oir', 'Escuchar la nota', D_OIR);
+      var leyendo = false;
+      var vozEs = function(){
+        var vs = voz.getVoices() || [];
+        return vs.filter(function(v){ return /^es[-_](SV|MX|US|419)/i.test(v.lang); })[0] ||
+               vs.filter(function(v){ return /^es/i.test(v.lang); })[0] || null;
+      };
+      var parar = function(){
+        voz.cancel(); leyendo = false; bo.classList.remove('on'); icono(bo, D_OIR);
+        bo.setAttribute('aria-label', 'Escuchar la nota'); bo.title = 'Escuchar la nota';
+      };
+      bo.addEventListener('click', function(){
+        if(leyendo){ parar(); return; }
+        var trozos = [titulo];
+        cuerpo.querySelectorAll('p, h2, h3, li').forEach(function(e){
+          var t = e.textContent.replace(/\s+/g, ' ').trim();
+          if(t && !/^Fuentes?:/i.test(t)) trozos.push(t);
+        });
+        var v = vozEs();
+        voz.cancel();
+        trozos.forEach(function(t, i){
+          var u = new SpeechSynthesisUtterance(t);
+          u.lang = v ? v.lang : 'es-MX'; if(v) u.voice = v; u.rate = 1;
+          if(i === trozos.length - 1) u.onend = parar;
+          voz.speak(u);
+        });
+        leyendo = true; bo.classList.add('on'); icono(bo, D_PARAR);
+        bo.setAttribute('aria-label', 'Dejar de escuchar'); bo.title = 'Dejar de escuchar';
+      });
+      addEventListener('pagehide', function(){ voz.cancel(); });
+    }
+
+    document.body.appendChild(p);
+
+    // Pulgar y comentarios: espejo del bloque de reacciones (solo si ese bloque existe).
+    function conectar(){
+      var soc = document.querySelector('.pl-social'), si = soc && soc.querySelector('.pl-rx-si');
+      if(!si) return false;
+      bl.hidden = false; bc.hidden = false;
+      var lista = soc.querySelector('.pl-com-lista');
+      var copiar = function(){
+        var n = (si.querySelector('.pl-rx-n') || {}).textContent || '0';
+        nl.textContent = n === '0' ? '' : n;
+        bl.classList.toggle('on', si.classList.contains('on'));
+        var c = lista ? lista.querySelectorAll('.pl-com-item').length : 0;
+        nc.textContent = c ? String(c) : '';
+      };
+      copiar();
+      var mo2 = new MutationObserver(copiar);
+      mo2.observe(si, {subtree: true, childList: true, characterData: true, attributes: true});
+      if(lista) mo2.observe(lista, {childList: true});
+      bl.addEventListener('click', function(){ si.click(); });
+      bc.addEventListener('click', function(){
+        (soc.querySelector('.pl-com-form') || soc).scrollIntoView({behavior: 'smooth', block: 'center'});
+        var n = soc.querySelector('.pl-com-form input[name=nombre]');
+        if(n) setTimeout(function(){ n.focus({preventScroll: true}); }, 600);
+      });
+      return true;
+    }
+    if(!conectar()){
+      var mo = new MutationObserver(function(){ if(conectar()) mo.disconnect(); });
+      mo.observe(document.body, {childList: true, subtree: true});
+      setTimeout(function(){ mo.disconnect(); }, 15000);
+    }
+
+    // Se ve entre el final de la foto y los botones grandes de abajo; la linea
+    // dorada marca cuanto del texto ya se leyo.
+    var foto = document.querySelector('.article-img') || document.querySelector('.article-header');
+    function mirar(){
+      var vh = innerHeight;
+      var desde = foto ? foto.getBoundingClientRect().bottom < 0 : scrollY > 400;
+      var tope = document.querySelector('.share-arriba') || document.querySelector('.pl-social') || document.querySelector('.footer');
+      var hasta = tope && tope.getBoundingClientRect().top < vh - 40;
+      var ver = desde && !hasta;
+      p.classList.toggle('show', ver);
+      document.body.classList.toggle('pl-panel-on', ver);
+      var r = cuerpo.getBoundingClientRect();
+      var hecho = Math.min(1, Math.max(0, (vh - r.top) / (r.height || 1)));
+      p.style.setProperty('--avance', hecho.toFixed(3));
+    }
+    addEventListener('scroll', mirar, {passive: true});
+    addEventListener('resize', mirar);
+    mirar();
+  }
+
+  function arrancar(){ init(); panel(); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
+  else arrancar();
 })();
 
 

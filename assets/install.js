@@ -113,6 +113,27 @@
     requestAnimationFrame(function(){requestAnimationFrame(function(){ov.classList.add('on');});});
     try{localStorage.setItem(LS_TS,String(Date.now()));localStorage.setItem(LS_IMG,String(b.imagen)+'|'+String(b.v||''));}catch(e){}
   }
+  // 29-oct-2026: la publicidad va dentro de la pagina, no encima. En una nota,
+  // despues del tercer parrafo; en la portada, entre el carrusel y lo mas leido.
+  function enLinea(b){
+    if(document.querySelector('.pl-ad-linea')) return;
+    var f=document.createElement('aside');f.className='pl-ad-linea';f.setAttribute('aria-label','Publicidad');
+    f.innerHTML='<span class="pl-ad-linea-tag">Publicidad</span>';
+    var a=document.createElement('a');a.href=b.link;a.target='_blank';a.rel='noopener nofollow sponsored';
+    var img=document.createElement('img');img.src=abs(b.imagen);img.alt=b.alt||'Publicidad';img.loading='lazy';
+    a.appendChild(img);f.appendChild(a);
+    if(esNota()){
+      var ps=document.querySelectorAll('.article-body > p');
+      var tras=ps[Math.min(2,ps.length-1)];
+      if(!tras)return;
+      tras.parentNode.insertBefore(f,tras.nextSibling);
+    } else {
+      var top=document.querySelector('.pl-top')||document.querySelector('.news-grid');
+      if(!top)return;
+      var w=document.createElement('div');w.className='wrap';w.appendChild(f);
+      top.parentNode.insertBefore(w,top);
+    }
+  }
   function init(){
     fetch('/banners.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(c){
       if(!c)return;var b=c.banner_p_popup;
@@ -120,13 +141,7 @@
       var donde=Array.isArray(b.ubicaciones)?b.ubicaciones:['nota_interno'];
       var aca=(esNota()&&donde.indexOf('nota_interno')>=0)||(esPortada()&&donde.indexOf('home_top')>=0);
       if(!aca)return;
-      var horas=parseFloat(b.frecuencia_horas);if(isNaN(horas)||horas<1)horas=24;if(horas>168)horas=168;
-      try{
-        var ts=parseInt(localStorage.getItem(LS_TS)||'0',10);
-        var vista=localStorage.getItem(LS_IMG)||'';
-        if(vista===String(b.imagen)+'|'+String(b.v||'')&&Date.now()-ts<horas*3600000)return;
-      }catch(e){}
-      setTimeout(function(){mostrar(b);},2000);
+      enLinea(b);  // 29-oct-2026: ya no tapa la pantalla (Google castiga los pop-ups); va dentro de la pagina
     }).catch(function(){});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
@@ -761,4 +776,112 @@
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+})();
+
+// ============================================================
+// 29-oct-2026 — Notas relacionadas DE VERDAD + hora relativa.
+// Las notas se arman copiando una nota «molde» y con ella venian sus
+// relacionadas viejas (en Haiti salian el equinoccio y un rayo en Izalco).
+// Aca se reemplazan por las 3 notas de la portada que mas palabras comparten
+// con esta (titulo + bajada), con un empujon a la misma seccion; si ninguna
+// se parece, van las 3 mas nuevas de la misma seccion.
+// ============================================================
+(function(){
+  var VACIAS = ('para como pero esta este estos estas sobre entre desde hasta tras ante bajo segun durante mientras ' +
+    'tambien porque cuando donde quien quienes cual cuales todo toda todos todas otro otra otros otras sus del los las ' +
+    'una unos unas que con por sin han hay fue son ser era mas muy ya les nos solo cada dos tres anos dias hoy ayer ' +
+    'tiene tienen dijo dice tras luego despues antes nuevo nueva salvador salvadorenos salvadorena salvadoreno').split(' ');
+  function palabras(t){
+    return String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/)
+      .filter(function(w){ return w.length > 3 && VACIAS.indexOf(w) < 0; });
+  }
+  var MES = {enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,setiembre:8,octubre:9,noviembre:10,diciembre:11};
+  function fechaDe(t){
+    var x = String(t || '').toLowerCase().match(/(\d{1,2})\s+de\s+([a-záéíóú]+),?\s+(\d{4})/);
+    return (x && MES[x[2]] !== undefined) ? Date.UTC(+x[3], MES[x[2]], +x[1]) : 0;
+  }
+  function seccion(t){ return String(t || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/o$/, 'a'); }
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+  function relacionadas(){
+    var rel = document.querySelector('.pl-rel'), grid = rel && rel.querySelector('.pl-rel-grid');
+    if(!grid || !/\/articulos\//.test(location.pathname)) return;
+    var yo = location.pathname.split('/').pop();
+    var h1 = document.querySelector('.article-header h1'), sub = document.querySelector('.article-header .subtitle');
+    var badge = document.querySelector('.article-header .badge');
+    var mias = palabras((h1 ? h1.textContent : '') + ' ' + (h1 ? h1.textContent : '') + ' ' + (sub ? sub.textContent : ''));
+    if(!mias.length) return;
+    var miSec = seccion(badge ? badge.textContent : '');
+    fetch('/index.html', {cache: 'no-cache'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(html){
+      if(!html) return;
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var notas = [];
+      doc.querySelectorAll('.news-grid article.card, .home-hero-grid article').forEach(function(c){
+        var a = c.querySelector('h2 a, h3 a'), img = c.querySelector('img');
+        if(!a || !img) return;
+        var href = (a.getAttribute('href') || '').split(/[?#]/)[0];
+        var archivo = href.split('/').pop();
+        if(!archivo || archivo === yo || notas.some(function(n){ return n.archivo === archivo; })) return;
+        var k = c.querySelector('.badge-sm, .kicker'), m = c.querySelector('.meta');
+        notas.push({archivo: archivo, titulo: a.textContent.trim(), img: img.getAttribute('src'),
+          sec: k ? k.textContent.trim() : '', meta: m ? m.textContent.trim() : '', fecha: fechaDe(m ? m.textContent : '')});
+      });
+      var cuenta = {};
+      mias.forEach(function(w){ cuenta[w] = 1; });
+      notas.forEach(function(n){
+        var vistas = {}, s = 0;
+        palabras(n.titulo).forEach(function(w){ if(cuenta[w] && !vistas[w]){ vistas[w] = 1; s += 1; } });
+        n.puntos = s + (s && seccion(n.sec) === miSec ? 0.5 : 0);
+      });
+      var buenas = notas.filter(function(n){ return n.puntos >= 1; })
+        .sort(function(a, b){ return (b.puntos - a.puntos) || (b.fecha - a.fecha); });
+      if(buenas.length < 3){
+        var ya = {}; buenas.forEach(function(n){ ya[n.archivo] = 1; });
+        notas.filter(function(n){ return !ya[n.archivo] && seccion(n.sec) === miSec; })
+          .sort(function(a, b){ return b.fecha - a.fecha; })
+          .forEach(function(n){ if(buenas.length < 3) buenas.push(n); });
+      }
+      buenas = buenas.slice(0, 3);
+      if(buenas.length < 2) return;
+      grid.innerHTML = buenas.map(function(n){
+        var src = /^https?:|^\//.test(n.img) ? n.img : '../' + n.img;
+        return '<a class="pl-rel-card" href="' + esc(n.archivo) + '"><img src="' + esc(src) + '" alt="" loading="lazy">' +
+          '<span class="pl-rel-txt"><span class="pl-rel-tit">' + esc(n.titulo) + '</span>' +
+          '<span class="pl-rel-meta">' + esc([n.sec, n.meta].filter(Boolean).join(' · ')) + '</span></span></a>';
+      }).join('');
+    }).catch(function(){});
+  }
+
+  // «Hace 2 horas» cuando la fecha trae hora («29 de octubre, 2026 · 9:40 p. m.») y es de hoy.
+  function horaRelativa(){
+    var ahora = new Date();
+    document.querySelectorAll('.article-meta, .card .meta, .pl-rel-meta, .hh-slide .meta').forEach(function(el){
+      if(el.dataset.plHora) return;
+      var t = el.textContent;
+      var x = t.match(/(\d{1,2})\s+de\s+([a-záéíóú]+),?\s+(\d{4})\s*·\s*(\d{1,2}):(\d{2})\s*([ap])\.?\s*m\.?/i);
+      if(!x || MES[x[2].toLowerCase()] === undefined) return;
+      var h = (+x[4]) % 12 + (/p/i.test(x[6]) ? 12 : 0);
+      // la hora es de El Salvador (UTC-6, sin horario de verano)
+      var cuando = Date.UTC(+x[3], MES[x[2].toLowerCase()], +x[1], h + 6, +x[5]);
+      var min = Math.round((ahora.getTime() - cuando) / 60000);
+      if(min < 0 || min >= 24 * 60) return;
+      var rel = min < 60 ? 'Hace ' + Math.max(1, min) + ' min' : 'Hace ' + Math.round(min / 60) + (Math.round(min / 60) === 1 ? ' hora' : ' horas');
+      el.dataset.plHora = '1';
+      // se cambia solo el texto de la fecha, sin tocar negritas ni enlaces
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n;
+      while((n = w.nextNode())){
+        if(x[0] && n.nodeValue.indexOf(x[0]) >= 0){ n.nodeValue = n.nodeValue.replace(x[0], rel); break; }
+      }
+      el.title = x[0];
+    });
+  }
+
+  function arrancar(){
+    relacionadas();
+    horaRelativa();
+    setTimeout(horaRelativa, 2500);   // el carrusel de la portada se arma despues
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
+  else arrancar();
 })();

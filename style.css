@@ -1566,7 +1566,7 @@ main{overflow:hidden}
   .article-img figcaption{padding-inline:max(24px,calc((100vw - 720px)/2))}
   .article-img-body{margin-inline:calc((680px - 100vw)/2)}
   .article-body blockquote{margin-inline:-28px}
-  .pl-rel{margin-inline:calc((680px - 100vw)/2);padding-inline:max(24px,calc((100vw - 1080px)/2))}
+  .pl-rel{margin-inline:calc((100% - 100vw)/2);padding-inline:max(24px,calc((100vw - 1080px)/2))}
   .pl-rel-grid{display:grid}
   .pl-rel-card{display:block;margin:0}
   .pl-rel-card img{width:100%;height:auto;aspect-ratio:16/9}
@@ -3233,3 +3233,10 @@ body.pl-panel-on .to-top{bottom:24px}
 .pl-top-n{position:absolute;top:6px;left:6px;width:34px;height:34px;font-size:1.25rem;line-height:34px;background:var(--brand);border-radius:50%}
 .pl-top-t{font-size:.98rem}
 }
+
+/* 29-oct-2026: publicidad dentro de la pagina (antes era pop-up encima) */
+.pl-ad-linea{position:relative;margin:26px auto;max-width:430px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+.pl-ad-linea a{display:block}
+.pl-ad-linea img{display:block;width:100%;height:auto}
+.pl-ad-linea-tag{position:absolute;top:8px;left:8px;background:rgba(8,26,65,.72);color:#fff;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.wrap > .pl-ad-linea{margin:18px auto 8px}

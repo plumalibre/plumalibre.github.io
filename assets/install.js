@@ -346,6 +346,15 @@
   }
 
   function init(){
+    // Los botones venian al final de todo (despues de relacionadas y contacto) y casi
+    // nadie llegaba: se suben justo debajo del texto de la nota (29-oct-2026).
+    var bloque = document.querySelector('.share');
+    var cuerpo = document.querySelector('.article-body');
+    if(bloque && cuerpo && cuerpo.nextElementSibling !== bloque){
+      cuerpo.parentNode.insertBefore(bloque, cuerpo.nextSibling);
+      bloque.classList.add('share-arriba');
+    }
+
     var cont = document.querySelector('.share-btns');
     if(!cont || cont.querySelector('.msg, .mas')) return;
 

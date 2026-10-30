@@ -3187,3 +3187,6 @@ body:has(.home-hero) .news-grid > .pl-ad--banner-c .pl-ad-frame iframe {
   .pl-social { padding-inline: 0; }
   .pl-com-t { font-size: 1.6rem; }
 }
+
+/* 29-oct-2026: compartir sube debajo del texto de la nota (lo mueve install.js) */
+.share.share-arriba{max-width:680px;margin:0 auto;padding:4px 0 24px;border-top:0}

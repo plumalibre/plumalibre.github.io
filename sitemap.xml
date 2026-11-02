@@ -1412,4 +1412,10 @@
     <priority>0.6</priority>
   </url>
 <url><loc>https://plumalibre.press/articulos/muere-hombre-atacado-pedradas-izalco-capturados-iran-por-homicidio.html</loc><lastmod>2026-10-31</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://plumalibre.press/articulos/nueve-muertos-al-estrellarse-un-jet-privado-en-una.html</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

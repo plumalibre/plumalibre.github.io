@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Tue, 17 Nov 2026 18:48:31 +0000</lastBuildDate>
+  <lastBuildDate>Tue, 17 Nov 2026 23:35:27 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>«No lo vamos a revelar»: el Gobierno mantiene en secreto el acuerdo que ampara a 2,000 soldados en Haití</title>
@@ -24,6 +24,15 @@
     <category>Social</category>
     <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000115489.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>Ascienden a 593 los privados de libertad fallecidos bajo el régimen de excepción tras reportarse cinco nuevos decesos en hospitales</title>
+    <link>https://plumalibre.press/articulos/ascienden-a-593-los-privados-de-libertad-fallecido.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/ascienden-a-593-los-privados-de-libertad-fallecido.html</guid>
+    <description>​Tres mujeres y dos hombres, recluidos en los penales de Apanteos e Izalco, murieron recientemente por complicaciones médicas, según denunciaron colectivos de familiares.</description>
+    <category>Social</category>
+    <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000115675.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>Dos meses sin decisión sobre el TPS: salvadoreños ya pierden empleos, licencias y hasta la pensión</title>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000104778.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Ya son cuatro los muertos por el mar en la Costa del Sol esta semana: hallan sin vida a dos niños en playa San Marcelino</title>
-    <link>https://plumalibre.press/articulos/dos-ninos-arrastrados-corriente-playa-san-marcelino-hallados-sin-vida.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/dos-ninos-arrastrados-corriente-playa-san-marcelino-hallados-sin-vida.html</guid>
-    <description>Los niños desaparecieron en el mar la tarde del martes y sus cuerpos aparecieron este miércoles. El lunes, el mar ya se había llevado a dos turistas colombianos en la misma costa, en plena temporada de mareas vivas.</description>
-    <category>Social</category>
-    <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/playa-san-marcelino-busqueda-ninos-arrastrados-corriente.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

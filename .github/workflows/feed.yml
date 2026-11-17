@@ -1,0 +1,44 @@
+# Mantiene rss.xml y llms.txt al dia.
+# Las notas se publican por varias vias (editor web, guiones por el Worker, git) y
+# solo el editor regeneraba el feed: quedo parado del 24-ago al 17-nov-2026.
+# Aca se regenera solo cada vez que entra o cambia una nota, venga de donde venga.
+name: Actualiza RSS y llms.txt
+
+on:
+  push:
+    branches: [master]
+    paths: ['articulos/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: feed
+  cancel-in-progress: true
+
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Regenerar feed
+        run: python herramientas-generar-feed.py
+      - name: Guardar si cambio
+        run: |
+          # lastBuildDate cambia en cada corrida: no cuenta como cambio.
+          if git diff --quiet -I'lastBuildDate' -- rss.xml llms.txt; then
+            echo "Sin cambios"; exit 0
+          fi
+          git config user.name "plumalibre"
+          git config user.email "plumalibre@users.noreply.github.com"
+          git add rss.xml llms.txt
+          git commit -m "Feed: actualiza rss.xml y llms.txt"
+          for i in 1 2 3; do
+            git pull --rebase origin master && git push origin HEAD:master && exit 0
+            sleep 5
+          done
+          exit 1

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Genera rss.xml y llms.txt a partir de las notas de articulos/.
+"""Genera rss.xml, llms.txt y sitemap-news.xml a partir de las notas de articulos/.
 Uso: python3 herramientas-generar-feed.py"""
 import io, os, re, glob
 from email.utils import format_datetime
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 BASE='https://plumalibre.press'
 MAX_ITEMS=30
@@ -86,4 +86,27 @@ for n in notas[:40]:
     l+='- [%s](%s/articulos/%s) — %s, %s\n'%(n['titulo'],BASE,n['fn'],n['seccion'],n['fecha'])
 l+='\n## Sobre el medio\n\n- [Quiénes somos](%s/sobre-nosotros.html)\n'%BASE
 io.open('llms.txt','w',encoding='utf-8').write(l)
-print('rss.xml: %d items | llms.txt: %d notas'%(min(len(notas),MAX_ITEMS),len(notas)))
+# ---------- sitemap-news.xml (Google Noticias) ----------
+# Solo las notas de los ultimos 2 dias: Google Noticias ignora lo mas viejo.
+# El dia se cuenta con la hora de El Salvador (UTC-6). Si no hay notas
+# recientes queda un mapa vacio, que es valido.
+hoy=datetime.now(timezone(timedelta(hours=-6))).date()
+desde=(hoy-timedelta(days=2)).isoformat()
+rec=[n for n in notas if desde<=n['fecha']<=hoy.isoformat()]
+sn=('<?xml version="1.0" encoding="UTF-8"?>\n'
+ '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+ 'xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">\n')
+for n in rec:
+    sn+=('  <url>\n'
+         '    <loc>%s/articulos/%s</loc>\n'
+         '    <news:news>\n'
+         '      <news:publication><news:name>Pluma Libre</news:name>'
+         '<news:language>es</news:language></news:publication>\n'
+         '      <news:publication_date>%s</news:publication_date>\n'
+         '      <news:title>%s</news:title>\n'
+         '    </news:news>\n'
+         '  </url>\n')%(BASE,n['fn'],n['fecha'],esc(n['titulo']))
+sn+='</urlset>\n'
+io.open('sitemap-news.xml','w',encoding='utf-8').write(sn)
+
+print('rss.xml: %d items | llms.txt: %d notas | sitemap-news.xml: %d notas'%(min(len(notas),MAX_ITEMS),len(notas),len(rec)))

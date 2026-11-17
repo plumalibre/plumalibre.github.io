@@ -1,13 +1,17 @@
-# Mantiene rss.xml y llms.txt al dia.
+# Mantiene rss.xml, llms.txt y sitemap-news.xml (Google Noticias) al dia.
 # Las notas se publican por varias vias (editor web, guiones por el Worker, git) y
 # solo el editor regeneraba el feed: quedo parado del 24-ago al 17-nov-2026.
 # Aca se regenera solo cada vez que entra o cambia una nota, venga de donde venga.
-name: Actualiza RSS y llms.txt
+name: Actualiza RSS, llms.txt y mapa de noticias
 
 on:
   push:
     branches: [master]
     paths: ['articulos/**']
+  # Una vez al dia (6:10 a. m. de El Salvador) para sacar del mapa de noticias
+  # las notas que ya pasaron de 2 dias, aunque ese dia no se publique nada.
+  schedule:
+    - cron: '10 12 * * *'
   workflow_dispatch:
 
 permissions:
@@ -30,13 +34,13 @@ jobs:
       - name: Guardar si cambio
         run: |
           # lastBuildDate cambia en cada corrida: no cuenta como cambio.
-          if git diff --quiet -I'lastBuildDate' -- rss.xml llms.txt; then
+          if git diff --quiet -I'lastBuildDate' -- rss.xml llms.txt sitemap-news.xml; then
             echo "Sin cambios"; exit 0
           fi
           git config user.name "plumalibre"
           git config user.email "plumalibre@users.noreply.github.com"
-          git add rss.xml llms.txt
-          git commit -m "Feed: actualiza rss.xml y llms.txt"
+          git add rss.xml llms.txt sitemap-news.xml
+          git commit -m "Feed: actualiza rss.xml, llms.txt y sitemap-news.xml"
           for i in 1 2 3; do
             git pull --rebase origin master && git push origin HEAD:master && exit 0
             sleep 5

@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Tue, 17 Nov 2026 15:18:31 +0000</lastBuildDate>
+  <lastBuildDate>Tue, 17 Nov 2026 18:48:31 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>«No lo vamos a revelar»: el Gobierno mantiene en secreto el acuerdo que ampara a 2,000 soldados en Haití</title>
@@ -15,6 +15,15 @@
     <category>Política</category>
     <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/felix-ulloa-acuerdo-haiti-no-lo-vamos-a-revelar.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>El director fundador de El Faro, Carlos Dada, será galardonado con el Premio Gwen Ifill a la Libertad de Prensa en Nueva York</title>
+    <link>https://plumalibre.press/articulos/el-director-fundador-de-el-faro-carlos-dada-sera-g.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/el-director-fundador-de-el-faro-carlos-dada-sera-g.html</guid>
+    <description>​El periodista salvadoreño Carlos Dada, director fundador del periódico digital El Faro, recibirá este jueves 19 de noviembre el Premio Gwen Ifill a la Libertad de Prensa. La distinción será entregada</description>
+    <category>Social</category>
+    <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000115489.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>Dos meses sin decisión sobre el TPS: salvadoreños ya pierden empleos, licencias y hasta la pensión</title>
@@ -267,15 +276,6 @@
     <category>Social</category>
     <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/playa-san-marcelino-busqueda-ninos-arrastrados-corriente.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title> ​Desde EE. UU., Flávio Bolsonaro se autoproclama &amp;quot;verdadero presidente electo&amp;quot; de Brasil</title>
-    <link>https://plumalibre.press/articulos/desde-ee-uu-flavio-bolsonaro-se-autoproclama-verda.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/desde-ee-uu-flavio-bolsonaro-se-autoproclama-verda.html</guid>
-    <description>​El senador ultraderechista Flávio Bolsonaro se autoproclamó este miércoles 28 de octubre como el &amp;quot;verdadero presidente electo de Brasil&amp;quot;, tras haber abandonado el país con destino a Estados Unidos lu</description>
-    <category>Política</category>
-    <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000105016.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

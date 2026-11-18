@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Wed, 18 Nov 2026 03:35:43 +0000</lastBuildDate>
+  <lastBuildDate>Wed, 18 Nov 2026 05:22:48 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>«No lo vamos a revelar»: el Gobierno mantiene en secreto el acuerdo que ampara a 2,000 soldados en Haití</title>
@@ -267,6 +267,15 @@
     <category>Social</category>
     <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/san-judas-tadeo-basilica-sagrado-corazon-altar-flores-velas.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>Expresidente Saca tiene orden de libertad tras cumplir 10 años de cárcel por corrupción</title>
+    <link>https://plumalibre.press/articulos/expresidente-saca-orden-de-libertad-tras-cumplir-10-anos-carcel-corrupcion.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/expresidente-saca-orden-de-libertad-tras-cumplir-10-anos-carcel-corrupcion.html</guid>
+    <description>Fue condenado en 2018 por desviar $301 millones de Casa Presidencial. Su partido, GANA, fue el que en 2019 llevó a Bukele a la presidencia.</description>
+    <category>Política</category>
+    <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/expresidente-elias-antonio-saca-orden-libertad.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

@@ -3261,3 +3261,10 @@ body.pl-panel-on .to-top{bottom:24px}
 @media (max-width: 899px){
   .footer-bottom{ padding-left:56px; padding-right:56px; }
 }
+
+/* 18-nov-2026: banner A (970x250) no se estira a 1200 (se veia borroso) y en celular la etiqueta
+   «Publicidad» va en su propia linea, sin tapar el texto del arte. */
+.pl-ad--banner-a { max-width: 970px; }
+@media (max-width: 768px) {
+  .pl-ad--banner-a .pl-ad-label { position: static; display: inline-block; margin: 0 0 3px; color: var(--muted, #666); background: transparent; padding: 0; }
+}

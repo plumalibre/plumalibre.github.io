@@ -3240,3 +3240,24 @@ body.pl-panel-on .to-top{bottom:24px}
 .pl-ad-linea img{display:block;width:100%;height:auto}
 .pl-ad-linea-tag{position:absolute;top:8px;left:8px;background:rgba(8,26,65,.72);color:#fff;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
 .wrap > .pl-ad-linea{margin:18px auto 8px}
+
+/* ============================================
+   Ajustes del 18-nov-2026
+   ============================================ */
+
+/* Secciones: se muestran de a tandas, igual que la portada. */
+.card-lg.is-oculta { display: none !important; }
+
+/* Etiqueta del carrusel: placa oscura para que se lea sobre cualquier foto. */
+.hh-slide .kicker{
+  justify-self:start;
+  padding:5px 10px;
+  border-radius:6px;
+  background:rgba(8,26,65,.72);
+  text-shadow:none;
+}
+
+/* En celular el boton de subir quedaba encima del texto del pie. */
+@media (max-width: 899px){
+  .footer-bottom{ padding-left:56px; padding-right:56px; }
+}

@@ -885,3 +885,39 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
   else arrancar();
 })();
+
+
+// "Ver mas" en las paginas de seccion — 18-nov-2026.
+// Politica ya pasaba de 90 notas y media mas de 50 pantallas en el celular.
+// Arranca con 12 y el resto se pide con el boton. Las notas siguen en el HTML
+// para que Google las vea.
+(function(){
+  var INICIALES = 12, POR_TANDA = 12;
+  function arrancar(){
+    var primera = document.querySelector('main article.card-lg');
+    if(!primera) return;
+    var cont = primera.parentNode;
+    var cards = [].slice.call(cont.querySelectorAll(':scope > article.card-lg'));
+    if(cards.length <= INICIALES) return;
+    var visibles = INICIALES;
+    var boton = document.createElement('button');
+    boton.type = 'button';
+    boton.className = 'ver-mas';
+    boton.textContent = 'Ver más noticias';
+    function aplicar(){
+      cards.forEach(function(c, i){ c.classList.toggle('is-oculta', i >= visibles); });
+      boton.hidden = visibles >= cards.length;
+    }
+    boton.addEventListener('click', function(){
+      var antes = visibles;
+      visibles += POR_TANDA;
+      aplicar();
+      var enlace = cards[antes] && cards[antes].querySelector('a');
+      if(enlace) enlace.focus({preventScroll: true});
+    });
+    cont.insertBefore(boton, cards[cards.length - 1].nextSibling);
+    aplicar();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
+  else arrancar();
+})();

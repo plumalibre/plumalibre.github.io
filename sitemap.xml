@@ -580,11 +580,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://plumalibre.press/articulos/fas-conquista-su-corona-numero-20-tras-golear-3-0.html</loc>
-    <changefreq>never</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://plumalibre.press/articulos/espana-vence-2-1-a-belgica-y-jugara-su-segunda-semifinal-mundialista.html</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>never</changefreq>
@@ -1521,4 +1516,22 @@
     <priority>0.6</priority>
   </url>
 <url><loc>https://plumalibre.press/articulos/nina-10-anos-pierde-la-vida-descarga-electrica-vivienda-armenia-sonsonate.html</loc><lastmod>2026-11-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://plumalibre.press/articulos/camiones-los-chorros-apopa-conductor-preso-otro-libre-con-fianza.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://plumalibre.press/articulos/pescador-sobrevive-ataque-lagarto-bahia-jiquilisco-mordida-rostro.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://plumalibre.press/articulos/servicio-de-inmigracion-de-ee-uu-confirma-fin-del.html</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

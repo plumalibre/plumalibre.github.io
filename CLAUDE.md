@@ -177,6 +177,16 @@ Poner `"activo": false` y guardar. El banner desaparece en el próximo redeploy.
 
 ## Historial reciente importante
 
+- 2026-11-18: **revisión del sitio (337 páginas) y tanda de arreglos.** Las páginas de sección ahora
+  muestran 12 notas y un botón «Ver más noticias» (Política medía 53 pantallas en celular; el código
+  está al final de `assets/install.js`). Se quitó de Deportes y del sitemap la card de FAS, cuya nota
+  ya no existe; se agregaron 3 notas que faltaban en el sitemap; JSON-LD en 23 notas que no lo tenían;
+  placa oscura en la etiqueta del carrusel y el pie ya no queda bajo el botón de subir.
+  **Quedó pendiente de decisión del director:** la nota «Renuncia el presidente de Uruguay» (5-nov)
+  parece ser la de Paraguay con el país equivocado; hay dos notas iguales de Wil Morán (`wil-` y
+  `will-`, solo la segunda tiene card); y los banners A y C enlazan al Facebook del medio aunque el
+  arte es de IMELTEX. **Ojo:** `sw.js?v=` en `index.html` estaba en 42 con `CACHE_VERSION` en 46 —
+  la prueba `tests/layout-modernization.test.cjs` fallaba; ahora ambos van en 47.
 - 2026-08-06/07: **la nota de las órdenes de Trump, y dos reglas que salieron de ella.** Herbert
   publicó desde el editor un texto que le llegó ya redactado con una placa de «Última hora». Traía
   dos errores graves: que las órdenes «contemplan retirar la ciudadanía automática en territorios

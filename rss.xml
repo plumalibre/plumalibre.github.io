@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Tue, 17 Nov 2026 23:35:27 +0000</lastBuildDate>
+  <lastBuildDate>Wed, 18 Nov 2026 02:36:06 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>«No lo vamos a revelar»: el Gobierno mantiene en secreto el acuerdo que ampara a 2,000 soldados en Haití</title>
@@ -33,6 +33,15 @@
     <category>Social</category>
     <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000115675.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>Amnistía Internacional denuncia que la opacidad fiscal del Gobierno de Bukele erosiona los derechos sociales en El Salvador  </title>
+    <link>https://plumalibre.press/articulos/amnistia-internacional-denuncia-que-la-opacidad-fi.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/amnistia-internacional-denuncia-que-la-opacidad-fi.html</guid>
+    <description>En una nueva investigación publicada por el diario español El País, Amnistía Internacional (AI) ha revelado que la gestión financiera y la centralización de funciones bajo la administración del presid</description>
+    <category>Política</category>
+    <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000115746.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>Dos meses sin decisión sobre el TPS: salvadoreños ya pierden empleos, licencias y hasta la pensión</title>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/expresidente-elias-antonio-saca-orden-libertad.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Ever Castillo, ​candidato a diputado por ARENA en Sonsonate presenta a su compañero de fórmula para la casilla #1</title>
-    <link>https://plumalibre.press/articulos/ever-castillo-candidato-a-diputado-por-arena-en-so.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/ever-castillo-candidato-a-diputado-por-arena-en-so.html</guid>
-    <description>En el marco del proceso electoral, el abogado sonsonateco y candidato a diputado por el partido Alianza Republicana Nacionalista (ARENA) en el departamento de Sonsonate anunció oficialmente la integra</description>
-    <category>Política</category>
-    <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000104778.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

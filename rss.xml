@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Thu, 19 Nov 2026 04:09:34 +0000</lastBuildDate>
+  <lastBuildDate>Thu, 19 Nov 2026 13:19:33 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>La JVE denuncia operar «casi a ciegas» a tres meses de las elecciones de 2027 por falta de información, recursos y control sobre el TSE</title>
@@ -15,6 +15,15 @@
     <category>Política</category>
     <pubDate>Wed, 18 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000116058.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>Asamblea autoriza deuda por hasta $860 millones sin pasar por comisión</title>
+    <link>https://plumalibre.press/articulos/asamblea-autoriza-deuda-860-millones-titulos-valores-dispensa-de-tramite.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/asamblea-autoriza-deuda-860-millones-titulos-valores-dispensa-de-tramite.html</guid>
+    <description>Con 57 votos y dispensa de trámite, los diputados autorizaron a Hacienda a emitir títulos valores para financiar el presupuesto 2027. La oposición votó en contra y preguntó para qué es el dinero.</description>
+    <category>Política</category>
+    <pubDate>Wed, 18 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/asamblea-legislativa-pleno-860-millones-titulos-valores.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>«No lo vamos a revelar»: el Gobierno mantiene en secreto el acuerdo que ampara a 2,000 soldados en Haití</title>
@@ -267,15 +276,6 @@
     <category>Internacional</category>
     <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/el-salvador-1000-soldados-haiti-reuters.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Con flores y candelas, miles de fieles celebran a San Judas Tadeo, el santo de las causas difíciles</title>
-    <link>https://plumalibre.press/articulos/miles-de-fieles-celebran-san-judas-tadeo-basilica-sagrado-corazon-san-salvador.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/miles-de-fieles-celebran-san-judas-tadeo-basilica-sagrado-corazon-san-salvador.html</guid>
-    <description>La Basílica del Sagrado Corazón de Jesús, en el centro de San Salvador, se llenó este 28 de octubre de devotos que llegaron a rezar, encender velas y pagar promesas al apóstol.</description>
-    <category>Social</category>
-    <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/san-judas-tadeo-basilica-sagrado-corazon-altar-flores-velas.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

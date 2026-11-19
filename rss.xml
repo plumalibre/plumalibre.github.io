@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Wed, 18 Nov 2026 05:22:48 +0000</lastBuildDate>
+  <lastBuildDate>Thu, 19 Nov 2026 04:09:34 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>La JVE denuncia operar «casi a ciegas» a tres meses de las elecciones de 2027 por falta de información, recursos y control sobre el TSE</title>
+    <link>https://plumalibre.press/articulos/la-jve-denuncia-operar-casi-a-ciegas-a-tres-meses.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/la-jve-denuncia-operar-casi-a-ciegas-a-tres-meses.html</guid>
+    <description>​A tres meses de los comicios de 2027, la Junta de Vigilancia Electoral (JVE) —señalada como el último espacio donde los partidos políticos fiscalizan al Tribunal Supremo Electoral (TSE)— enfrenta ser</description>
+    <category>Política</category>
+    <pubDate>Wed, 18 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000116058.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>«No lo vamos a revelar»: el Gobierno mantiene en secreto el acuerdo que ampara a 2,000 soldados en Haití</title>
     <link>https://plumalibre.press/articulos/ulloa-no-revelara-acuerdo-haiti-2000-soldados-salvadorenos.html</link>
@@ -267,15 +276,6 @@
     <category>Social</category>
     <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/san-judas-tadeo-basilica-sagrado-corazon-altar-flores-velas.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Expresidente Saca tiene orden de libertad tras cumplir 10 años de cárcel por corrupción</title>
-    <link>https://plumalibre.press/articulos/expresidente-saca-orden-de-libertad-tras-cumplir-10-anos-carcel-corrupcion.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/expresidente-saca-orden-de-libertad-tras-cumplir-10-anos-carcel-corrupcion.html</guid>
-    <description>Fue condenado en 2018 por desviar $301 millones de Casa Presidencial. Su partido, GANA, fue el que en 2019 llevó a Bukele a la presidencia.</description>
-    <category>Política</category>
-    <pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/expresidente-elias-antonio-saca-orden-libertad.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

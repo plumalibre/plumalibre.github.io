@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://plumalibre.press/articulos/la-jve-denuncia-operar-casi-a-ciegas-a-tres-meses.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-18</news:publication_date>
+      <news:title>La JVE denuncia operar «casi a ciegas» a tres meses de las elecciones de 2027 por falta de información, recursos y control sobre el TSE</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/ulloa-no-revelara-acuerdo-haiti-2000-soldados-salvadorenos.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>

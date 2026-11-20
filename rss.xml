@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Thu, 19 Nov 2026 18:41:36 +0000</lastBuildDate>
+  <lastBuildDate>Fri, 20 Nov 2026 02:03:16 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Roberto Aquino se inscribe para buscar la reelección como alcalde de Sonsonate Centro</title>
+    <link>https://plumalibre.press/articulos/roberto-aquino-se-inscribe-reeleccion-alcalde-sonsonate-centro-pdc-2027.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/roberto-aquino-se-inscribe-reeleccion-alcalde-sonsonate-centro-pdc-2027.html</guid>
+    <description>El alcalde llegó este jueves a la oficina del Tribunal Supremo Electoral en Sonsonate, en el último día del plazo, acompañado de una caminata de simpatizantes del PDC.</description>
+    <category>Política</category>
+    <pubDate>Thu, 19 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/roberto-aquino-inscripcion-reeleccion-sonsonate-centro-pdc.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Cinco lesionados al caer un camión a una canaleta en Quebrada Española, Izalco</title>
     <link>https://plumalibre.press/articulos/cinco-lesionados-camion-cae-canaleta-quebrada-espanola-izalco-sonsonate.html</link>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000105742.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Con rezo, misa y serenata, la familia Mata Ramírez celebró a San Judas Tadeo</title>
-    <link>https://plumalibre.press/articulos/familia-mata-ramirez-rezo-misa-serenata-san-judas-tadeo-colonia-santa-marta.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/familia-mata-ramirez-rezo-misa-serenata-san-judas-tadeo-colonia-santa-marta.html</guid>
-    <description>Entre flores, candelas y música de mariachi, la familia Mata Ramírez celebró al santo de las causas difíciles en su taller, ubicado en la primera calle de la colonia Santa Marta.</description>
-    <category>Social</category>
-    <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/familia-mata-ramirez-san-judas-tadeo-serenata-mariachi.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

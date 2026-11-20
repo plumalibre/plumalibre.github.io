@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Fri, 20 Nov 2026 19:36:10 +0000</lastBuildDate>
+  <lastBuildDate>Fri, 20 Nov 2026 20:53:34 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>Dos soldados salvadoreños mueren en Haití tras una detonación en un campamento</title>
@@ -15,6 +15,15 @@
     <category>Internacional</category>
     <pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/dos-soldados-salvadorenos-mueren-haiti-detonacion.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>Bukele busca un tercer mandato: en 2024 dijo que la Constitución se lo prohibía</title>
+    <link>https://plumalibre.press/articulos/bukele-busca-tercer-mandato-en-2024-dijo-constitucion-lo-prohibia.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/bukele-busca-tercer-mandato-en-2024-dijo-constitucion-lo-prohibia.html</guid>
+    <description>El presidente inscribió su candidatura para 2027. En 2013 y en 2024 él mismo dijo que la Constitución no lo permitía; la Asamblea la cambió en 2025.</description>
+    <category>Política</category>
+    <pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/bukele-busca-tercer-mandato-inscripcion-tse.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>Roberto Aquino se inscribe para buscar la reelección como alcalde de Sonsonate Centro</title>
@@ -267,15 +276,6 @@
     <category>Internacional</category>
     <pubDate>Sun, 01 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000106689.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Capturan a hombre que golpeó a una mujer y a su bebé de 7 meses en San Antonio del Monte</title>
-    <link>https://plumalibre.press/articulos/capturan-hombre-golpeo-mujer-bebe-7-meses-san-antonio-del-monte.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/capturan-hombre-golpeo-mujer-bebe-7-meses-san-antonio-del-monte.html</guid>
-    <description>La Policía encontró a la bebé con moretones en la cara. El detenido será acusado de lesiones.</description>
-    <category>Social</category>
-    <pubDate>Sun, 01 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/capturado-agresion-bebe-san-antonio-del-monte.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

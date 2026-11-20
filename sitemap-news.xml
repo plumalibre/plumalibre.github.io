@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://plumalibre.press/articulos/dos-soldados-salvadorenos-mueren-haiti-detonacion-campamento.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-20</news:publication_date>
+      <news:title>Dos soldados salvadoreños mueren en Haití tras una detonación en un campamento</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/roberto-aquino-se-inscribe-reeleccion-alcalde-sonsonate-centro-pdc-2027.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
@@ -46,46 +54,6 @@
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
       <news:publication_date>2026-11-18</news:publication_date>
       <news:title>Asamblea autoriza deuda por hasta $860 millones sin pasar por comisión</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/ulloa-no-revelara-acuerdo-haiti-2000-soldados-salvadorenos.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-17</news:publication_date>
-      <news:title>«No lo vamos a revelar»: el Gobierno mantiene en secreto el acuerdo que ampara a 2,000 soldados en Haití</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/nina-10-anos-pierde-la-vida-descarga-electrica-vivienda-armenia-sonsonate.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-17</news:publication_date>
-      <news:title>Niña de 10 años pierde la vida tras sufrir una descarga eléctrica en su casa, en Armenia</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/el-director-fundador-de-el-faro-carlos-dada-sera-g.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-17</news:publication_date>
-      <news:title>El director fundador de El Faro, Carlos Dada, será galardonado con el Premio Gwen Ifill a la Libertad de Prensa en Nueva York</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/ascienden-a-593-los-privados-de-libertad-fallecido.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-17</news:publication_date>
-      <news:title>Ascienden a 593 los privados de libertad fallecidos bajo el régimen de excepción tras reportarse cinco nuevos decesos en hospitales</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/amnistia-internacional-denuncia-que-la-opacidad-fi.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-17</news:publication_date>
-      <news:title>Amnistía Internacional denuncia que la opacidad fiscal del Gobierno de Bukele erosiona los derechos sociales en El Salvador  </news:title>
     </news:news>
   </url>
 </urlset>

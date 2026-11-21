@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Sat, 21 Nov 2026 05:11:01 +0000</lastBuildDate>
+  <lastBuildDate>Sat, 21 Nov 2026 12:35:00 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Haití anuncia tres cárceles a cargo de una empresa salvadoreña; no informó costo ni financiamiento</title>
+    <link>https://plumalibre.press/articulos/haiti-anuncia-tres-carceles-empresa-salvadorena-no-informo-costo-financiamiento.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/haiti-anuncia-tres-carceles-empresa-salvadorena-no-informo-costo-financiamiento.html</guid>
+    <description>El ministro de Justicia haitiano lo anunció tras visitar el CECOT. No se informó el nombre de la empresa ni quién administrará los penales.</description>
+    <category>Política</category>
+    <pubDate>Sat, 21 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/haiti-anuncia-tres-carceles-empresa-salvadorena.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>&amp;quot;Papá, por favor no me mates&amp;quot;: hombre mató a esposa y a sus tres hijos en Florida</title>
     <link>https://plumalibre.press/articulos/papa-por-favor-no-me-mates-hombre-mato-a-esposa-y.html</link>
@@ -267,15 +276,6 @@
     <category>Internacional</category>
     <pubDate>Wed, 04 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/marcha-canaan-haiti-contra-soldados-salvadorenos.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Cayetano Cruz critica la gestión de las fiestas patronales y el desalojo de vendedores en Soyapango.</title>
-    <link>https://plumalibre.press/articulos/cayetano-cruz-critica-la-gestion-de-las-fiestas-pa.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/cayetano-cruz-critica-la-gestion-de-las-fiestas-pa.html</guid>
-    <description>En el marco de las festividades patronales de Soyapango, Cayetano Cruz, concejal municipal y candidato a alcalde de San Salvador Este por el partido FMLN, ofreció una entrevista al periodista Leo Fune</description>
-    <category>Política</category>
-    <pubDate>Tue, 03 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000107874.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

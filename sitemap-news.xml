@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://plumalibre.press/articulos/haiti-anuncia-tres-carceles-empresa-salvadorena-no-informo-costo-financiamiento.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-21</news:publication_date>
+      <news:title>Haití anuncia tres cárceles a cargo de una empresa salvadoreña; no informó costo ni financiamiento</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/papa-por-favor-no-me-mates-hombre-mato-a-esposa-y.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
@@ -62,22 +70,6 @@
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
       <news:publication_date>2026-11-19</news:publication_date>
       <news:title>Capturan a tres gestores del VMT: los acusan de exigir $100 a una motociclista</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/la-jve-denuncia-operar-casi-a-ciegas-a-tres-meses.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-18</news:publication_date>
-      <news:title>La JVE denuncia operar «casi a ciegas» a tres meses de las elecciones de 2027 por falta de información, recursos y control sobre el TSE</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/asamblea-autoriza-deuda-860-millones-titulos-valores-dispensa-de-tramite.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-18</news:publication_date>
-      <news:title>Asamblea autoriza deuda por hasta $860 millones sin pasar por comisión</news:title>
     </news:news>
   </url>
 </urlset>

@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Sat, 21 Nov 2026 13:31:23 +0000</lastBuildDate>
+  <lastBuildDate>Sat, 21 Nov 2026 19:19:47 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>Tito Mira, el cantante de Armenia, está hospitalizado en estado reservado en Estados Unidos</title>
@@ -15,6 +15,15 @@
     <category>Social</category>
     <pubDate>Sat, 21 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/tito-mira-cantante-armenia-hospitalizado-estados-unidos.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>MOVIR exige investigar 120 presuntos casos de tuberculosis en la Granja Penitenciaria de Izalco; las autoridades no han informado</title>
+    <link>https://plumalibre.press/articulos/movir-exige-investigar-120-presuntos-casos-tuberculosis-granja-penitenciaria-izalco.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/movir-exige-investigar-120-presuntos-casos-tuberculosis-granja-penitenciaria-izalco.html</guid>
+    <description>La organización pide a Salud y a Centros Penales decir si hay un brote. Ninguna de las dos instituciones se ha pronunciado.</description>
+    <category>Social</category>
+    <pubDate>Sat, 21 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/movir-tuberculosis-granja-penitenciaria-izalco.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>Haití anuncia tres cárceles a cargo de una empresa salvadoreña; no informó costo ni financiamiento</title>
@@ -267,15 +276,6 @@
     <category>Social</category>
     <pubDate>Thu, 05 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000108800.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Fallece la joven salvadoreña apuñalada en Brooklyn mientras entrenaba para el Maratón de Nueva York </title>
-    <link>https://plumalibre.press/articulos/fallece-la-joven-salvadorena-apunalada-en-brooklyn.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/fallece-la-joven-salvadorena-apunalada-en-brooklyn.html</guid>
-    <description>Consternación e indignación ha causado el fallecimiento de Katie Suárez, una joven atleta de 28 años y de origen salvadoreño, quien murió tras permanecer tres días en estado crítico en el Hospital NYU</description>
-    <category>Política</category>
-    <pubDate>Thu, 05 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000108734.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

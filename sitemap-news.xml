@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://plumalibre.press/articulos/dilber-morales-se-retira-contienda-alcaldia-acajutla-sonsonate-oeste.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-22T15:42:00-06:00</news:publication_date>
+      <news:title>Dilber Morales se retira de la contienda por la alcaldía de Acajutla</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/bukele-publica-imagenes-nuevos-blindados-haiti-un-dia-despues-muerte-tres-soldados.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>

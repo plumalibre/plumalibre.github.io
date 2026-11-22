@@ -21,7 +21,7 @@ for f in sorted(glob.glob('articulos/*.html')):
     fn=os.path.basename(f)
     if 'plantilla' in fn: continue
     h=io.open(f, encoding='utf-8').read()
-    fecha=re.search(r'article:published_time" content="(\d{4}-\d{2}-\d{2})', h)
+    fecha=re.search(r'article:published_time" content="(\d{4}-\d{2}-\d{2})(T\d{2}:\d{2}(?::\d{2})?[+-]\d{2}:\d{2})?', h)
     if not fecha: continue
     titulo=meta(h,'title') or fn.replace('.html','').replace('-',' ')
     titulo=re.sub(r'\s*—\s*Pluma Libre\s*$','',titulo)
@@ -29,16 +29,19 @@ for f in sorted(glob.glob('articulos/*.html')):
     notas.append({
         'fn':fn, 'titulo':titulo, 'desc':meta(h,'description'),
         'img':meta(h,'image'), 'fecha':fecha.group(1),
+        # Con hora si la nota la trae (desde el 21-nov-2026); si no, solo el dia.
+        'fechah':fecha.group(1)+(fecha.group(2) or ''),
         'seccion':badge.group(1).strip() if badge else 'Noticias',
     })
 
-notas.sort(key=lambda n:(n['fecha'], n['fn']), reverse=True)
+notas.sort(key=lambda n:(n['fechah'], n['fn']), reverse=True)
 ahora=format_datetime(datetime.now(timezone.utc))
 
 # ---------- RSS ----------
 it=''
 for n in notas[:MAX_ITEMS]:
-    d=datetime.strptime(n['fecha'],'%Y-%m-%d').replace(tzinfo=timezone.utc)
+    d=datetime.fromisoformat(n['fechah'])
+    if d.tzinfo is None: d=d.replace(tzinfo=timezone.utc)
     it+=('  <item>\n'
          '    <title>%s</title>\n'
          '    <link>%s/articulos/%s</link>\n'
@@ -105,7 +108,7 @@ for n in rec:
          '      <news:publication_date>%s</news:publication_date>\n'
          '      <news:title>%s</news:title>\n'
          '    </news:news>\n'
-         '  </url>\n')%(BASE,n['fn'],n['fecha'],esc(n['titulo']))
+         '  </url>\n')%(BASE,n['fn'],n['fechah'],esc(n['titulo']))
 sn+='</urlset>\n'
 io.open('sitemap-news.xml','w',encoding='utf-8').write(sn)
 

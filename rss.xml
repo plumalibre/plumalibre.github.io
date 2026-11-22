@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Sun, 22 Nov 2026 04:31:45 +0000</lastBuildDate>
+  <lastBuildDate>Sun, 22 Nov 2026 17:21:40 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Bukele publica imágenes de nuevos blindados en Haití un día después de la muerte de tres soldados</title>
+    <link>https://plumalibre.press/articulos/bukele-publica-imagenes-nuevos-blindados-haiti-un-dia-despues-muerte-tres-soldados.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/bukele-publica-imagenes-nuevos-blindados-haiti-un-dia-despues-muerte-tres-soldados.html</guid>
+    <description>La publicación no lleva texto. La Secretaría de Prensa informó que el mandatario «ha fortalecido la operación militar» en ese país.</description>
+    <category>Internacional</category>
+    <pubDate>Sun, 22 Nov 2026 11:21:00 -0600</pubDate>
+    <enclosure url="https://plumalibre.press/assets/bukele-publica-imagenes-nuevos-blindados-haiti.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Hombre muere atropellado en Quebrada Española, Izalco; no ha sido identificado</title>
     <link>https://plumalibre.press/articulos/hombre-muere-atropellado-quebrada-espanola-izalco-no-ha-sido-identificado.html</link>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Fri, 06 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000109968.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Presidente de Paraguay renuncia por el colapso de un banco ligado a él; minutos después lo mandan a juicio político</title>
-    <link>https://plumalibre.press/articulos/santiago-pena-renuncia-paraguay-ueno-bank-juicio-politico.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/santiago-pena-renuncia-paraguay-ueno-bank-juicio-politico.html</guid>
-    <description>Santiago Peña, aliado de Trump, anunció su renuncia en video tras la caída de Ueno Bank, que dejó a casi tres millones de clientes sin acceso a su dinero. Diputados aprobó el juicio político por unanimidad.</description>
-    <category>Internacional</category>
-    <pubDate>Thu, 05 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/santiago-pena-renuncia-paraguay-ueno-bank.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

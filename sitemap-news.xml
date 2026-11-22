@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://plumalibre.press/articulos/bukele-publica-imagenes-nuevos-blindados-haiti-un-dia-despues-muerte-tres-soldados.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-22T11:21:00-06:00</news:publication_date>
+      <news:title>Bukele publica imágenes de nuevos blindados en Haití un día después de la muerte de tres soldados</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/hombre-muere-atropellado-quebrada-espanola-izalco-no-ha-sido-identificado.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
@@ -62,38 +70,6 @@
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
       <news:publication_date>2026-11-20</news:publication_date>
       <news:title>Bukele se inscribe para quedarse en el poder hasta 2033</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/roberto-aquino-se-inscribe-reeleccion-alcalde-sonsonate-centro-pdc-2027.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-19</news:publication_date>
-      <news:title>Roberto Aquino se inscribe para buscar la reelección como alcalde de Sonsonate Centro</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/conductora-accidente-metalio-sigue-hospitalizada-podria-ser-operada-columna.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-19</news:publication_date>
-      <news:title>La conductora del accidente de Metalío sigue hospitalizada y podría ser operada de la columna</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/cinco-lesionados-camion-cae-canaleta-quebrada-espanola-izalco-sonsonate.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-19</news:publication_date>
-      <news:title>Cinco lesionados al caer un camión a una canaleta en Quebrada Española, Izalco</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/capturan-tres-gestores-vmt-acusados-exigir-100-dolares-motociclista-los-proceres.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-19</news:publication_date>
-      <news:title>Capturan a tres gestores del VMT: los acusan de exigir $100 a una motociclista</news:title>
     </news:news>
   </url>
 </urlset>

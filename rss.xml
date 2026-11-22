@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Sat, 21 Nov 2026 19:19:47 +0000</lastBuildDate>
+  <lastBuildDate>Sun, 22 Nov 2026 03:51:05 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>Tito Mira, el cantante de Armenia, está hospitalizado en estado reservado en Estados Unidos</title>
@@ -24,6 +24,15 @@
     <category>Social</category>
     <pubDate>Sat, 21 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/movir-tuberculosis-granja-penitenciaria-izalco.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>Hombre muere atropellado en Quebrada Española, Izalco; no ha sido identificado</title>
+    <link>https://plumalibre.press/articulos/hombre-muere-atropellado-quebrada-espanola-izalco-no-ha-sido-identificado.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/hombre-muere-atropellado-quebrada-espanola-izalco-no-ha-sido-identificado.html</guid>
+    <description>Ocurrió la noche de este sábado 21 de noviembre en la carretera entre San Salvador y Sonsonate. Es la segunda emergencia en ese sector en tres días.</description>
+    <category>Social</category>
+    <pubDate>Sat, 21 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/hombre-muere-atropellado-quebrada-espanola-izalco.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>Haití anuncia tres cárceles a cargo de una empresa salvadoreña; no informó costo ni financiamiento</title>
@@ -267,15 +276,6 @@
     <category>Internacional</category>
     <pubDate>Thu, 05 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/santiago-pena-renuncia-paraguay-ueno-bank.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Roberto Aquino anuncia la apertura de una &amp;quot;Casa de la Mujer&amp;quot; en cada distrito de Sonsonate Centro a partir de 2027</title>
-    <link>https://plumalibre.press/articulos/roberto-aquino-anuncia-la-apertura-de-una-casa-de.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/roberto-aquino-anuncia-la-apertura-de-una-casa-de.html</guid>
-    <description>​En un esfuerzo por  la atención a la población femenina y acercar los servicios municipales a las comunidades, el alcalde de Sonsonate Centro, Roberto Aquino, anunció la creación de la “Casa de la Mu</description>
-    <category>Social</category>
-    <pubDate>Thu, 05 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000108800.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

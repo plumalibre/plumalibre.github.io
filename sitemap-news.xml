@@ -17,6 +17,14 @@
     </news:news>
   </url>
   <url>
+    <loc>https://plumalibre.press/articulos/hombre-muere-atropellado-quebrada-espanola-izalco-no-ha-sido-identificado.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-21</news:publication_date>
+      <news:title>Hombre muere atropellado en Quebrada Española, Izalco; no ha sido identificado</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/haiti-anuncia-tres-carceles-empresa-salvadorena-no-informo-costo-financiamiento.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>

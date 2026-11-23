@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Mon, 23 Nov 2026 19:01:23 +0000</lastBuildDate>
+  <lastBuildDate>Mon, 23 Nov 2026 23:17:46 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Sepultan en Atiquizaya al cabo Emerson Zepeda, muerto en Haití</title>
+    <link>https://plumalibre.press/articulos/sepultan-atiquizaya-cabo-emerson-zepeda-muerto-haiti.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/sepultan-atiquizaya-cabo-emerson-zepeda-muerto-haiti.html</guid>
+    <description>Familiares, vecinos y militares lo acompañaron este lunes hasta el cementerio. Es uno de los tres soldados salvadoreños que murieron tras una detonación en un campamento en Haití.</description>
+    <category>Social</category>
+    <pubDate>Mon, 23 Nov 2026 17:17:00 -0600</pubDate>
+    <enclosure url="https://plumalibre.press/assets/sepelio-cabo-emerson-zepeda-atiquizaya-haiti.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Repartidor en moto sufre la semiamputación de una pierna en accidente en Sonzacate</title>
     <link>https://plumalibre.press/articulos/repartidor-moto-semiamputacion-pierna-accidente-sonzacate-sonsonate.html</link>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Fri, 13 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000113479.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Histórica victoria demócrata en Misisipi amplía la mayoría del partido en el Senado de EE. UU.</title>
-    <link>https://plumalibre.press/articulos/historica-victoria-democrata-en-misisipi-amplia-la.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/historica-victoria-democrata-en-misisipi-amplia-la.html</guid>
-    <description>​En una de las mayores sorpresas de las elecciones de medio mandato, el Partido Demócrata conquistó un escaño clave en el Senado por el estado de Misisipi.</description>
-    <category>Internacional</category>
-    <pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000112661.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

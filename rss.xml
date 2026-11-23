@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Sun, 22 Nov 2026 21:42:47 +0000</lastBuildDate>
+  <lastBuildDate>Mon, 23 Nov 2026 03:37:59 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Entregan en cajas de cartón las pertenencias del teniente muerto en Haití</title>
+    <link>https://plumalibre.press/articulos/entregan-cajas-carton-pertenencias-teniente-muerto-haiti-olocuilta.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/entregan-cajas-carton-pertenencias-teniente-muerto-haiti-olocuilta.html</guid>
+    <description>Un video de la entrega a la familia de Cristian Daniel Santos Palacios, en Olocuilta, circula en redes y ha generado críticas. Este domingo fue sepultado con honores militares.</description>
+    <category>Social</category>
+    <pubDate>Sun, 22 Nov 2026 21:37:00 -0600</pubDate>
+    <enclosure url="https://plumalibre.press/assets/entregan-cajas-pertenencias-teniente-haiti-olocuilta.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Dilber Morales se retira de la contienda por la alcaldía de Acajutla</title>
     <link>https://plumalibre.press/articulos/dilber-morales-se-retira-contienda-alcaldia-acajutla-sonsonate-oeste.html</link>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Mon, 09 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000111392.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>El Salvador financia y ejecuta con recursos propios su misión en Haití, destaca el vicepresidente Félix Ulloa</title>
-    <link>https://plumalibre.press/articulos/el-salvador-financia-y-ejecuta-con-recursos-propio.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/el-salvador-financia-y-ejecuta-con-recursos-propio.html</guid>
-    <description>El vicepresidente de la República, Félix Ulloa, afirmó que la misión de seguridad desplegada por El Salvador en Haití se financia exclusivamente con recursos del Estado salvadoreño, sin representar co</description>
-    <category>Política</category>
-    <pubDate>Mon, 09 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000111388.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

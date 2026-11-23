@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Mon, 23 Nov 2026 03:37:59 +0000</lastBuildDate>
+  <lastBuildDate>Mon, 23 Nov 2026 19:01:23 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Repartidor en moto sufre la semiamputación de una pierna en accidente en Sonzacate</title>
+    <link>https://plumalibre.press/articulos/repartidor-moto-semiamputacion-pierna-accidente-sonzacate-sonsonate.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/repartidor-moto-semiamputacion-pierna-accidente-sonzacate-sonsonate.html</guid>
+    <description>Ocurrió la noche de este domingo 22 de noviembre en la carretera de Sonsonate hacia Santa Ana, cerca de la entrada al CEGA. Fue llevado al Hospital Jorge Mazzini.</description>
+    <category>Social</category>
+    <pubDate>Mon, 23 Nov 2026 13:01:00 -0600</pubDate>
+    <enclosure url="https://plumalibre.press/assets/repartidor-moto-semiamputacion-pierna-sonzacate-comandos.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Entregan en cajas de cartón las pertenencias del teniente muerto en Haití</title>
     <link>https://plumalibre.press/articulos/entregan-cajas-carton-pertenencias-teniente-muerto-haiti-olocuilta.html</link>
@@ -267,15 +276,6 @@
     <category>Internacional</category>
     <pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000112661.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Ministra Michelle Sol destaca que el régimen de excepción se extiende a la protección contra la violencia de género y otras denuncias ciudadanas</title>
-    <link>https://plumalibre.press/articulos/ministra-michelle-sol-destaca-que-el-regimen-de-ex.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/ministra-michelle-sol-destaca-que-el-regimen-de-ex.html</guid>
-    <description>Durante una intervención pública, la ministra de Vivienda, Michelle Sol, señaló que el régimen de excepción vigente en el país ha trascendido su propósito original de combatir la violencia de las pand</description>
-    <category>Política</category>
-    <pubDate>Mon, 09 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000111392.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

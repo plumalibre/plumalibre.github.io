@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://plumalibre.press/articulos/repartidor-moto-semiamputacion-pierna-accidente-sonzacate-sonsonate.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-23T13:01:00-06:00</news:publication_date>
+      <news:title>Repartidor en moto sufre la semiamputación de una pierna en accidente en Sonzacate</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/entregan-cajas-carton-pertenencias-teniente-muerto-haiti-olocuilta.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
@@ -54,38 +62,6 @@
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
       <news:publication_date>2026-11-21T06:37:00-06:00</news:publication_date>
       <news:title>Haití anuncia tres cárceles a cargo de una empresa salvadoreña; no informó costo ni financiamiento</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/papa-por-favor-no-me-mates-hombre-mato-a-esposa-y.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-20</news:publication_date>
-      <news:title>&amp;quot;Papá, por favor no me mates&amp;quot;: hombre mató a esposa y a sus tres hijos en Florida</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/dos-soldados-salvadorenos-mueren-haiti-detonacion-campamento.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-20</news:publication_date>
-      <news:title>Tres soldados salvadoreños mueren en Haití tras una detonación en un campamento</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/bukele-no-ha-dicho-nada-dos-soldados-muertos-haiti.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-20</news:publication_date>
-      <news:title>Fueron a rescatar a cuatro y ya murieron tres soldados en Haití</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/bukele-busca-tercer-mandato-en-2024-dijo-constitucion-lo-prohibia.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-20</news:publication_date>
-      <news:title>Bukele se inscribe para quedarse en el poder hasta 2033</news:title>
     </news:news>
   </url>
 </urlset>

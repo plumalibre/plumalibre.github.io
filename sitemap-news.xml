@@ -40,36 +40,4 @@
       <news:title>Bukele publica imágenes de nuevos blindados en Haití un día después de la muerte de tres soldados</news:title>
     </news:news>
   </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/hombre-muere-atropellado-quebrada-espanola-izalco-no-ha-sido-identificado.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-21T21:53:00-06:00</news:publication_date>
-      <news:title>Hombre muere atropellado en Quebrada Española, Izalco; no ha sido identificado</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/movir-exige-investigar-120-presuntos-casos-tuberculosis-granja-penitenciaria-izalco.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-21T13:21:00-06:00</news:publication_date>
-      <news:title>MOVIR exige investigar 120 presuntos casos de tuberculosis en la Granja Penitenciaria de Izalco; las autoridades no han informado</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/tito-mira-cantante-armenia-hospitalizado-estado-reservado-estados-unidos.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-21T07:33:00-06:00</news:publication_date>
-      <news:title>Tito Mira, el cantante de Armenia, está hospitalizado en estado reservado en Estados Unidos</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://plumalibre.press/articulos/haiti-anuncia-tres-carceles-empresa-salvadorena-no-informo-costo-financiamiento.html</loc>
-    <news:news>
-      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
-      <news:publication_date>2026-11-21T06:37:00-06:00</news:publication_date>
-      <news:title>Haití anuncia tres cárceles a cargo de una empresa salvadoreña; no informó costo ni financiamiento</news:title>
-    </news:news>
-  </url>
 </urlset>

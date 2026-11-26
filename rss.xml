@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Wed, 25 Nov 2026 21:36:45 +0000</lastBuildDate>
+  <lastBuildDate>Thu, 26 Nov 2026 00:15:00 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>​Kilmar Ábrego García sale de Estados Unidos y llega a España y pone fin a 20 meses de batalla legal por su deportación</title>
+    <link>https://plumalibre.press/articulos/kilmar-abrego-garcia-sale-de-estados-unidos-y-lleg.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/kilmar-abrego-garcia-sale-de-estados-unidos-y-lleg.html</guid>
+    <description>​El salvadoreño Kilmar Ábrego García salió de Estados Unidos y llegó a España para iniciar una nueva etapa fuera del país, cerrando así un prolongado proceso migratorio y judicial de 20 meses marcado </description>
+    <category>Internacional</category>
+    <pubDate>Wed, 25 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000120489.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Sepultan en Atiquizaya al cabo Emerson Zepeda, muerto en Haití</title>
     <link>https://plumalibre.press/articulos/sepultan-atiquizaya-cabo-emerson-zepeda-muerto-haiti.html</link>
@@ -267,15 +276,6 @@
     <category>Religión</category>
     <pubDate>Fri, 13 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000113499.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Claudia Ortiz confirma su candidatura a diputada por San Salvador para las elecciones de 2027 bajo la bandera de VAMOS</title>
-    <link>https://plumalibre.press/articulos/claudia-ortiz-confirma-su-candidatura-a-diputada-p.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/claudia-ortiz-confirma-su-candidatura-a-diputada-p.html</guid>
-    <description>En una reciente entrevista concedida a El Faro, la diputada y referente de la oposición en la Asamblea Legislativa, Claudia Ortiz, confirmó de manera categórica que competirá nuevamente en los próximo</description>
-    <category>Política</category>
-    <pubDate>Fri, 13 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000113479.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

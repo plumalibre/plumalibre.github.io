@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Thu, 26 Nov 2026 04:24:25 +0000</lastBuildDate>
+  <lastBuildDate>Thu, 26 Nov 2026 13:40:09 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Claudia Ortiz cuestiona el origen de $860 millones en nueva deuda y advierte sobre el uso de ahorros de los salvadoreños</title>
+    <link>https://plumalibre.press/articulos/claudia-ortiz-cuestiona-el-origen-de-860-millones.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/claudia-ortiz-cuestiona-el-origen-de-860-millones.html</guid>
+    <description>​La diputada de oposición Claudia Ortiz, del partido VAMOS, cuestionó el origen y el financiamiento de los $860 millones en nueva deuda incorporados al presupuesto estatal, advirtiendo que las institu</description>
+    <category>Economía</category>
+    <pubDate>Thu, 26 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000120727.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Salvadoreño gana $1 millón en la lotería y seis días después lo arresta ICE</title>
     <link>https://plumalibre.press/articulos/salvadoreno-gana-millon-loteria-massachusetts-arrestado-ice-east-boston.html</link>
@@ -267,15 +276,6 @@
     <category>Social</category>
     <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000115167.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Anderson Molina oficializa su candidatura a la alcaldía de La Libertad Costa por el partido VAMOS ​</title>
-    <link>https://plumalibre.press/articulos/anderson-molina-oficializa-su-candidatura-a-la-alc.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/anderson-molina-oficializa-su-candidatura-a-la-alc.html</guid>
-    <description>El licenciado Anderson Molina quedó oficialmente inscrito este sábado como candidato a alcalde del municipio de La Libertad Costa, bajo la bandera del partido político VAMOS. El trámite legal se reali</description>
-    <category>Política</category>
-    <pubDate>Sat, 14 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000114166.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

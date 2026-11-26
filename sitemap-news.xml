@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://plumalibre.press/articulos/salvadoreno-gana-millon-loteria-massachusetts-arrestado-ice-east-boston.html</loc>
+    <news:news>
+      <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>
+      <news:publication_date>2026-11-25T22:24:00-06:00</news:publication_date>
+      <news:title>Salvadoreño gana $1 millón en la lotería y seis días después lo arresta ICE</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://plumalibre.press/articulos/kilmar-abrego-garcia-sale-de-estados-unidos-y-lleg.html</loc>
     <news:news>
       <news:publication><news:name>Pluma Libre</news:name><news:language>es</news:language></news:publication>

@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Thu, 26 Nov 2026 13:48:38 +0000</lastBuildDate>
+  <lastBuildDate>Fri, 27 Nov 2026 21:58:29 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Cautela y baja afluencia marcan el Black Friday en los centros comerciales de El Salvador</title>
+    <link>https://plumalibre.press/articulos/cautela-y-baja-afluencia-marcan-el-black-friday-en.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/cautela-y-baja-afluencia-marcan-el-black-friday-en.html</guid>
+    <description>​La tradicional jornada de descuentos del Black Friday en los principales centros comerciales de El Salvador registra una actividad notablemente menor en comparación con años anteriores, reflejando el</description>
+    <category>Economía</category>
+    <pubDate>Fri, 27 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000122184.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Claudia Ortiz cuestiona el origen de $860 millones en nueva deuda y advierte sobre el uso de ahorros de los salvadoreños</title>
     <link>https://plumalibre.press/articulos/claudia-ortiz-cuestiona-el-origen-de-860-millones.html</link>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/luis-antonio-navarrete-quijano-deportado-condenado-25-anos.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Congresista estadounidense Jim McGovern conmemora 37 años de la masacre de los jesuitas en la UCA y llama a defender los derechos humanos</title>
-    <link>https://plumalibre.press/articulos/congresista-estadounidense-jim-mcgovern-conmemora.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/congresista-estadounidense-jim-mcgovern-conmemora.html</guid>
-    <description>​Al cumplirse 37 años de la masacre ocurrida en la Universidad Centroamericana José Simeón Cañas (UCA), el miembro de la Cámara de Representantes de los Estados Unidos, Jim McGovern, rememoró el asesi</description>
-    <category>Social</category>
-    <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000115167.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

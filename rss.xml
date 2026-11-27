@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Fri, 27 Nov 2026 21:58:29 +0000</lastBuildDate>
+  <lastBuildDate>Fri, 27 Nov 2026 22:26:12 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>El Salvador, el país de Centroamérica al que Estados Unidos más le niega la visa</title>
+    <link>https://plumalibre.press/articulos/el-salvador-pais-centroamerica-estados-unidos-mas-niega-visa.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/el-salvador-pais-centroamerica-estados-unidos-mas-niega-visa.html</guid>
+    <description>Estados Unidos rechazó el 58 % de las visas de turista pedidas por salvadoreños en 2025, según el Departamento de Estado. El jueves, Bukele saludó «a todos mis amigos en Estados Unidos».</description>
+    <category>Política</category>
+    <pubDate>Fri, 27 Nov 2026 16:25:00 -0600</pubDate>
+    <enclosure url="https://plumalibre.press/assets/bukele-trump-despacho-oval-visas-salvadorenos.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>Cautela y baja afluencia marcan el Black Friday en los centros comerciales de El Salvador</title>
     <link>https://plumalibre.press/articulos/cautela-y-baja-afluencia-marcan-el-black-friday-en.html</link>
@@ -267,15 +276,6 @@
     <category>Internacional</category>
     <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/tps-marcha-inmigrantes-trabajadores-mueven-economia.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Lo deportaron de EE. UU., lo detuvieron en el aeropuerto «por 15 días» y tres años después lo condenan a 25 años</title>
-    <link>https://plumalibre.press/articulos/deportado-eeuu-detenido-aeropuerto-condenado-25-anos-navarrete-quijano.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/deportado-eeuu-detenido-aeropuerto-condenado-25-anos-navarrete-quijano.html</guid>
-    <description>Luis Antonio Navarrete Quijano fue detenido el 9 de junio de 2023 al llegar deportado al aeropuerto. Su madre dice que no tenía antecedentes ni orden de captura y pide que se revise el caso.</description>
-    <category>Política</category>
-    <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/luis-antonio-navarrete-quijano-deportado-condenado-25-anos.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

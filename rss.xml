@@ -5,8 +5,17 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Sat, 28 Nov 2026 00:24:15 +0000</lastBuildDate>
+  <lastBuildDate>Sat, 28 Nov 2026 05:27:53 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>Joven de 15 años es trasladado en helicóptero tras accidente que dejó ocho lesionados en El Canelo</title>
+    <link>https://plumalibre.press/articulos/joven-15-anos-trasladado-helicoptero-accidente-ocho-lesionados-el-canelo-sonsonate.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/joven-15-anos-trasladado-helicoptero-accidente-ocho-lesionados-el-canelo-sonsonate.html</guid>
+    <description>Ocurrió la tarde de este viernes 27 de noviembre en la carretera de Sonsonate hacia Los Naranjos. En el pick-up viajaban trabajadores de la construcción.</description>
+    <category>Social</category>
+    <pubDate>Fri, 27 Nov 2026 23:27:00 -0600</pubDate>
+    <enclosure url="https://plumalibre.press/assets/accidente-el-canelo-sonsonate-pick-up-cuneta-bomberos.jpg" length="0" type="image/jpeg"/>
+  </item>
   <item>
     <title>El Salvador, el país de Centroamérica al que Estados Unidos más le niega la visa</title>
     <link>https://plumalibre.press/articulos/el-salvador-pais-centroamerica-estados-unidos-mas-niega-visa.html</link>
@@ -267,15 +276,6 @@
     <category>Social</category>
     <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000115675.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Amnistía Internacional denuncia que la opacidad fiscal del Gobierno de Bukele erosiona los derechos sociales en El Salvador  </title>
-    <link>https://plumalibre.press/articulos/amnistia-internacional-denuncia-que-la-opacidad-fi.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/amnistia-internacional-denuncia-que-la-opacidad-fi.html</guid>
-    <description>En una nueva investigación publicada por el diario español El País, Amnistía Internacional (AI) ha revelado que la gestión financiera y la centralización de funciones bajo la administración del presid</description>
-    <category>Política</category>
-    <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/1000115746.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>

@@ -5,7 +5,7 @@
   <link>https://plumalibre.press/</link>
   <description>Medio de comunicación digital independiente de Sonsonate, El Salvador. Cobertura local, nacional e internacional.</description>
   <language>es-SV</language>
-  <lastBuildDate>Fri, 27 Nov 2026 22:26:12 +0000</lastBuildDate>
+  <lastBuildDate>Sat, 28 Nov 2026 00:24:15 +0000</lastBuildDate>
   <atom:link href="https://plumalibre.press/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>El Salvador, el país de Centroamérica al que Estados Unidos más le niega la visa</title>
@@ -15,6 +15,15 @@
     <category>Política</category>
     <pubDate>Fri, 27 Nov 2026 16:25:00 -0600</pubDate>
     <enclosure url="https://plumalibre.press/assets/bukele-trump-despacho-oval-visas-salvadorenos.jpg" length="0" type="image/jpeg"/>
+  </item>
+  <item>
+    <title>Comunidades costeras de Conchagua denuncian amenazas de desalojo ante megaproyectos y señalan al cantante Marc Anthony</title>
+    <link>https://plumalibre.press/articulos/comunidades-costeras-de-conchagua-denuncian-amenaz.html</link>
+    <guid isPermaLink="true">https://plumalibre.press/articulos/comunidades-costeras-de-conchagua-denuncian-amenaz.html</guid>
+    <description>​Pobladores de la comunidad La Criba, en el municipio de Conchagua, denunciaron públicamente amenazas de desalojo y el riesgo de desplazamiento ante el avance de megaproyectos en la zona costera, seña</description>
+    <category>Social</category>
+    <pubDate>Fri, 27 Nov 2026 00:00:00 +0000</pubDate>
+    <enclosure url="https://plumalibre.press/assets/1000122222.jpg" length="0" type="image/jpeg"/>
   </item>
   <item>
     <title>Cautela y baja afluencia marcan el Black Friday en los centros comerciales de El Salvador</title>
@@ -267,15 +276,6 @@
     <category>Política</category>
     <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
     <enclosure url="https://plumalibre.press/assets/1000115746.jpg" length="0" type="image/jpeg"/>
-  </item>
-  <item>
-    <title>Dos meses sin decisión sobre el TPS: salvadoreños ya pierden empleos, licencias y hasta la pensión</title>
-    <link>https://plumalibre.press/articulos/tps-dos-meses-sin-decision-salvadorenos-pierden-empleos-licencias-pension.html</link>
-    <guid isPermaLink="true">https://plumalibre.press/articulos/tps-dos-meses-sin-decision-salvadorenos-pierden-empleos-licencias-pension.html</guid>
-    <description>La Alianza Nacional del TPS pide a Washington una fecha y reglas claras. Abogados recomiendan pedir revisión al Seguro Social si llega la carta de suspensión.</description>
-    <category>Internacional</category>
-    <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
-    <enclosure url="https://plumalibre.press/assets/tps-marcha-inmigrantes-trabajadores-mueven-economia.jpg" length="0" type="image/jpeg"/>
   </item>
 </channel>
 </rss>
